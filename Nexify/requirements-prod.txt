@@ -1,0 +1,4 @@
+# وابستگی‌های تولید (سرور / Docker)
+-r requirements.txt
+gunicorn>=23.0
+psycopg[binary]>=3.2

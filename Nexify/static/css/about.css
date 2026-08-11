@@ -1,0 +1,90 @@
+/* ============================================================
+   Nexify - درباره ما (about.html)
+   ============================================================ */
+
+.about-hero-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 0; border: 1px solid var(--border); border-radius: 24px; overflow: hidden; }
+.about-visual-panel { background: var(--surface); display: flex; align-items: center; justify-content: center; font-size: 7rem; padding: 64px 48px; position: relative; overflow: hidden; }
+.about-visual-panel::before { content: ''; position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: aboutGlow 4s ease-in-out infinite; }
+[data-theme="light"] .about-visual-panel::before { background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%); }
+@keyframes aboutGlow { 0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 0.6; } 50% { transform: translate(-50%,-50%) scale(1.2); opacity: 1; } }
+.about-visual-emoji { position: relative; z-index: 1; }
+.about-text-panel { padding: 64px 56px; display: flex; flex-direction: column; justify-content: center; }
+.section-flush-top { padding-top: 0; }
+.about-cta-wrap { margin-top: 16px; }
+.about-text-panel h2 { font-size: clamp(1.5rem, 3vw, 1.8rem); font-weight: 500; margin-bottom: 20px; }
+.about-text-panel p { font-size: 0.95rem; color: var(--text-secondary); font-weight: 300; line-height: 2; margin-bottom: 16px; }
+.skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 32px; transition: all 0.4s ease; position: relative; overflow: hidden; }
+.skill-card::after { content: ''; position: absolute; top: 0; right: 0; width: 120px; height: 120px; background: radial-gradient(circle at top right, rgba(124,58,237,0.08) 0%, transparent 70%); border-radius: 0 0 0 100%; pointer-events: none; }
+.skill-card:hover { border-color: rgba(124,58,237,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.1); transform: translateY(-4px); }
+[data-theme="light"] .skill-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+.skill-card-title { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 3px; color: var(--accent-light); margin-bottom: 24px; }
+.skill-item { margin-bottom: 20px; } .skill-item:last-child { margin-bottom: 0; }
+.skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.skill-name { font-size: 0.9rem; font-weight: 400; color: var(--text-secondary); }
+.skill-level { font-size: 0.78rem; color: var(--text-muted); font-weight: 300; }
+.skill-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.skill-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light)); border-radius: 2px; transition: width 1.5s cubic-bezier(0.25,0.46,0.45,0.94); width: 0; }
+.timeline-wrapper { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+.timeline-row { display: flex; align-items: center; gap: 24px; padding: 24px 32px; border-bottom: 1px solid var(--border); transition: all 0.3s ease; cursor: default; }
+.timeline-row:last-child { border-bottom: none; }
+.timeline-row:hover { background: var(--surface); padding-right: 40px; }
+.timeline-dot { width: 12px; height: 12px; background: var(--accent); border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 16px rgba(124,58,237,0.4); }
+.timeline-year { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent-light); min-width: 60px; font-weight: 500; }
+.timeline-info h4 { font-size: 1rem; font-weight: 500; margin-bottom: 4px; }
+.timeline-info p { font-size: 0.85rem; color: var(--text-muted); font-weight: 300; }
+.values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.value-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 40px 28px; text-align: center; transition: all 0.4s ease; }
+.value-card:hover { border-color: rgba(124,58,237,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.1); transform: translateY(-4px); }
+[data-theme="light"] .value-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+.value-emoji { font-size: 2.5rem; margin-bottom: 16px; display: block; }
+.value-card h4 { font-size: 1.1rem; font-weight: 500; margin-bottom: 8px; }
+.value-card p { font-size: 0.85rem; color: var(--text-muted); font-weight: 300; line-height: 1.8; }
+@media (max-width:768px) { .about-hero-grid { grid-template-columns: 1fr; border-radius: 16px; } .about-visual-panel { padding: 48px 32px; font-size: 5rem; } .about-text-panel { padding: 40px 28px; } .skills-grid { grid-template-columns: 1fr; } .values-grid { grid-template-columns: 1fr; } .timeline-row { padding: 20px 24px; } .timeline-row:hover { padding-right: 32px; } }
+@media (max-width:480px) { .about-visual-panel { padding: 40px 24px; font-size: 4rem; } .about-text-panel { padding: 32px 20px; } .value-card { padding: 32px 20px; } .timeline-row { gap: 16px; padding: 18px 16px; } .timeline-row:hover { padding-right: 22px; } .timeline-info h4 { font-size: 0.92rem; } }
+
+/* ============================================================
+   انیمیشن hover بخش «ما که هستیم؟»
+   نور دنبال‌کننده‌ی موس + انیمیشن ایموجی + درخشش قاب
+   ============================================================ */
+
+.about-hero-grid {
+    position: relative;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.about-hero-grid:hover {
+    border-color: rgba(124, 58, 237, 0.45);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+}
+[data-theme="light"] .about-hero-grid:hover { box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08); }
+
+/* نور متحرک دنبال‌کننده‌ی موس (موقعیت توسط about.js با --mx/--my ست می‌شود) */
+.about-hero-grid::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgba(124, 58, 237, 0.14), transparent 65%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+.about-hero-grid:hover::after { opacity: 1; }
+
+/* انیمیشن ایموجی هنگام hover */
+.about-visual-emoji { display: inline-block; }
+.about-hero-grid:hover .about-visual-emoji {
+    animation: aboutEmojiPop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+    filter: drop-shadow(0 14px 26px rgba(124, 58, 237, 0.35));
+}
+@keyframes aboutEmojiPop {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    30%      { transform: scale(1.16) rotate(-7deg); }
+    60%      { transform: scale(1.06) rotate(5deg); }
+}
+
+/* احترام به تنظیمات کاهش حرکت سیستم */
+@media (prefers-reduced-motion: reduce) {
+    .about-hero-grid:hover .about-visual-emoji { animation: none; }
+    .about-hero-grid::after { transition: none; }
+}

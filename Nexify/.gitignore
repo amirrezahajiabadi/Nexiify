@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Django
+db.sqlite3
+staticfiles/
+media/
+media-test/
+
+# محیط و رازها
+.env
+
+# ابزارها
+.idea/
+.vscode/
+.DS_Store
+
+# pytest و پوشش کد
+.pytest_cache/
+.coverage
+htmlcov/
+
+# لاگ‌ها
+*.log

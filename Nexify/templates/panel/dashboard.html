@@ -1,0 +1,145 @@
+{% extends "panel/base_panel.html" %}
+{% load core_extras %}
+{% block title %}داشبورد{% endblock %}
+
+{% block content %}
+<section class="panel-section">
+    <div class="panel-page-head">
+        <h1>داشبورد</h1>
+        <p>خلاصه‌ی وضعیت سایت — خوش آمدی {{ user.get_full_name|default:user.username }} 👋</p>
+    </div>
+
+    <div class="panel-stats">
+        <div class="panel-stat-card">
+            <div class="panel-stat-value">{{ blog_count }}</div>
+            <div class="panel-stat-label">مقالات</div>
+            <div class="panel-stat-sub">{{ blog_published }} منتشر شده</div>
+        </div>
+        <div class="panel-stat-card">
+            <div class="panel-stat-value">{{ project_count }}</div>
+            <div class="panel-stat-label">پروژه‌ها</div>
+            <div class="panel-stat-sub">{{ project_published }} در سایت</div>
+        </div>
+        <div class="panel-stat-card panel-stat-accent">
+            <div class="panel-stat-value">{{ message_new }}</div>
+            <div class="panel-stat-label">سفارش جدید</div>
+            <div class="panel-stat-sub">از {{ message_total }} کل</div>
+        </div>
+        <div class="panel-stat-card">
+            <div class="panel-stat-value">{{ user_count }}</div>
+            <div class="panel-stat-label">کاربران</div>
+            <div class="panel-stat-sub">{{ user_staff }} ادمین</div>
+        </div>
+    </div>
+
+    <div class="panel-card visits-card">
+        <div class="panel-card-head">
+            <h3>{{ "📈"|icon_svg }} آمار بازدید</h3>
+            <span class="panel-cell-sub">از {{ visit_total }} بازدید ثبت‌شده — مسیرهای پنل/ادمین حساب نمی‌شوند</span>
+        </div>
+
+        <div class="visits-grid">
+            <div class="visit-mini">
+                <div class="visit-mini-value">{{ visit_total|default:"۰" }}</div>
+                <div class="visit-mini-label">کل بازدید</div>
+            </div>
+            <div class="visit-mini">
+                <div class="visit-mini-value">{{ visit_today|default:"۰" }}</div>
+                <div class="visit-mini-label">بازدید امروز</div>
+            </div>
+            <div class="visit-mini">
+                <div class="visit-mini-value">{{ visit_week|default:"۰" }}</div>
+                <div class="visit-mini-label">۷ روز اخیر</div>
+            </div>
+            <div class="visit-mini">
+                <div class="visit-mini-value">{{ visit_month|default:"۰" }}</div>
+                <div class="visit-mini-label">۳۰ روز اخیر</div>
+            </div>
+        </div>
+
+        <div class="visits-row">
+            <div class="visits-chart-wrap">
+                <h4 class="visits-subtitle">بازدیدهای ۱۴ روز اخیر</h4>
+                {% if visit_total %}
+                <div class="visits-chart" dir="ltr">
+                    {% for c in visit_chart %}
+                    <div class="visits-chart-col">
+                        <div class="visits-chart-bar" style="--h:{{ c.percent }}%" title="{{ c.day|date:"Y/m/d" }} — {{ c.count }} بازدید"></div>
+                        <span class="visits-chart-day">{{ c.day|date:"d" }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="panel-empty">هنوز بازدیدی ثبت نشده — با باز کردن صفحات سایت، آمار اینجا جمع می‌شود.</p>
+                {% endif %}
+            </div>
+
+            {% if top_pages %}
+            <div class="visits-top">
+                <h4 class="visits-subtitle">پربازدیدترین صفحات</h4>
+                <ol class="visits-top-list">
+                    {% for p in top_pages %}
+                    <li>
+                        <span class="visits-top-path" dir="ltr">{{ p.path }}</span>
+                        <span class="visits-top-count">{{ p.c }}</span>
+                    </li>
+                    {% endfor %}
+                </ol>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="panel-grid-2">
+        <div class="panel-card">
+            <div class="panel-card-head">
+                <h3>آخرین سفارش‌ها / پیام‌ها</h3>
+                <a href="{% url 'panel:message_list' %}" class="panel-link">همه ←</a>
+            </div>
+            {% if recent_messages %}
+            <ul class="panel-list">
+                {% for m in recent_messages %}
+                <li>
+                    <a href="{% url 'panel:message_detail' m.pk %}">
+                        <span class="panel-badge badge-{{ m.status }}">{{ m.get_status_display }}</span>
+                        <strong>{{ m.name }}</strong>
+                        <small>{{ m.get_request_type_display }} · {{ m.created_at|date:"Y/m/d H:i" }}</small>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="panel-empty">هنوز پیامی نیامده است.</p>
+            {% endif %}
+        </div>
+
+        <div class="panel-card">
+            <div class="panel-card-head">
+                <h3>آخرین مقالات</h3>
+                <a href="{% url 'panel:blog_list' %}" class="panel-link">همه ←</a>
+            </div>
+            {% if recent_posts %}
+            <ul class="panel-list">
+                {% for p in recent_posts %}
+                <li>
+                    <a href="{% url 'panel:blog_edit' p.pk %}">
+                        <span class="panel-badge {% if p.is_published %}badge-done{% else %}badge-new{% endif %}">{% if p.is_published %}منتشر شده{% else %}پیش‌نویس{% endif %}</span>
+                        <strong>{{ p.title }}</strong>
+                        <small>{{ p.category }} · {{ p.published_at|date:"Y/m/d" }}</small>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="panel-empty">هنوز مقاله‌ای ننوشته‌ای.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="panel-quick">
+        <a href="{% url 'panel:blog_new' %}" class="btn btn-primary">+ مقاله جدید</a>
+        <a href="{% url 'panel:project_new' %}" class="btn btn-outline">+ پروژه جدید</a>
+        <a href="{% url 'panel:setting_list' %}" class="btn btn-outline">{{ "✎"|icon_svg }} ویرایش متن‌ها</a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,55 @@
+/* ============================================================
+   Nexify - خدمات (services.html)
+   ============================================================ */
+
+.services-reveal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.service-reveal-card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 40px 28px 28px; text-decoration: none; color: var(--text); overflow: hidden; transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), border-color 0.4s ease; display: flex; flex-direction: column; align-items: center; text-align: center; min-height: 280px; will-change: transform; }
+.service-reveal-card::before { content: ''; position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 70% 30%, rgba(124,58,237,0.25) 0%, rgba(6,182,212,0.08) 40%, transparent 70%); opacity: 0; transition: opacity 0.5s ease; pointer-events: none; z-index: 0; }
+[data-theme="light"] .service-reveal-card::before { background: radial-gradient(circle at 70% 30%, rgba(124,58,237,0.12) 0%, rgba(6,182,212,0.04) 40%, transparent 70%); }
+.service-reveal-card:hover { transform: translateY(-8px); border-color: rgba(124,58,237,0.4); }
+.service-reveal-card:hover::before { opacity: 1; }
+.service-reveal-number { position: absolute; top: 8px; left: 16px; font-family: 'JetBrains Mono', monospace; font-size: 5rem; font-weight: 700; color: rgba(128,128,128,0.03); pointer-events: none; z-index: 0; transition: color 0.5s ease; line-height: 1; }
+[data-theme="light"] .service-reveal-number { color: rgba(0,0,0,0.03); }
+.service-reveal-card:hover .service-reveal-number { color: rgba(124,58,237,0.08); }
+.service-reveal-icon { font-size: 3rem; margin-bottom: 20px; position: relative; z-index: 1; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); will-change: transform; }
+.service-reveal-card:hover .service-reveal-icon { transform: scale(1.15) translateY(-4px); }
+.service-reveal-title { font-size: 1.2rem; font-weight: 500; margin-bottom: 10px; position: relative; z-index: 1; transition: color 0.3s ease; }
+.service-reveal-card:hover .service-reveal-title { color: var(--accent-light); }
+.service-reveal-desc { font-size: 0.85rem; color: var(--text-muted); font-weight: 300; line-height: 1.7; position: relative; z-index: 1; flex: 1; transition: color 0.3s ease; }
+.service-reveal-card:hover .service-reveal-desc { color: var(--text-secondary); }
+.service-reveal-tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; margin-top: 16px; }
+.service-reveal-tag { padding: 4px 10px; border: 1px solid var(--border-light); border-radius: 50px; font-size: 0.7rem; color: var(--text-muted); font-weight: 300; transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease; background: transparent; }
+.service-reveal-card:hover .service-reveal-tag { border-color: rgba(124,58,237,0.3); color: var(--text-secondary); background: rgba(124,58,237,0.05); }
+/* کارت MLOps — «به‌زودی»: hover کهربایی + چرخش آیکون ⚙️ (متفاوت از بقیه) */
+.service-reveal-card-soon:hover { border-color: rgba(251, 191, 36, 0.5); }
+.service-reveal-card-soon::before { background: radial-gradient(circle at 70% 30%, rgba(251, 191, 36, 0.22) 0%, rgba(245, 158, 11, 0.08) 40%, transparent 70%); }
+[data-theme="light"] .service-reveal-card-soon::before { background: radial-gradient(circle at 70% 30%, rgba(251, 191, 36, 0.14) 0%, rgba(245, 158, 11, 0.05) 40%, transparent 70%); }
+.service-reveal-card-soon:hover .service-reveal-number { color: rgba(251, 191, 36, 0.12); }
+.service-reveal-card-soon:hover .service-reveal-title { color: #fbbf24; }
+.service-reveal-card-soon:hover .service-reveal-tag { border-color: rgba(251, 191, 36, 0.35); background: rgba(251, 191, 36, 0.06); }
+.service-reveal-card-soon .service-reveal-icon { animation: soonSpin 6s linear infinite; }
+.service-reveal-card-soon:hover .service-reveal-icon { animation-duration: 1.2s; }
+@media (prefers-reduced-motion: reduce) {
+    .service-reveal-card-soon .service-reveal-icon { animation: none; }
+    .coming-soon-badge { box-shadow: 0 0 10px rgba(251, 191, 36, 0.3); }
+}
+
+.service-reveal-card.cta-card { background: transparent; border: 1px dashed var(--border-light); justify-content: center; cursor: pointer; }
+.service-reveal-card.cta-card::before { display: none; }
+.service-reveal-card.cta-card:hover { border-color: var(--accent); border-style: solid; background: rgba(124,58,237,0.03); transform: translateY(-4px); }
+.cta-card-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.cta-card-link { font-size: 0.85rem; color: var(--accent-light); margin-top: 8px; }
+.cta-desc-mb { margin-bottom: 28px; }
+.cta-card-text { font-size: 1rem; font-weight: 500; color: var(--text-secondary); transition: color 0.3s ease; }
+.service-reveal-card.cta-card:hover .cta-card-text { color: var(--accent-light); }
+.process-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--border); }
+.process-item { padding: 40px 28px; text-align: center; border-left: 1px solid var(--border); transition: background 0.3s ease; }
+.process-item:last-child { border-left: none; }
+.process-item:hover { background: var(--surface); }
+.process-num { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 200; color: var(--accent); margin-bottom: 12px; }
+.process-title { font-size: 0.95rem; font-weight: 500; margin-bottom: 6px; }
+.process-desc { font-size: 0.78rem; color: var(--text-muted); font-weight: 300; line-height: 1.6; }
+.cta-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 200; letter-spacing: -1px; margin-bottom: 20px; max-width: 600px; }
+@media (max-width:1024px) { .services-reveal-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width:640px) { .services-reveal-grid { grid-template-columns: 1fr; } .service-reveal-card { min-height: 220px; padding: 32px 24px 24px; } .service-reveal-icon { font-size: 2.5rem; } .process-grid { grid-template-columns: repeat(2, 1fr); } .process-item { border-bottom: 1px solid var(--border); } .process-item:nth-child(even) { border-left: none; } }
+@media (max-width:480px) { .process-grid { grid-template-columns: 1fr; } .process-item { border-left: none; } .process-item:last-child { border-bottom: none; } .service-reveal-card { min-height: 200px; } }

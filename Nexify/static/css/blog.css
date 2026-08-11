@@ -1,0 +1,49 @@
+/* ============================================================
+   Nexify - مقالات (blog.html)
+   ============================================================ */
+
+.blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.blog-card { position: relative; border-radius: 20px; overflow: hidden; cursor: pointer; background: var(--surface); border: 1px solid var(--border); transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), border-color 0.4s ease; text-decoration: none; color: var(--text); display: flex; flex-direction: column; will-change: transform; }
+.blog-card:hover { transform: translateY(-8px); border-color: rgba(124,58,237,0.4); }
+[data-theme="light"] .blog-card:hover { box-shadow: 0 15px 30px rgba(0,0,0,0.05); }
+.blog-image { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 3rem; position: relative; overflow: hidden; background: var(--grad); }
+.blog-image::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(124,58,237,0.3) 0%, rgba(6,182,212,0.1) 50%, transparent 70%); opacity: 0; transition: opacity 0.5s ease; }
+[data-theme="light"] .blog-image::after { background: radial-gradient(circle at 50% 50%, rgba(124,58,237,0.15) 0%, rgba(6,182,212,0.05) 50%, transparent 70%); }
+.blog-card:hover .blog-image::after { opacity: 1; }
+.blog-image-icon { position: relative; z-index: 1; transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+.blog-card:hover .blog-image-icon { transform: scale(1.1); }
+.blog-image-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+.blog-card:hover .blog-image-photo { transform: scale(1.06); }
+.blog-image-has-photo::after { opacity: 0.35; }
+.blog-card:hover .blog-image-has-photo::after { opacity: 1; }
+.blog-category-badge { position: absolute; top: 12px; right: 12px; padding: 4px 12px; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); border-radius: 50px; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; color: var(--accent-light); z-index: 2; }
+.blog-soon-badge { position: absolute; top: 14px; left: 14px; z-index: 3; box-shadow: 0 4px 16px rgba(0,0,0,0.35); }
+[data-theme="light"] .blog-category-badge { background: rgba(255,255,255,0.7); border-color: rgba(0,0,0,0.1); }
+.blog-body { padding: 20px; flex: 1; display: flex; flex-direction: column; position: relative; z-index: 1; background: var(--surface); transition: background 0.4s ease; }
+.blog-card:hover .blog-body { background: var(--glass-bg-hover); }
+.blog-title { font-size: 1rem; font-weight: 500; margin-bottom: 8px; line-height: 1.5; }
+.blog-card:hover .blog-title { color: var(--accent-light); }
+.blog-excerpt { font-size: 0.82rem; color: var(--text-muted); font-weight: 300; line-height: 1.7; margin-bottom: 16px; flex: 1; }
+.blog-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: var(--text-muted); font-weight: 300; padding-top: 12px; border-top: 1px solid var(--border); transition: border-color 0.3s ease; }
+.blog-card:hover .blog-meta { border-color: rgba(124,58,237,0.2); }
+.newsletter-section { padding: 120px 0; }
+.newsletter-card { border: 1px solid var(--border); border-radius: 24px; padding: 64px 48px; text-align: center; position: relative; overflow: hidden; background: var(--surface); }
+.newsletter-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 50% 50%, rgba(124,58,237,0.08) 0%, transparent 60%); pointer-events: none; }
+.newsletter-title { font-size: clamp(1.5rem, 3.5vw, 1.8rem); font-weight: 300; letter-spacing: -0.5px; margin-bottom: 12px; position: relative; z-index: 1; }
+.newsletter-desc { font-size: 0.95rem; color: var(--text-secondary); font-weight: 300; margin-bottom: 28px; position: relative; z-index: 1; }
+.newsletter-form { display: flex; gap: 12px; max-width: 450px; margin: 0 auto; position: relative; z-index: 1; }
+.newsletter-input { flex: 1; padding: 14px 18px; background: var(--bg); border: 1px solid var(--border-light); border-radius: 50px; color: var(--text); font-family: var(--font-sans); font-size: 0.9rem; transition: border-color 0.3s; }
+.newsletter-input:focus { outline: none; border-color: var(--accent); }
+.newsletter-input::placeholder { color: var(--text-muted); }
+.newsletter-form .btn-success { background: #22c55e; border-color: #22c55e; color: #fff; }
+/* --- صفحه‌ی جزئیات مقاله --- */
+.blog-article { max-width: 760px; margin: 0 auto; }
+.blog-article-cover { height: 260px; border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 5rem; margin-bottom: 40px; position: relative; overflow: hidden; border: 1px solid var(--border); background: var(--grad); }
+.blog-article-cover::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(124,58,237,0.25) 0%, transparent 65%); }
+.blog-article-cover .blog-image-icon { position: relative; z-index: 1; }
+.blog-article-content { font-size: 1rem; color: var(--text-secondary); font-weight: 300; line-height: 2.2; margin-bottom: 40px; }
+.blog-article-content p { margin-bottom: 18px; }
+.blog-article-footer { text-align: center; }
+@media (max-width:640px) { .blog-article-cover { height: 180px; font-size: 3.5rem; margin-bottom: 28px; } }
+@media (max-width:1024px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width:640px) { .blog-grid { grid-template-columns: 1fr; } .blog-image { height: 160px; font-size: 2.5rem; } .newsletter-card { padding: 40px 24px; } .newsletter-form { flex-direction: column; } .newsletter-form .btn { justify-content: center; } .newsletter-section { padding: 80px 0; } }

@@ -1,0 +1,59 @@
+{% extends "panel/base_panel.html" %}
+{% load panel_extras %}
+{% block title %}سفارش‌ها / پیام‌ها{% endblock %}
+
+{% block content %}
+<section class="panel-section">
+    <div class="panel-page-head">
+        <h1>سفارش‌ها / پیام‌ها</h1>
+        <p>درخواست‌های مشتریان از فرم تماس — پیگیری و مدیریت کنید.</p>
+    </div>
+
+    <div class="panel-tabs">
+        <a href="{% url 'panel:message_list' %}" class="panel-tab {% if not status %}active{% endif %}">همه ({{ counts.new|add:counts.in_progress|add:counts.done }})</a>
+        {% for s, label in statuses %}
+        <a href="{% url 'panel:message_list' %}?status={{ s }}" class="panel-tab {% if status == s %}active{% endif %}">{{ label }} ({{ counts|get_item:s }})</a>
+        {% endfor %}
+    </div>
+
+    <div class="panel-card">
+        {% if msgs %}
+        <table class="panel-table">
+            <thead>
+                <tr>
+                    <th>نام</th>
+                    <th>نوع درخواست</th>
+                    <th>روش تماس</th>
+                    <th>تاریخ</th>
+                    <th>وضعیت</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in msgs %}
+                <tr {% if not m.is_read %}class="panel-row-unread"{% endif %}>
+                    <td><a href="{% url 'panel:message_detail' m.pk %}" class="panel-title-link">{{ m.name }}</a><small class="panel-cell-sub">{{ m.email }}</small></td>
+                    <td>{{ m.get_request_type_display }}</td>
+                    <td>{% if m.contact_method == 'telegram' %}تلگرام: {{ m.telegram_id }}{% else %}تلفن: {{ m.phone }}{% endif %}</td>
+                    <td>{{ m.created_at|date:"Y/m/d H:i" }}</td>
+                    <td><span class="panel-badge badge-{{ m.status }}">{{ m.get_status_display }}</span></td>
+                    <td class="panel-actions">
+                        <a href="{% url 'panel:message_detail' m.pk %}" class="btn btn-mini">مشاهده</a>
+                        {% if m.status != 'done' %}
+                        <a href="{% url 'panel:message_status' m.pk 'done' %}?next={{ request.get_full_path|urlencode }}" class="btn btn-mini btn-mini-ghost">انجام شد</a>
+                        {% endif %}
+                        <form method="post" action="{% url 'panel:message_delete' m.pk %}" class="inline-form confirm-form" data-confirm="حذف این درخواست؟">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-mini btn-mini-danger">حذف</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="panel-empty">درخواستی در این وضعیت نیست.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

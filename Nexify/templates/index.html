@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+{% load core_extras %}
+
+{% block title %}Nexify | AI Solutions{% endblock %}
+{% block meta %}<meta name="description" content="Nexify - طراحی سایت، Agent AI، مشاوره هوش مصنوعی و MLOps">{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/index.css' %}">{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-mesh"></div><canvas id="neuralCanvas"></canvas><div class="bg-particles" id="bgParticles"></div>
+
+<section class="hero"><div class="container"><div class="hero-content">
+    <p class="hero-label reveal">AI Solutions & Development</p>
+    <h1 class="hero-title"><span class="hero-title-line reveal reveal-delay-1">{{ site_settings.hero_title_1|default:"ساخت و توسعه" }}</span><span class="hero-title-line reveal reveal-delay-2">{{ site_settings.hero_title_2|default:"سرویس‌های" }} <span class="accent-text">{{ site_settings.hero_title_accent|default:"هوش مصنوعی" }}</span></span></h1>
+    <p class="hero-subtitle reveal reveal-delay-4">{{ site_settings.hero_subtitle|default:"Nexify پلی است میان ایده‌های شما و تکنولوژی‌های هوشمند." }}</p>
+    <div class="hero-actions reveal reveal-delay-5"><a href="{% url 'core:services' %}" class="btn btn-primary">مشاهده خدمات</a><a href="{% url 'contact:index' %}" class="btn btn-outline">درخواست مشاوره ←</a></div>
+</div></div></section>
+<div class="divider"></div>
+
+<section><div class="container"><div class="stats-row">
+    <div class="stat-item reveal"><div class="stat-value">۱۵+</div><div class="stat-label">پروژه موفق</div></div>
+    <div class="stat-item reveal reveal-delay-1"><div class="stat-value">۲+</div><div class="stat-label">سال تجربه</div></div>
+    <div class="stat-item reveal reveal-delay-2"><div class="stat-value">۶+</div><div class="stat-label">خدمات تخصصی</div></div>
+    <div class="stat-item reveal reveal-delay-3"><div class="stat-value">۱۰۰٪</div><div class="stat-label">رضایت مشتری</div></div>
+</div></div></section>
+<div class="divider"></div>
+
+<section><div class="container">
+    <p class="section-label reveal">خدمات ما</p>
+    <div class="services-bento">
+        <a href="{% url 'core:services' %}" class="service-card service-card-feature service-card-green reveal">
+            <span class="service-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg></span>
+            <div class="service-card-body">
+                <h3 class="service-card-title">Agent AI</h3>
+                <p class="service-card-desc">دستیارهای هوشمند برای خودکارسازی فرآیندهای کسب‌وکار با LangChain و RAG</p>
+                <div class="service-card-tags"><span class="service-card-tag">LangChain</span><span class="service-card-tag">OpenAI</span><span class="service-card-tag">RAG</span></div>
+            </div>
+            <span class="service-card-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="{% url 'core:services' %}" class="service-card service-card-blue reveal reveal-delay-1">
+            <span class="service-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
+            <div class="service-card-body">
+                <h3 class="service-card-title">طراحی سایت و اپلیکیشن</h3>
+                <p class="service-card-desc">محصولات دیجیتال مدرن با تمرکز بر تجربه کاربری و عملکرد فنی</p>
+            </div>
+            <span class="service-card-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="{% url 'core:services' %}" class="service-card reveal reveal-delay-2">
+            <span class="service-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></span>
+            <div class="service-card-body">
+                <h3 class="service-card-title">مشاوره هوش مصنوعی</h3>
+                <p class="service-card-desc">استراتژی داده‌محور و نقشه راه تحول دیجیتال برای کسب‌وکار شما</p>
+            </div>
+            <span class="service-card-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="{% url 'core:services' %}" class="service-card service-card-soon reveal reveal-delay-3">
+            <span class="service-card-icon" aria-hidden="true"><svg class="service-card-icon-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></span>
+            <div class="service-card-body">
+                <h3 class="service-card-title">MLOps <span class="coming-soon-badge">به‌زودی</span></h3>
+                <p class="service-card-desc">استقرار و مقیاس‌پذیری مدل‌های یادگیری ماشین در محیط تولید</p>
+            </div>
+            <span class="service-card-arrow" aria-hidden="true">←</span>
+        </a>
+        <a href="{% url 'contact:index' %}" class="service-card service-card-cta reveal reveal-delay-4">
+            <div class="service-card-cta-inner">
+                <span class="service-card-cta-icon">{{ "💬"|icon_svg }}</span>
+                <span class="service-card-cta-text">نیاز به مشاوره داری؟</span>
+                <span class="service-card-cta-link">تماس با ما ←</span>
+            </div>
+        </a>
+    </div>
+</div></section>
+<div class="divider"></div>
+
+<section><div class="container">
+    <h2 class="cta-title reveal">{{ site_settings.cta_title_1|default:"آماده‌اید" }} <span class="accent-text">{{ site_settings.cta_title_accent|default:"پروژه" }}</span> {{ site_settings.cta_title_2|default:"خود را شروع کنیم؟" }}</h2>
+    <p class="hero-subtitle reveal reveal-delay-1 cta-subtitle-mb">{{ site_settings.cta_subtitle|default:"یک گفتگوی کوتاه می‌تواند آغاز یک همکاری بزرگ باشد." }}</p>
+    <div class="reveal reveal-delay-2"><a href="{% url 'contact:index' %}" class="btn btn-primary">تماس با ما ←</a></div>
+</div></section>
+<div class="divider"></div>
+{% endblock %}
+
+{% block extra_js %}<script src="{% static 'js/index.js' %}" defer></script>{% endblock %}

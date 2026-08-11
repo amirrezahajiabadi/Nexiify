@@ -1,0 +1,40 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<section class="panel-section panel-section-narrow">
+    <div class="panel-page-head">
+        <h1>{{ title }}</h1>
+        <p>فیلدهایی که با ستاره مشخص شده‌اند الزامی هستند.</p>
+    </div>
+
+    <div class="panel-card">
+        <form method="post" class="panel-form" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span class="required-star">*</span>{% endif %}</label>
+                {{ field }}
+                {% if field.help_text %}<small class="field-help">{{ field.help_text }}</small>{% endif %}
+                {% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                {% if field.name == "cover_image" %}
+                <div class="panel-cover-preview" id="coverPreview">
+                    {% if form.instance.cover_image %}
+                    <img src="{{ form.instance.cover_image.url }}" alt="پیش‌نمایش تصویر شاخص" class="cover-preview-img" data-current="1">
+                    <span class="cover-preview-placeholder" hidden>در حال نمایش تصویر فعلی — انتخاب فایل جدید آن را جایگزین می‌کند</span>
+                    {% else %}
+                    <img src="" alt="پیش‌نمایش تصویر شاخص" class="cover-preview-img" hidden>
+                    <span class="cover-preview-placeholder">بدون تصویر — گرادیان نمایش داده می‌شود</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <div class="panel-form-actions">
+                <button type="submit" class="btn btn-primary">ذخیره</button>
+                <a href="{% url 'panel:blog_list' %}" class="btn btn-outline">انصراف</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

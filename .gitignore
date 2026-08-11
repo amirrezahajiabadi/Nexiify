@@ -1,0 +1,12 @@
+# Freebuff workspace internals (logs, db, pids, settings) — never commit
+.freebuff/
+
+# Python caches (also covers .agents/ and .claude/ skill scripts)
+__pycache__/
+*.py[cod]
+
+# Editor / OS noise (safety net at repo root)
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

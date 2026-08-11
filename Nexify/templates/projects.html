@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+{% load core_extras %}
+
+{% block title %}نمونه کارها | Nexify{% endblock %}
+{% block meta %}<meta name="description" content="نمونه کارهای Nexify - طراحی سایت، Agent AI، MLOps و اپلیکیشن">{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/projects.css' %}">{% endblock %}
+
+{% block content %}
+<section class="page-header"><div class="container"><p class="page-label reveal">Our Work</p><h1 class="page-title reveal reveal-delay-1">پروژه‌های <span class="accent-text">اخیر</span></h1><p class="page-desc reveal reveal-delay-2">مجموعه‌ای از پروژه‌های متنوع در حوزه طراحی سایت، هوش مصنوعی و MLOps</p></div></section>
+<div class="divider"></div>
+
+<section class="projects-section"><div class="container">
+    <div class="filter-bar reveal">
+        <button class="filter-btn active" data-filter="all">همه</button>
+        <button class="filter-btn" data-filter="web">طراحی سایت</button>
+        <button class="filter-btn" data-filter="ai">Agent AI</button>
+        <button class="filter-btn filter-btn-soon" data-filter="mlops">MLOps <span class="coming-soon-badge">به‌زودی</span></button>
+        <button class="filter-btn" data-filter="app">اپلیکیشن</button>
+    </div>
+    <div class="projects-grid" id="projectsGrid">
+        {% for project in projects %}
+        <div class="project-card reveal{% if forloop.counter|divisibleby:2 %} reveal-delay-1{% endif %}"
+             data-category="{{ project.categories }}"
+             data-icon="{{ project.icon }}"
+             data-title="{{ project.title }}"
+             data-cat="{{ project.category_label }}"
+             data-desc="{{ project.description }}"
+             data-duration="{{ project.duration }}"
+             data-role="{{ project.role }}"
+             data-status="{{ project.status }}"
+             data-tags="{{ project.tags|join:',' }}"
+             data-github="{{ project.github_url }}"
+             {% if project.cover_image %}data-cover="{{ project.cover_image.url }}"{% endif %}>
+            <div class="project-visual{% if project.cover_image %} project-visual-has-photo{% endif %}" style="--grad:linear-gradient({{ project.gradient }});">{% if project.cover_image %}<img src="{{ project.cover_image.url }}" alt="{{ project.title }}" class="project-visual-photo" loading="lazy">{% else %}<span class="project-visual-icon">{{ project.icon|icon_svg }}</span>{% endif %}{% if 'mlops' in project.categories %}<span class="coming-soon-badge project-soon-badge">به‌زودی</span>{% endif %}</div>
+            <div class="project-body">
+                <div class="project-category">{{ project.category_label }}</div>
+                <h3 class="project-title">Project-{{ project.order }} | {{ project.title }}</h3>
+                <p class="project-desc">{{ project.short_description }}</p>
+                <div class="project-tags">{% for tag in project.tags %}<span class="project-tag">{{ tag }}</span>{% endfor %}</div>
+                <div class="project-links">
+                    {% if project.github_url %}<a href="{{ project.github_url }}" target="_blank" rel="noopener" class="project-link">GitHub ↗</a>{% endif %}
+                    <button class="project-link" type="button">جزئیات ←</button>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="grid-empty-state">هنوز پروژه‌ای ثبت نشده است.</p>
+        {% endfor %}
+    </div>
+</div></section>
+<div class="modal-overlay" id="modalOverlay"><div class="modal" id="modalContent"></div></div>
+<div class="divider"></div>
+{% endblock %}
+
+{% block extra_js %}<script src="{% static 'js/projects.js' %}" defer></script>{% endblock %}

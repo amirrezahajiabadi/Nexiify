@@ -1,0 +1,63 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}مقالات{% endblock %}
+
+{% block content %}
+<section class="panel-section">
+    <div class="panel-page-head panel-page-head-row">
+        <div>
+            <h1>مقالات</h1>
+            <p>انتشار، ویرایش و حذف مقاله‌های وبلاگ.</p>
+        </div>
+        <a href="{% url 'panel:blog_new' %}" class="btn btn-primary">+ مقاله جدید</a>
+    </div>
+
+    <form method="get" class="panel-search">
+        <input type="search" name="q" value="{{ q }}" placeholder="جستجو در عنوان، دسته یا اسلاگ…" class="form-input">
+        <button type="submit" class="btn btn-outline">جستجو</button>
+    </form>
+
+    <div class="panel-card">
+        {% if posts %}
+        <table class="panel-table">
+            <thead>
+                <tr>
+                    <th>عنوان</th>
+                    <th>دسته</th>
+                    <th>تاریخ</th>
+                    <th>وضعیت</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in posts %}
+                <tr>
+                    <td><a href="{% url 'panel:blog_edit' p.pk %}" class="panel-title-link">{{ p.title }}</a><small class="panel-cell-sub">{{ p.slug }}</small></td>
+                    <td>{{ p.category }}</td>
+                    <td>{{ p.published_at|date:"Y/m/d" }}</td>
+                    <td>
+                        {% if p.is_published %}
+                        <span class="panel-badge badge-done">منتشر شده</span>
+                        {% else %}
+                        <span class="panel-badge badge-new">پیش‌نویس</span>
+                        {% endif %}
+                    </td>
+                    <td class="panel-actions">
+                        <a href="{% url 'panel:blog_edit' p.pk %}" class="btn btn-mini">ویرایش</a>
+                        <a href="{% url 'panel:blog_toggle' p.pk %}" class="btn btn-mini btn-mini-ghost">
+                            {% if p.is_published %}عدم انتشار{% else %}انتشار{% endif %}
+                        </a>
+                        <form method="post" action="{% url 'panel:blog_delete' p.pk %}" class="inline-form confirm-form" data-confirm="حذف این مقاله؟">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-mini btn-mini-danger">حذف</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="panel-empty">مقاله‌ای پیدا نشد. اولین مقاله را بنویس!</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

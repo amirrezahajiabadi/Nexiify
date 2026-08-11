@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Web Design Components</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-['Inter'] bg-gray-50">
+
+<!-- Navigation Components -->
+
+<!-- 1. Professional Header -->
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+                <img class="h-8 w-8" src="logo.svg" alt="Logo">
+                <span class="ml-2 text-xl font-semibold text-gray-900">Brand</span>
+            </div>
+            <div class="hidden md:block">
+                <div class="ml-10 flex items-baseline space-x-8">
+                    <a href="#" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors">Home</a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors">About</a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors">Services</a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors">Contact</a>
+                </div>
+            </div>
+            <div class="hidden md:block">
+                <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                    Get Started
+                </button>
+            </div>
+            <div class="md:hidden">
+                <button class="text-gray-600 hover:text-gray-900" id="mobile-menu-button">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- 2. SaaS Gradient Header -->
+<header class="bg-gradient-to-r from-purple-600 to-blue-600">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+                <span class="text-xl font-bold text-white">SaaS App</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="text-purple-100 hover:text-white transition-colors">Features</a>
+                <a href="#" class="text-purple-100 hover:text-white transition-colors">Pricing</a>
+                <a href="#" class="text-purple-100 hover:text-white transition-colors">Resources</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="text-purple-100 hover:text-white">Sign In</a>
+                <button class="bg-white text-purple-600 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                    Start Free Trial
+                </button>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Hero Sections -->
+
+<!-- 3. Minimalist Hero -->
+<section class="bg-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                Build something
+                <span class="text-blue-600">amazing</span>
+            </h1>
+            <p class="mt-6 max-w-3xl mx-auto text-xl text-gray-600">
+                Create beautiful, responsive websites with our modern design system and component library.
+            </p>
+            <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-blue-600 text-white px-8 py-3 rounded-md font-medium hover:bg-blue-700 transition-colors transform hover:-translate-y-1">
+                    Get Started
+                </button>
+                <button class="border border-gray-300 text-gray-700 px-8 py-3 rounded-md font-medium hover:bg-gray-50 transition-colors">
+                    Learn More
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 4. SaaS Hero with Animation -->
+<section class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h1 class="text-5xl lg:text-6xl font-bold text-white leading-tight">
+                    The future of
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
+                        productivity
+                    </span>
+                </h1>
+                <p class="mt-6 text-xl text-gray-300">
+                    Streamline your workflow with AI-powered tools that adapt to your team's needs.
+                </p>
+                <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                    <button class="bg-white text-gray-900 px-8 py-3 rounded-md font-semibold hover:bg-gray-100 transition-all transform hover:scale-105">
+                        Start Free Trial
+                    </button>
+                    <button class="border border-purple-400 text-purple-400 px-8 py-3 rounded-md font-semibold hover:bg-purple-400 hover:text-white transition-colors">
+                        Watch Demo
+                    </button>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="bg-white/10 backdrop-blur-lg rounded-xl p-8 border border-white/20">
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                            <div class="h-2 bg-gray-300 rounded w-32"></div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                            <div class="h-2 bg-gray-300 rounded w-24"></div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
+                            <div class="h-2 bg-gray-300 rounded w-40"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Feature Sections -->
+
+<!-- 5. Feature Grid -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">
+                Everything you need to succeed
+            </h2>
+            <p class="mt-4 text-xl text-gray-600">
+                Powerful features to help you build better websites faster
+            </p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="text-center p-6 rounded-lg hover:shadow-lg transition-shadow">
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Lightning Fast</h3>
+                <p class="text-gray-600">Optimized for speed and performance on all devices</p>
+            </div>
+            <div class="text-center p-6 rounded-lg hover:shadow-lg transition-shadow">
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Reliable</h3>
+                <p class="text-gray-600">99.9% uptime guarantee with robust infrastructure</p>
+            </div>
+            <div class="text-center p-6 rounded-lg hover:shadow-lg transition-shadow">
+                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Secure</h3>
+                <p class="text-gray-600">Enterprise-grade security to protect your data</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Components -->
+
+<!-- 6. Testimonial Carousel -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-900">What our customers say</h2>
+        </div>
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <div class="text-center">
+                    <p class="text-xl text-gray-600 italic mb-8">
+                        "This platform has completely transformed how we build and deploy websites. The design system is incredible and the performance is outstanding."
+                    </p>
+                    <div class="flex items-center justify-center">
+                        <img class="w-12 h-12 rounded-full mr-4" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" alt="Customer">
+                        <div class="text-left">
+                            <p class="font-semibold text-gray-900">John Smith</p>
+                            <p class="text-gray-600">CEO, TechCorp</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 7. Contact Form -->
+<section class="py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Get in touch</h2>
+            <p class="mt-4 text-xl text-gray-600">Ready to start your project? Let's talk.</p>
+        </div>
+        <form class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                    <input type="text" id="first_name" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                    <input type="text" id="last_name" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+            <div>
+                <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                <textarea id="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-md font-medium hover:bg-blue-700 transition-colors transform hover:-translate-y-1">
+                    Send Message
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Company</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Careers</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Product</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Support</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Community</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+            <p class="text-gray-400">&copy; 2024 Your Company. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Mobile menu toggle
+document.getElementById('mobile-menu-button')?.addEventListener('click', function() {
+    // Mobile menu implementation
+});
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+
+// Intersection Observer for animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in-up');
+        }
+    });
+}, observerOptions);
+
+// Observe all sections for animation
+document.querySelectorAll('section').forEach(section => {
+    observer.observe(section);
+});
+</script>
+
+</body>
+</html>

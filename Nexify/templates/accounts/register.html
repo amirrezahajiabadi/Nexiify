@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}ثبت‌نام | Nexify{% endblock %}
+{% block meta %}<meta name="description" content="ساخت حساب کاربری Nexify">{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/auth.css' %}">{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    {% include "partials/auth_background.html" %}
+    <div class="container auth-container">
+        <div class="auth-card{% if form.non_field_errors %} auth-shake{% endif %}" id="authCard">
+            <div class="auth-card-glow" aria-hidden="true"></div>
+            <div class="auth-head">
+                <a href="{% url 'core:index' %}" class="auth-logo"><span class="nav-logo-dot"></span>NEXIFY</a>
+                <h1 class="auth-title">ساخت <span class="accent-text">حساب جدید</span></h1>
+                <p class="auth-subtitle">چند ثانیه وقت بگیر، همین‌جا شروع می‌کنیم ✨</p>
+            </div>
+            {% if form.non_field_errors %}
+            <div class="form-errors auth-errors" role="alert"><ul>{% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+                <div class="auth-field">
+                    <label class="form-label" for="{{ form.username.id_for_label }}">نام کاربری</label>
+                    <div class="auth-input-wrap">
+                        <span class="auth-input-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                        {{ form.username }}
+                    </div>
+                    {% for error in form.username.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                </div>
+                <div class="auth-field">
+                    <label class="form-label" for="{{ form.email.id_for_label }}">ایمیل</label>
+                    <div class="auth-input-wrap">
+                        <span class="auth-input-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></span>
+                        {{ form.email }}
+                    </div>
+                    {% for error in form.email.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                </div>
+                <div class="auth-field">
+                    <label class="form-label" for="{{ form.password1.id_for_label }}">رمز عبور</label>
+                    <div class="auth-input-wrap">
+                        <span class="auth-input-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                        {{ form.password1 }}
+                        {% include "partials/auth_eye_toggle.html" with field_id=form.password1.id_for_label %}
+                    </div>
+                    {% for error in form.password1.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                </div>
+                <div class="auth-strength" id="authStrength" data-target="{{ form.password1.id_for_label }}" hidden>
+                    <div class="auth-strength-bars"><span></span><span></span><span></span></div>
+                    <small class="auth-strength-text">ضعیف</small>
+                </div>
+                <div class="auth-field">
+                    <label class="form-label" for="{{ form.password2.id_for_label }}">تکرار رمز عبور</label>
+                    <div class="auth-input-wrap">
+                        <span class="auth-input-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                        {{ form.password2 }}
+                        {% include "partials/auth_eye_toggle.html" with field_id=form.password2.id_for_label %}
+                    </div>
+                    {% for error in form.password2.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                </div>
+                <div class="hp-wrap" aria-hidden="true"><label for="hpWebsite">وب‌سایت</label><input type="text" id="hpWebsite" name="website" tabindex="-1" autocomplete="off"></div>
+                <button type="submit" class="btn auth-submit">ساخت حساب</button>
+            </form>
+            <p class="auth-switch">حساب داری؟ <a href="{% url 'accounts:login' %}">وارد شو</a></p>
+            <a href="{% url 'core:index' %}" class="auth-back">← بازگشت به خانه</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}<script src="{% static 'js/auth.js' %}" defer></script>{% endblock %}

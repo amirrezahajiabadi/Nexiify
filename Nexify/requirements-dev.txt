@@ -1,0 +1,4 @@
+# وابستگی‌های تست (pytest) — همراه با requirements.txt نصب می‌شوند
+-r requirements.txt
+pytest>=9.0
+pytest-django>=4.9

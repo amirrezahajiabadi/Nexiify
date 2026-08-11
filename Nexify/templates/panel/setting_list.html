@@ -1,0 +1,56 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}متن‌های سایت{% endblock %}
+
+{% block content %}
+<section class="panel-section">
+    <div class="panel-page-head panel-page-head-row">
+        <div>
+            <h1>متن‌های سایت</h1>
+            <p>این متن‌ها مستقیماً در سایت نمایش داده می‌شوند — بدون تغییر کد ویرایش کنید.</p>
+        </div>
+        <a href="{% url 'panel:setting_add' %}" class="btn btn-primary">+ متن جدید</a>
+    </div>
+
+    <div class="panel-tabs">
+        <a href="{% url 'panel:setting_list' %}" class="panel-tab {% if not group %}active{% endif %}">همه</a>
+        {% for value, label in groups %}
+        <a href="{% url 'panel:setting_list' %}?group={{ value }}" class="panel-tab {% if group == value %}active{% endif %}">{{ label }}</a>
+        {% endfor %}
+    </div>
+
+    <div class="panel-card">
+        {% if settings %}
+        <table class="panel-table">
+            <thead>
+                <tr>
+                    <th>عنوان</th>
+                    <th>کلید</th>
+                    <th>گروه</th>
+                    <th>مقدار (پیش‌نمایش)</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in settings %}
+                <tr>
+                    <td><a href="{% url 'panel:setting_edit' s.pk %}" class="panel-title-link">{{ s.label }}</a></td>
+                    <td><code dir="ltr">{{ s.key }}</code></td>
+                    <td>{{ s.get_group_display }}</td>
+                    <td class="panel-cell-value">{{ s.value|truncatechars:45 }}</td>
+                    <td class="panel-actions">
+                        <a href="{% url 'panel:setting_edit' s.pk %}" class="btn btn-mini">ویرایش</a>
+                        <form method="post" action="{% url 'panel:setting_delete' s.pk %}" class="inline-form confirm-form" data-confirm="حذف این متن؟">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-mini btn-mini-danger">حذف</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="panel-empty">متن‌ها: `python manage.py seed_settings` را اجرا کنید.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

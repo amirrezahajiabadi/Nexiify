@@ -1,0 +1,73 @@
+{% load static %}
+{% load core_extras %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}پنل مدیریت{% endblock %} | Nexify</title>
+    <meta name="theme-color" content="#0a0a0a">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%237c3aed' d='M13 2 3 14h7l-1 8 10-12h-7l1-8z'/></svg>">
+    <link rel="preload" href="{% static 'fonts/Vazirmatn-Variable.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/panel.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="panel-body">
+<div class="panel-shell">
+
+    <aside class="panel-sidebar">
+        <a href="{% url 'panel:dashboard' %}" class="panel-brand"><span class="panel-brand-icon">{{ "⚡"|icon_svg }}</span> Nexify<small>پنل مدیریت</small></a>
+
+        <nav class="panel-nav">
+            <a href="{% url 'panel:dashboard' %}" class="panel-nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                <span class="pn-ico">{{ "▦"|icon_svg }}</span> داشبورد</a>
+            <a href="{% url 'panel:blog_list' %}" class="panel-nav-link {% if request.resolver_match.url_name|slice:':5' == 'blog_' or request.resolver_match.url_name == 'blog_list' %}active{% endif %}">
+                <span class="pn-ico">{{ "📝"|icon_svg }}</span> مقالات</a>
+            <a href="{% url 'panel:project_list' %}" class="panel-nav-link {% if request.resolver_match.url_name|slice:':8' == 'project_' or request.resolver_match.url_name == 'project_list' %}active{% endif %}">
+                <span class="pn-ico">{{ "🧩"|icon_svg }}</span> پروژه‌ها / محصولات</a>
+            <a href="{% url 'panel:message_list' %}" class="panel-nav-link {% if request.resolver_match.url_name|slice:':8' == 'message_' or request.resolver_match.url_name == 'message_list' %}active{% endif %}">
+                <span class="pn-ico">{{ "✉"|icon_svg }}</span> سفارش‌ها / پیام‌ها</a>
+            <a href="{% url 'panel:faq_list' %}" class="panel-nav-link {% if request.resolver_match.url_name|slice:':4' == 'faq_' or request.resolver_match.url_name == 'faq_list' %}active{% endif %}">
+                <span class="pn-ico">{{ "؟"|icon_svg }}</span> سوالات متداول</a>
+            <a href="{% url 'panel:setting_list' %}" class="panel-nav-link {% if request.resolver_match.url_name|slice:':8' == 'setting_' or request.resolver_match.url_name == 'setting_list' %}active{% endif %}">
+                <span class="pn-ico">{{ "✎"|icon_svg }}</span> متن‌های سایت</a>
+            <a href="{% url 'panel:user_list' %}" class="panel-nav-link {% if request.resolver_match.url_name|slice:':5' == 'user_' or request.resolver_match.url_name == 'user_list' %}active{% endif %}">
+                <span class="pn-ico">{{ "👥"|icon_svg }}</span> کاربران</a>
+        </nav>
+
+        <div class="panel-sidebar-foot">
+            <a href="{% url 'core:index' %}" class="panel-foot-link">مشاهده سایت ←</a>
+            <form method="post" action="{% url 'accounts:logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="panel-foot-link panel-logout">خروج از پنل</button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="panel-main">
+        <header class="panel-topbar">
+            <div class="panel-userchip">
+                <span class="panel-avatar">{{ user.username|slice:":1" }}</span>
+                <div class="panel-userchip-text">
+                    <strong>{{ user.get_full_name|default:user.username }}</strong>
+                    <small>{% if user.is_superuser %}مدیر اصلی{% else %}ادمین{% endif %}</small>
+                </div>
+            </div>
+        </header>
+
+        {% if messages %}
+        <div class="panel-messages">
+            {% for m in messages %}
+            <div class="panel-alert panel-alert-{{ m.tags|default:'info' }}">{{ m }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+</div>
+<script src="{% static 'js/panel.js' %}" defer></script>
+</body>
+</html>

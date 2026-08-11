@@ -1,0 +1,190 @@
+/* ============================================================
+   Nexify - صفحه اصلی (index.html)
+   استایل‌های اختصاصی این صفحه (جدا شده از HTML)
+   ============================================================ */
+
+.hero { min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; padding-top: 100px; }
+.hero-content { max-width: 800px; }
+.hero-label { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 5px; color: var(--accent-light); text-transform: uppercase; margin-bottom: 40px; }
+.hero-title { font-size: clamp(2.5rem, 5.2vw, 4.2rem); font-weight: 200; line-height: 1.25; letter-spacing: -1px; margin-bottom: 32px; }
+.hero-title-line { display: block; }
+.hero-subtitle { font-size: 1.15rem; font-weight: 300; color: var(--text-secondary); max-width: 480px; line-height: 2; margin-bottom: 56px; }
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+.stats-row { display: flex; gap: 80px; flex-wrap: wrap; }
+.stat-item { flex: 1; min-width: 140px; }
+.stat-value { font-size: 3.5rem; font-weight: 200; letter-spacing: -1px; margin-bottom: 8px; transition: color 0.5s ease; }
+.stat-item:hover .stat-value { color: var(--accent); }
+.stat-label { font-size: 0.83rem; color: var(--text-muted); font-weight: 300; transition: color 0.3s ease; }
+.stat-item:hover .stat-label { color: var(--text-secondary); }
+
+/* ==================== خدمات — Bento Grid ====================
+   ساختار ناهم‌ساز: کارت بزرگ Agent AI (۲×۲) + ۳ سرویس + کارت CTA
+   افکت spotlight: نور دنبال‌کننده موس با --mx/--my (ست‌شده در index.js)
+   =========================================================== */
+.services-bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 150px; gap: 16px; }
+.service-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    text-decoration: none;
+    color: var(--text);
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s ease, box-shadow 0.4s ease;
+    will-change: transform;
+}
+.service-card::before {
+    /* نور دنبال‌کننده موس (spotlight) */
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(124, 58, 237, 0.14) 0%, transparent 65%);
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+[data-theme="light"] .service-card::before { background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(124, 58, 237, 0.12) 0%, transparent 65%); }
+.service-card:hover { transform: translateY(-6px); border-color: rgba(124, 58, 237, 0.45); box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(124, 58, 237, 0.08); }
+.service-card:hover::before { opacity: 1; }
+
+/* کارت بزرگ Agent AI (۲×۲) */
+.service-card-feature { grid-column: span 2; grid-row: span 2; justify-content: flex-start; }
+.service-card-feature .service-card-title { font-size: 1.9rem; }
+.service-card-feature .service-card-desc { font-size: 0.95rem; max-width: 380px; }
+
+.service-card-body { position: relative; z-index: 1; }
+
+/* آیکون SVG شیشه‌ای بالای هر سرویس (هم‌سبک آواتار کاربری/لوگوی تلگرام — گرادیان بنفش روی hover) */
+.service-card-icon {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    position: relative;
+    z-index: 1;
+    transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.service-card-icon svg {
+    width: 22px;
+    height: 22px;
+}
+.service-card:hover .service-card-icon {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.3), 0 8px 24px rgba(124, 58, 237, 0.35);
+    transform: scale(1.08) translateY(-3px);
+}
+/* کارت بزرگ Agent AI — آیکون بزرگ‌تر */
+.service-card-feature .service-card-icon {
+    width: 62px;
+    height: 62px;
+    margin-bottom: 26px;
+}
+.service-card-feature .service-card-icon svg {
+    width: 28px;
+    height: 28px;
+}
+/* MLOps «به‌زودی» — کهربایی به‌جای بنفش + چرخش آرام چرخ‌دنده (انیمیشن متفاوت از بقیه) */
+.service-card-soon .service-card-icon-gear {
+    animation: soonSpin 8s linear infinite;
+}
+.service-card-soon:hover .service-card-icon {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-color: transparent;
+    color: #1c1917;
+    box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.3), 0 8px 24px rgba(251, 191, 36, 0.3);
+}
+/* هویت رنگی هر سرویس — گرادیان hover آیکون متمایز (پیش‌فرض بنفش برای مشاوره AI) */
+.service-card-green:hover .service-card-icon {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.3), 0 8px 24px rgba(16, 185, 129, 0.35);
+}
+.service-card-blue:hover .service-card-icon {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3), 0 8px 24px rgba(59, 130, 246, 0.35);
+}
+
+.service-card-title { font-size: 1.1rem; font-weight: 500; margin-bottom: 8px; transition: color 0.3s ease; }
+.service-card:hover .service-card-title { color: var(--accent-light); }
+.service-card-desc { font-size: 0.82rem; color: var(--text-muted); font-weight: 300; line-height: 1.8; transition: color 0.3s ease; }
+.service-card:hover .service-card-desc { color: var(--text-secondary); }
+.service-card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 18px; }
+.service-card-tag { padding: 4px 10px; border: 1px solid var(--border-light); border-radius: 50px; font-size: 0.7rem; color: var(--text-muted); font-weight: 300; transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease; }
+.service-card:hover .service-card-tag { border-color: rgba(124, 58, 237, 0.3); color: var(--text-secondary); background: rgba(124, 58, 237, 0.05); }
+.service-card-arrow { position: absolute; top: 24px; left: 24px; font-size: 1.1rem; color: var(--text-muted); opacity: 0; transform: translateX(8px); transition: opacity 0.35s ease, transform 0.35s ease, color 0.3s ease; z-index: 1; }
+.service-card:hover .service-card-arrow { opacity: 1; transform: translateX(0); color: var(--accent-light); }
+
+/* کارت CTA (دعوت به تماس) */
+.service-card-cta { background: transparent; border: 1px dashed var(--border-light); justify-content: center; align-items: center; cursor: pointer; }
+.service-card-cta::before { display: none; }
+.service-card-cta:hover { border-color: var(--accent); border-style: solid; background: rgba(124, 58, 237, 0.03); transform: translateY(-4px); }
+.service-card-cta-inner { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; position: relative; z-index: 1; }
+.service-card-cta-icon { font-size: 1.8rem; }
+.service-card-cta-text { font-size: 0.95rem; font-weight: 500; color: var(--text-secondary); transition: color 0.3s ease; }
+.service-card-cta:hover .service-card-cta-text { color: var(--accent-light); }
+.service-card-cta-link { font-size: 0.8rem; color: var(--accent-light); }
+
+/* انیمیشن ورود کم‌وظریف: خط زیر عنوان هر کارت هنگام اسکرول */
+.service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1;
+}
+.service-card:hover::after { width: 100%; }
+.service-card-cta::after { display: none; }
+.cta-title { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 200; letter-spacing: -1px; margin-bottom: 24px; max-width: 700px; line-height: 1.3; }
+.cta-subtitle-mb { margin-bottom: 32px; }
+
+/* پس‌زمینه‌های متحرک (mesh + neural network + particles) */
+.bg-gradient-mesh { position: fixed; top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.3; background: radial-gradient(ellipse at 20% 50%, rgba(124,58,237,0.08) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(6,182,212,0.04) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(167,139,250,0.05) 0%, transparent 50%), radial-gradient(ellipse at 40% 40%, rgba(124,58,237,0.03) 0%, transparent 60%); transition: opacity 0.4s ease; }
+[data-theme="light"] .bg-gradient-mesh { opacity: 0.5; }
+#neuralCanvas { position: fixed; top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.5; transition: opacity 0.4s ease; }
+[data-theme="light"] #neuralCanvas { opacity: 0.25; }
+.bg-particles { position: fixed; top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.6; transition: opacity 0.4s ease; }
+[data-theme="light"] .bg-particles { opacity: 0.3; }
+.particle { position: absolute; border-radius: 50%; background: var(--accent-light); animation: floatUp linear infinite; opacity: 0; }
+@keyframes floatUp { 0% { opacity:0; transform: translateY(100vh) scale(0); } 10% { opacity:0.6; } 90% { opacity:0.3; } 100% { opacity:0; transform: translateY(-10vh) scale(1); } }
+
+/* ==================== کارت MLOps — «به‌زودی» ====================
+   انیمیشن متفاوت از بقیه کارت‌ها: spotlight کهربایی به‌جای بنفش + چرخش آیکون ⚙️
+   ============================================================= */
+.service-card-soon::before {
+    background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(251, 191, 36, 0.16) 0%, transparent 65%);
+}
+.service-card-soon:hover {
+    border-color: rgba(251, 191, 36, 0.5);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(251, 191, 36, 0.1);
+}
+.service-card-soon:hover .service-card-title { color: #fbbf24; }
+.service-card-soon:hover .service-card-arrow { color: #fbbf24; }
+.service-card-soon:hover .service-card-tag { border-color: rgba(251, 191, 36, 0.35); background: rgba(251, 191, 36, 0.06); }
+.service-card-soon::after {
+    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .service-card:hover { transform: none; box-shadow: none; }
+    .service-card:hover .service-card-icon { transform: none; }
+    .service-card:hover .service-card-arrow { opacity: 1; transform: none; }
+    .service-card:hover::after { width: 0; }
+    .service-card-soon .service-card-icon-gear { animation: none; }
+}
+@media (max-width:1024px) { .services-bento { grid-template-columns: repeat(2, 1fr); } .service-card-feature { grid-column: span 2; grid-row: auto; min-height: 260px; } }
+@media (max-width:768px) { .services-bento{grid-template-columns:1fr;} .service-card-feature{grid-column:auto;grid-row:auto;} .stats-row{gap:40px;} .stat-value{font-size:2.5rem;} .hero-title{font-size:2rem;} .hero-subtitle{font-size:1rem;} /* پس‌زمینه‌های متحرک در موبایل: کم‌رنگ‌تر (باتری/پرفورمنس) */ .bg-gradient-mesh{opacity:0.18;} #neuralCanvas{opacity:0.3;} .bg-particles{opacity:0.35;} }
+@media (max-width:480px) { .services-bento{grid-template-columns:1fr;} .service-card{padding:20px;} .stats-row{gap:24px;} .stat-value{font-size:2rem;} .stat-item{min-width:120px;} .hero-title{font-size:1.85rem;} .hero-subtitle{margin-bottom:40px;} }

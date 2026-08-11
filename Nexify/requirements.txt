@@ -1,0 +1,4 @@
+# وابستگی‌های توسعه‌ی محلی (SQLite + console mail)
+Django>=6.0,<7.0
+whitenoise>=6.8
+Pillow>=11.0          # تصاویر شاخص (ImageField در مقالات/پروژه‌ها)

@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% load static %}
+{% load core_extras %}
+
+{% block title %}تماس با ما | Nexify{% endblock %}
+{% block meta %}<meta name="description" content="تماس با Nexify - درخواست مشاوره، پروژه یا همکاری">{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/contact.css' %}">{% endblock %}
+
+{% block content %}
+<section class="page-header"><div class="container"><p class="page-label reveal">Contact</p><h1 class="page-title reveal reveal-delay-1">بیا با هم <span class="accent-text">صحبت کنیم</span></h1><p class="page-desc reveal reveal-delay-2">ایده‌ای داری؟ پروژه‌ای مد نظرته؟ فرم رو پر کن تا در سریع‌ترین زمان ممکن باهات تماس بگیریم</p></div></section>
+<div class="divider"></div>
+
+<section><div class="container"><div class="contact-layout reveal">
+    <div class="contact-info-cards">
+        <a href="mailto:{{ site_settings.contact_email|default:'amirrezahajiabadi480@gmail.com' }}" class="info-card"><div class="info-card-icon">{{ "✉"|icon_svg }}</div><div class="info-card-content"><h4>ایمیل</h4><span>{{ site_settings.contact_email|default:'amirrezahajiabadi480@gmail.com' }}</span></div></a>
+        <a href="https://github.com/amirrezahajiabadi" target="_blank" rel="noopener" class="info-card"><div class="info-card-icon">{{ "⌘"|icon_svg }}</div><div class="info-card-content"><h4>گیت‌هاب</h4><span>github.com/amirrezahajiabadi</span></div></a>
+        <div class="info-card"><div class="info-card-icon">{{ "◉"|icon_svg }}</div><div class="info-card-content"><h4>موقعیت</h4><span>ایران — پروژه‌های ریموت</span></div></div>
+        <div class="social-block"><p class="social-block-title">شبکه‌های اجتماعی</p><div class="social-row"><a href="https://github.com/amirrezahajiabadi" target="_blank" rel="noopener" class="social-dot" aria-label="گیت‌هاب">{{ "⌥"|icon_svg }}</a><a href="mailto:amirrezahajiabadi480@gmail.com" class="social-dot" aria-label="ایمیل">{{ "✉"|icon_svg }}</a><a href="#" class="social-dot" aria-label="لینکدین">{{ "in"|icon_svg }}</a><a href="#" class="social-dot" aria-label="تلگرام">{{ "➤"|icon_svg }}</a></div></div>
+    </div>
+    <div class="form-card" id="contactFormWrapper">
+        <h3>درخواست <span class="accent-text">مشاوره</span></h3>
+        <p class="form-subtitle">فرم زیر رو پر کن تا در اسرع وقت باهات تماس بگیریم</p>
+        {% if success %}
+        <div class="success-message show" id="successMessage">
+            <div class="success-icon">{{ "✓"|icon_svg }}</div>
+            <h3 class="success-title">پیامت با موفقیت ارسال شد</h3>
+            <p class="success-desc">معمولاً کمتر از ۲۴ ساعت پاسخ می‌دیم</p>
+            <a href="{% url 'contact:index' %}" class="btn btn-outline btn-resend">ارسال پیام جدید</a>
+        </div>
+        {% else %}
+        <form id="contactForm" method="post" novalidate>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+            <div class="form-errors"><ul>{% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="id_name">نام و نام خانوادگی *</label>
+                    <input type="text" class="form-input" id="id_name" name="name" value="{{ form.name.value|default:'' }}" placeholder="علی محمدی" required minlength="2">
+                    {% for error in form.name.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="id_email">ایمیل *</label>
+                    <input type="email" class="form-input" id="id_email" name="email" value="{{ form.email.value|default:'' }}" placeholder="example@email.com" required>
+                    {% for error in form.email.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                </div>
+            </div>
+            <div class="form-group form-group-static">
+                <label class="form-label">روش تماس <span class="form-required-mark">*</span></label>
+                <div class="contact-method-group" id="contactMethodGroup">
+                    <div class="method-spot" aria-hidden="true"></div>
+                    <label class="method-pill">
+                        <input type="radio" name="contact_method" value="phone" class="method-radio" aria-label="تماس تلفنی" {% if form.contact_method.value != 'telegram' %}checked{% endif %}>
+                        <span class="method-card">
+                            <span class="method-icon" aria-hidden="true">{{ "📞"|icon_svg }}</span>
+                            <span class="method-text">
+                                <span class="method-title">تماس تلفنی</span>
+                                <span class="method-sub">پاسخ سریع در ساعات کاری</span>
+                            </span>
+                            <span class="method-check" aria-hidden="true">{{ "✓"|icon_svg }}</span>
+                        </span>
+                    </label>
+                    <label class="method-pill">
+                        <input type="radio" name="contact_method" value="telegram" class="method-radio" aria-label="تلگرام" {% if form.contact_method.value == 'telegram' %}checked{% endif %}>
+                        <span class="method-card">
+                        <span class="method-icon" aria-hidden="true"><svg class="method-icon-svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></span>
+                        <span class="method-text">
+                            <span class="method-title">تلگرام</span>
+                                <span class="method-sub">معمولاً سریع‌ترین راه ارتباط</span>
+                            </span>
+                            <span class="method-check" aria-hidden="true">{{ "✓"|icon_svg }}</span>
+                        </span>
+                    </label>
+                </div>
+                {% for error in form.contact_method.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+            </div>
+            <div class="form-group form-group-static" id="phoneGroup">
+                <label class="form-label" for="id_phone">شماره تماس <span class="form-required-mark">*</span></label>
+                <input type="tel" class="form-input" id="id_phone" name="phone" value="{{ form.phone.value|default:'' }}" placeholder="۰۹۱۲۳۴۵۶۷۸۹" dir="ltr" required>
+                {% for error in form.phone.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+            </div>
+            <div class="form-group form-group-static" id="telegramGroup" {% if form.contact_method.value != 'telegram' %}hidden{% endif %}>
+                <label class="form-label" for="id_telegram">آیدی تلگرام <span class="form-required-mark">*</span></label>
+                <input type="text" class="form-input" id="id_telegram" name="telegram_id" value="{{ form.telegram_id.value|default:'' }}" placeholder="@username" dir="ltr">
+                <small class="form-hint form-hint-block">بعد از انتخاب «تلگرام»، از طریق همین آیدی باهات در ارتباط خواهیم بود</small>
+                {% for error in form.telegram_id.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+            </div>
+            <div class="form-group form-group-select">
+                    <label class="form-label" for="id_request_type">نوع درخواست *</label>
+                    <div class="custom-select-group" id="customSelectGroup">
+                        <div class="custom-select-trigger" id="customSelectTrigger"><span class="select-placeholder">انتخاب کنید...</span><span class="select-arrow">▼</span></div>
+                        <div class="select-dropdown" id="selectDropdown">
+                            {% for opt in options %}
+                            <div class="select-option{% if form.request_type.value == opt.value %} selected{% endif %}{% if opt.value == 'mlops' %} select-option-soon{% endif %}" data-value="{{ opt.value }}" data-svg="{{ opt.icon_svg }}" data-text="{{ opt.label }}"><span class="select-option-icon">{{ opt.icon_svg|safe }}</span> {{ opt.label }}{% if opt.value == 'mlops' %} <span class="coming-soon-badge">به‌زودی</span>{% endif %}</div>
+                            {% endfor %}
+                        </div>
+                        <select class="hidden-select" id="id_request_type" name="request_type" required>
+                            <option value="" disabled {% if not form.request_type.value %}selected{% endif %}></option>
+                            {% for opt in options %}
+                            <option value="{{ opt.value }}" {% if form.request_type.value == opt.value %}selected{% endif %}>{{ opt.label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% for error in form.request_type.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                </div>
+            <div class="form-group form-group-static">
+                <label class="form-label" for="id_subject">موضوع</label>
+                <input type="text" class="form-input" id="id_subject" name="subject" value="{{ form.subject.value|default:'' }}" placeholder="موضوع درخواست...">
+                {% for error in form.subject.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+            </div>
+            <div class="form-group form-group-static">
+                <label class="form-label" for="id_message">توضیحات *</label>
+                <textarea class="form-textarea" id="id_message" name="message" placeholder="درمورد پروژه یا ایده‌ات توضیح بده..." required minlength="10">{{ form.message.value|default:'' }}</textarea>
+                {% for error in form.message.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+            </div>
+            <div class="hp-wrap" aria-hidden="true"><label for="hpWebsite">وب‌سایت</label><input type="text" id="hpWebsite" name="website" tabindex="-1" autocomplete="off"></div>
+            <button type="submit" class="btn btn-primary btn-submit">ارسال درخواست</button>
+        </form>
+        {% endif %}
+    </div>
+</div></div></section>
+
+<section class="faq-section-wrap"><div class="container"><p class="section-label reveal">FAQ</p><div class="faq-grid reveal reveal-delay-1" id="faqGrid">
+    {% for faq in faqs %}
+    <div class="faq-card">
+        <button class="faq-question-btn" type="button" aria-expanded="false" aria-controls="faqAnswer{{ forloop.counter }}"><span class="faq-question-text">{{ faq.question }}</span><span class="faq-icon-circle">+</span></button>
+        <div class="faq-answer-grid" id="faqAnswer{{ forloop.counter }}" hidden><div class="faq-answer-inner"><div class="faq-answer-content">{{ faq.answer }}</div></div></div>
+    </div>
+    {% endfor %}
+</div></div></section>
+<div class="divider"></div>
+{% endblock %}
+
+{% block extra_js %}<script src="{% static 'js/contact.js' %}" defer></script>{% endblock %}

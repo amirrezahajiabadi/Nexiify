@@ -1,0 +1,36 @@
+# ============================================================
+# Nexify — هدرهای امنیتی (فاز ۲)
+# فرمت Netlify / Cloudflare Pages
+# کاربرد:
+#   - Netlify: همین فایل را در ریشه‌ی دیپلوی قرار دهید
+#   - Cloudflare Pages: Settings → Headers → درج همین مقادیر
+# برای Nginx از nginx-security.conf استفاده کنید.
+# ============================================================
+
+# --- صفحات اصلی (CSP بدون CDN اضافه) ---
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+# --- پنل مدیریت (فاز ۴: Django Admin در /admin/) ---
+# ⚠️ ادمین جنگو اسکریپت اینلاین دارد؛ بنابراین script-src باید 'unsafe-inline' باشد.
+/admin/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+
+# --- کش فایل‌های استاتیک (فاز ۳ + ۴) ---
+# ⚠️ در جنگو نام فایل‌ها بعد از collectstatic هش می‌شوند (style.abcd1234.css)
+#    یعنی بعد از هر دیپلوی نسخه‌ی جدید به‌صورت خودکار لود می‌شود؛
+#    برای هش‌شده‌ها می‌توانید immutable بگذارید:
+#    Cache-Control: public, max-age=31536000, immutable
+/static/css/*
+  Cache-Control: public, max-age=86400
+
+/static/js/*
+  Cache-Control: public, max-age=86400
+
+/static/fonts/*
+  Cache-Control: public, max-age=31536000, immutable

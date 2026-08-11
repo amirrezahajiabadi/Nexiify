@@ -1,0 +1,68 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}کاربران{% endblock %}
+
+{% block content %}
+<section class="panel-section">
+    <div class="panel-page-head">
+        <h1>کاربران</h1>
+        <p>مدیریت چند ادمین — فقط مدیر اصلی می‌تواند دسترسی ادمین بدهد یا بردارد.</p>
+    </div>
+
+    <div class="panel-card">
+        {% if users %}
+        <table class="panel-table">
+            <thead>
+                <tr>
+                    <th>کاربر</th>
+                    <th>نقش</th>
+                    <th>آخرین ورود</th>
+                    <th>تاریخ عضویت</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>
+                        <div class="panel-user-cell">
+                            <span class="panel-avatar panel-avatar-sm">{{ u.username|slice:":1" }}</span>
+                            <div>
+                                <strong>{{ u.get_full_name|default:u.username }}</strong>
+                                <small class="panel-cell-sub" dir="ltr" style="direction:ltr; display:block; text-align:right">{{ u.email|default:"—" }}</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        {% if u.is_superuser %}
+                        <span class="panel-badge badge-super">مدیر اصلی</span>
+                        {% elif u.is_staff %}
+                        <span class="panel-badge badge-done">ادمین</span>
+                        {% else %}
+                        <span class="panel-badge badge-new">کاربر عادی</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ u.last_login|date:"Y/m/d H:i"|default:"—" }}</td>
+                    <td>{{ u.date_joined|date:"Y/m/d" }}</td>
+                    <td class="panel-actions">
+                        {% if not u.is_superuser %}
+                        <form method="post" action="{% url 'panel:user_toggle_staff' u.pk %}" class="inline-form confirm-form"
+                              data-confirm="{% if u.is_staff %}حذف دسترسی ادمین از {{ u.username }}؟{% else %}دادن دسترسی ادمین به {{ u.username }}؟{% endif %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-mini {% if u.is_staff %}btn-mini-danger{% else %}btn-mini-ghost{% endif %}">
+                                {% if u.is_staff %}حذف ادمین{% else %}ادمین کن{% endif %}
+                            </button>
+                        </form>
+                        {% else %}
+                        <span class="panel-cell-sub">—</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="panel-empty">کاربری ثبت نشده است.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

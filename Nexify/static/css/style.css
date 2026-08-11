@@ -1,0 +1,633 @@
+/* ============================================================
+   Nexify - Shared Stylesheet (Dark + Light Mode)
+   Version: 5.2 - Final
+   ============================================================ */
+
+/* ==================== Self-hosted Variable Fonts ====================
+   Vazirmatn و JetBrains Mono به‌صورت محلی (فاز ۳: حذف Google Fonts)
+   هر کدام یک فایل woff2 متغیر برای تمام وزن‌ها هستند.
+   font-display: swap → متن بلافاصله با فونت جایگزین رندر می‌شود
+   ==================================================================== */
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('../fonts/Vazirmatn-Variable.woff2') format('woff2-variations');
+    src: url('../fonts/Vazirmatn-Variable.woff2') format('woff2') tech('variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('../fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');
+    src: url('../fonts/JetBrainsMono-Variable.woff2') format('woff2') tech('variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --border: #1f1f1f;
+    --border-light: #2a2a2a;
+    --text: #f5f5f5;
+    --text-secondary: #a3a3a3; /* U1: کنتراست AA (7.8:1) — قبلاً #888888 */
+    --text-muted: #9ca3af;     /* U1: کنتراست AA (7.8:1) — قبلاً #555555 (2.66:1 بود و FAIL) */
+    --accent: #7c3aed;
+    --accent-light: #a78bfa;
+    --success: #22c55e;
+    --font-sans: 'Vazirmatn', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --glass-bg: rgba(22, 22, 31, 0.4);
+    --glass-bg-hover: rgba(22, 22, 31, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="light"] {
+    --bg: #f8f8fa;
+    --surface: #ffffff;
+    --border: #e5e5ea;
+    --border-light: #dcdce0;
+    --text: #1a1a1a;
+    --text-secondary: #4b5563; /* U1: کنتراست AA (7.1:1) — قبلاً #555555 */
+    --text-muted: #6b7280;     /* U1: کنتراست AA (4.6:1) — قبلاً #888888 (3.3:1 بود و FAIL) */
+    --accent: #6d28d9;
+    --accent-light: #7c3aed;
+    --glass-bg: rgba(255, 255, 255, 0.6);
+    --glass-bg-hover: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(0, 0, 0, 0.06);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+    font-family: var(--font-sans); background: var(--bg); color: var(--text);
+    line-height: 1.6; direction: rtl; -webkit-font-smoothing: antialiased;
+    overflow-x: hidden; transition: background 0.4s ease, color 0.4s ease;
+    -webkit-tap-highlight-color: transparent; /* حذف فلش آبی کلیک در موبایل (iOS/Android) */
+}
+/* لینک‌ها و دکمه‌ها: بدون تأخیر ۳۰۰ms کلیک در موبایل */
+a, button, input, select, textarea { touch-action: manipulation; }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+h1, h2, h3, h4, h5, h6 { line-height: 1.3; font-weight: 500; }
+p { color: var(--text-secondary); line-height: 2; }
+
+::selection { background: rgba(124, 58, 237, 0.3); color: var(--text); }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+.container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+section { padding: 140px 0; position: relative; z-index: 1; }
+
+.divider { width: 100%; height: 1px; background: var(--border); position: relative; z-index: 1; transition: background 0.4s ease; }
+
+/* ---------- Utility classes ---------- */
+.accent-text { color: var(--accent); }
+
+/* U2: آیکون‌های SVG جایگزین ایموجی — هم‌اندازه با فونت زمینه (em) و با currentColor */
+.icon-svg { width: 1em; height: 1em; display: inline-block; vertical-align: middle; flex-shrink: 0; }
+.grid-empty-state { grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 60px 0; }
+
+.navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 0;
+    padding-top: calc(24px + env(safe-area-inset-top, 0px)); /* ناچ آیفون */
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.navbar.scrolled {
+    background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border); padding: 14px 0;
+}
+.navbar .container { display: flex; justify-content: space-between; align-items: center; }
+
+.nav-logo {
+    font-family: var(--font-mono); font-size: 1.05rem; font-weight: 400;
+    letter-spacing: 3px; color: var(--text); text-decoration: none;
+    display: flex; align-items: center; gap: 10px; transition: opacity 0.3s; z-index: 101;
+}
+.nav-logo:hover { opacity: 0.7; }
+.nav-logo-dot {
+    width: 5px; height: 5px; background: var(--accent); border-radius: 50%;
+    animation: dotPulse 3s ease-in-out infinite;
+}
+@keyframes dotPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+.nav-links { display: flex; list-style: none; gap: 40px; align-items: center; }
+.nav-link {
+    color: var(--text-secondary); text-decoration: none; font-size: 0.83rem;
+    font-weight: 400; letter-spacing: 0.5px; transition: color 0.3s;
+    position: relative; padding-bottom: 6px; cursor: pointer;
+    background: none; border: none; font-family: var(--font-sans);
+}
+.nav-link::after {
+    content: ''; position: absolute; bottom: 0; right: 0;
+    width: 0; height: 1px; background: var(--accent);
+    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.nav-link:hover { color: var(--text); }
+.nav-link:hover::after, .nav-link.active::after { width: 100%; left: 0; right: auto; }
+.nav-link.active { color: var(--text); }
+.nav-link.active::after { animation: activePulse 2s ease-in-out infinite; }
+@keyframes activePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+.theme-toggle {
+    background: none; border: 1px solid var(--border-light);
+    width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
+    font-size: 1rem; display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s ease; margin-right: 12px;
+}
+.theme-toggle:hover { border-color: var(--accent); }
+.theme-icon-dark { display: inline; }
+.theme-icon-light { display: none; }
+[data-theme="light"] .theme-icon-dark { display: none; }
+[data-theme="light"] .theme-icon-light { display: inline; }
+
+.mobile-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; padding: 8px; z-index: 101; transition: opacity 0.3s; }
+.mobile-toggle:hover { opacity: 0.7; }
+
+/* ==================== Auth Buttons (ورود / ثبت‌نام) ====================
+   دکمه‌های نوبار با انیمیشن نور (درخشش پالس + موج نور شیب‌دار)
+   - بدون inline handler و بدون JS → کاملاً سازگار با CSP
+   - ورود: سبک شیشه‌ای/خطی  |  ثبت‌نام: گرادیان بنفش + انیمیشن نور
+   ======================================================================= */
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 16px;
+}
+.auth-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 20px;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ورود — دکمه خطی شیشه‌ای */
+.auth-btn-login {
+    color: var(--text-secondary);
+    border-color: var(--border-light);
+    background: transparent;
+}
+.auth-btn-login:hover {
+    color: var(--text);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.15), 0 0 20px rgba(124, 58, 237, 0.15);
+}
+
+/* ثبت‌نام — گرادیان بنفش + درخشش تنفسی (پالس نور) */
+.auth-btn-register {
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    animation: authGlow 3s ease-in-out infinite;
+}
+.auth-btn-register:hover {
+    transform: translateY(-2px);
+    animation-duration: 1.6s;
+}
+
+/* دکمه‌ی «پنل مدیریت» — فقط برای کاربران staff */
+.auth-btn-panel {
+    color: var(--accent-light);
+    border-color: rgba(124, 58, 237, 0.35);
+    background: rgba(124, 58, 237, 0.08);
+    gap: 6px;
+}
+.auth-btn-panel:hover {
+    color: var(--accent-light);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.25);
+}
+.auth-panel-icon { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* موج نور که روی دکمه ثبت‌نام می‌خزد (انیمیشن لایت) */
+.auth-btn-register::after {
+    content: '';
+    position: absolute;
+    top: -20%;
+    bottom: -20%;
+    left: 0;
+    width: 40%;
+    background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    transform: translateX(-250%) skewX(-20deg);
+    animation: authShine 3.2s ease-in-out infinite;
+    pointer-events: none;
+}
+.auth-btn-register:hover::after { animation-duration: 1.4s; }
+
+@keyframes authShine {
+    0%, 55% { transform: translateX(-250%) skewX(-20deg); }
+    85%, 100% { transform: translateX(350%) skewX(-20deg); }
+}
+@keyframes authGlow {
+    0%, 100% { box-shadow: 0 0 8px rgba(124, 58, 237, 0.35), 0 0 2px rgba(124, 58, 237, 0.2); }
+    50% { box-shadow: 0 0 24px rgba(124, 58, 237, 0.6), 0 0 6px rgba(124, 58, 237, 0.35); }
+}
+
+/* دکمه‌های ورود/ثبت‌نام داخل منوی موبایل */
+.mobile-auth {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+.mobile-auth .auth-btn {
+    padding: 12px 28px;
+    font-size: 0.9rem;
+}
+
+/* وضعیت کاربر واردشده: چیپ شیشه‌ای نام کاربری (آواتار SVG + نام) + فرم خروج (POST با CSRF)
+   انیمیشن‌ها: ورود نرم چیپ (userChipIn) + درخشش تنفسی آواتار (userAvatarGlow) — فقط CSS، سازگار با CSP */
+.auth-user-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 14px 3px 12px;
+    border-radius: 999px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 500;
+    white-space: nowrap;
+    animation: userChipIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    transform-origin: right center;
+    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.auth-user-chip:hover {
+    border-color: rgba(124, 58, 237, 0.45);
+    background: var(--glass-bg-hover);
+    box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.12), 0 4px 18px rgba(124, 58, 237, 0.14);
+    transform: translateY(-1px);
+}
+.auth-user-avatar {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #6d28d9);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.35);
+    animation: userAvatarGlow 3.2s ease-in-out infinite;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.auth-user-icon {
+    width: 14px;
+    height: 14px;
+}
+.auth-user-name {
+    transition: color 0.3s ease;
+}
+.auth-user-chip:hover .auth-user-avatar {
+    transform: scale(1.12);
+}
+.auth-user-chip:hover .auth-user-name {
+    color: var(--text);
+}
+@keyframes userChipIn {
+    from { opacity: 0; transform: translateY(-8px) scale(0.94); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes userAvatarGlow {
+    0%, 100% { box-shadow: 0 0 8px rgba(124, 58, 237, 0.28); }
+    50% { box-shadow: 0 0 16px rgba(124, 58, 237, 0.55); }
+}
+.nav-logout-form {
+    display: inline-flex;
+    margin: 0;
+}
+/* خروج — مثل ورود اما hover قرمز (بعد از auth-btn-login تعریف می‌شود تا برنده شود) */
+.auth-btn-logout:hover {
+    color: #f87171 !important;
+    border-color: #ef4444 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.15), 0 0 20px rgba(239, 68, 68, 0.15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-btn-register, .auth-btn-register::after { animation: none !important; }
+    .auth-btn-register { box-shadow: 0 0 12px rgba(124, 58, 237, 0.3); }
+    .auth-btn-login:hover, .auth-btn-register:hover { transform: none; }
+    .auth-user-chip, .auth-user-avatar { animation: none !important; }
+    .auth-user-chip:hover, .auth-user-chip:hover .auth-user-avatar { transform: none; }
+}
+
+/* ==================== برچسب «بهزودی» (Coming Soon) ====================
+   برای سرویس‌ها/گزینه‌هایی که هنوز آماده نیستند (فعلاً MLOps)
+   انیمیشن: پالس کهربایی (درخشش تنفسی) — بدون JS، سازگار با CSP
+   ===================================================================== */
+.coming-soon-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    background: rgba(251, 191, 36, 0.08);
+    animation: soonPulse 2.2s ease-in-out infinite;
+    vertical-align: middle;
+}
+.coming-soon-badge::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #fbbf24;
+    animation: soonBlink 2.2s ease-in-out infinite;
+}
+@keyframes soonPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.25); }
+    50% { box-shadow: 0 0 14px 2px rgba(251, 191, 36, 0.45); }
+}
+@keyframes soonSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+@keyframes soonBlink {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.75); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .coming-soon-badge, .coming-soon-badge::before { animation: none !important; }
+    .coming-soon-badge { box-shadow: 0 0 10px rgba(251, 191, 36, 0.3); }
+}
+
+/* ==================== فرم‌ها (مشترک — تماس و احراز هویت) ====================
+   کلاس‌های پایه‌ی فرم‌ها اینجا هستند تا در هر صفحه‌ای که از آن‌ها استفاده
+   می‌کند (contact، accounts و...) بدون نیاز به CSS جداگانه اعمال شوند.
+   ======================================================================= */
+.form-label { display: block; font-size: 0.8rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px; }
+.form-input, .form-textarea { width: 100%; min-width: 0; padding: 13px 16px; background: var(--bg); border: 1px solid var(--border-light); border-radius: 12px; color: var(--text); font-family: var(--font-sans); font-size: 0.9rem; transition: all 0.3s ease; resize: vertical; }
+.form-input:focus, .form-textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
+.form-textarea { min-height: 120px; }
+/* هانی‌پات ضد اسپم — نامرئی برای کاربر، اما برای ربات قابل پر شدن */
+.hp-wrap { position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
+/* خطاهای فرم (سمت سرور جنگو) */
+.field-error { display: block; margin-top: 6px; font-size: 0.75rem; color: #ef4444; font-weight: 300; }
+.form-errors { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.3); border-radius: 12px; padding: 12px 16px; margin-bottom: 18px; font-size: 0.82rem; color: #f87171; }
+.form-errors ul { margin: 0; padding-right: 18px; }
+
+.mobile-menu {
+    position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+    height: 100dvh; /* ارتفاع واقعی دید در موبایل (نوار آدرس مرورگر) */
+    background: var(--bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    z-index: 200; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 36px;
+    transition: right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.mobile-menu.open { right: 0; }
+.mobile-menu a { color: var(--text); text-decoration: none; font-size: 1.7rem; font-weight: 300; transition: opacity 0.3s; cursor: pointer; }
+.mobile-menu a:hover { opacity: 0.6; }
+.mobile-menu-close {
+    position: absolute; top: 24px; right: 24px; background: none; border: none;
+    color: var(--text); font-size: 2rem; cursor: pointer; padding: 12px;
+    transition: opacity 0.3s; line-height: 1;
+}
+.mobile-menu-close:hover { opacity: 0.6; }
+
+.btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px;
+    font-family: var(--font-sans); font-size: 0.88rem; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    letter-spacing: 0.3px; border: 1px solid transparent;
+    white-space: nowrap; background: transparent;
+}
+.btn:active { transform: scale(0.97) !important; }
+.btn-primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+.btn-primary:hover { background: transparent; color: var(--text); transform: translateY(-2px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+.btn-outline { background: transparent; color: var(--text); border-color: var(--border-light); }
+.btn-outline:hover { border-color: var(--text); transform: translateY(-2px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+.page-header { padding: 180px 0 80px; }
+.page-label {
+    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 5px;
+    color: var(--accent-light); text-transform: uppercase; margin-bottom: 32px;
+}
+.page-title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 200;
+    letter-spacing: -1px; line-height: 1.1; margin-bottom: 24px; max-width: 700px;
+}
+.page-desc { font-size: 1.1rem; color: var(--text-secondary); font-weight: 300; max-width: 500px; line-height: 2; }
+.section-label { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 5px; color: var(--accent-light); text-transform: uppercase; margin-bottom: 64px; }
+
+.back-to-top {
+    position: fixed; bottom: 32px; right: 32px; width: 44px; height: 44px;
+    background: var(--surface); border: 1px solid var(--border-light); border-radius: 50%;
+    color: var(--text); cursor: pointer; z-index: 99;
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease;
+}
+.back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.back-to-top:hover { border-color: var(--accent); color: var(--accent-light); transform: translateY(-4px); }
+
+/* ==================== Footer ==================== */
+.footer {
+    padding: 80px 0 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px); /* ناچ آیفون */
+    border-top: 1px solid var(--border);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-logo {
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 3px;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: opacity 0.3s;
+}
+
+.footer-logo:hover { opacity: 0.7; }
+
+.footer-logo-dot {
+    width: 6px; height: 6px;
+    background: var(--accent); border-radius: 50%;
+}
+
+.footer-tagline {
+    font-size: 0.85rem; color: var(--text-muted);
+    font-weight: 300; line-height: 1.6;
+}
+
+.footer-heading {
+    font-size: 0.8rem; font-weight: 600;
+    color: var(--text); margin-bottom: 16px;
+    letter-spacing: 0.5px;
+}
+
+.footer-links-col .footer-links {
+    display: flex; flex-direction: column;
+    gap: 10px; list-style: none;
+}
+
+.footer-link {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 0.85rem; font-weight: 300;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block; position: relative;
+    padding-bottom: 2px;
+}
+
+.footer-link::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px; background: var(--accent);
+    transition: width 0.3s ease;
+}
+
+.footer-link:hover { color: var(--text); transform: translateX(-4px); }
+.footer-link:hover::after { width: 100%; }
+
+.footer-social-col { display: flex; flex-direction: column; }
+
+.footer-social { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.footer-social-link {
+    display: flex; align-items: center; justify-content: center;
+    width: 42px; height: 42px; border-radius: 12px;
+    border: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: var(--surface);
+}
+
+.footer-social-link:hover {
+    transform: translateY(-4px) scale(1.05);
+    color: var(--accent-light); border-color: var(--accent);
+    background: rgba(124, 58, 237, 0.08);
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.15);
+}
+
+.footer-social-link svg { display: block; color: inherit; }
+
+.footer-bottom {
+    border-top: 1px solid var(--border);
+    padding: 24px 0; text-align: center;
+}
+
+.footer-copy { font-size: 0.8rem; color: var(--text-muted); font-weight: 300; }
+
+/* ==================== Preloader ==================== */
+.preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.6s ease, visibility 0.6s ease; }
+.preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.preloader-content { text-align: center; }
+.preloader-logo { font-family: var(--font-mono); font-size: 2rem; font-weight: 400; letter-spacing: 6px; color: var(--text); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; justify-content: center; }
+.preloader-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: preloaderPulse 1s ease-in-out infinite; }
+@keyframes preloaderPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.8); opacity: 0.4; } }
+.preloader-bar { width: 120px; height: 1px; background: var(--border); margin: 0 auto; overflow: hidden; position: relative; }
+.preloader-bar-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); animation: preloaderBar 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; width: 0; }
+@keyframes preloaderBar { 0% { width: 0; } 50% { width: 70%; } 100% { width: 100%; } }
+
+/* Micro-interactions */
+.nav-link, .btn, .project-card, .blog-card, .faq-item, .social-link, .social-dot, .filter-btn, .back-to-top, .timeline-row, .value-card, .skill-card, .info-card, .stat-item, .service-reveal-card, .faq-card { transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+.stat-item:hover { transform: translateY(-4px); }
+
+@media (hover: none) {
+    .service-card:hover, .service-reveal-card:hover, .project-card:hover, .blog-card:hover, .skill-card:hover, .value-card:hover, .info-card:hover, .timeline-row:hover, .auth-btn-login:hover, .auth-btn-register:hover, .auth-btn-logout:hover { transform: none !important; border-color: var(--border) !important; box-shadow: none !important; }
+    .service-reveal-card:hover .service-reveal-icon, .project-card:hover .project-visual-icon, .blog-card:hover .blog-image-icon { transform: none !important; }
+    .service-reveal-card:hover::before, .project-card:hover .project-visual::after, .blog-card:hover .blog-image::after { opacity: 0 !important; }
+    .service-reveal-card:hover .service-reveal-title, .blog-card:hover .blog-title { color: inherit !important; }
+}
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@media (max-width: 768px) {
+    /* اینپوت‌ها در موبایل: فونت ≥16px تا iOS زوم خودکار نکند (کل فرم‌ها — auth و تماس) */
+    .form-input, .form-textarea { font-size: 1rem; }
+    .nav-links { display: none; }
+    /* ورود/ثبت‌نام در هدر موبایل — فشرده و همیشه نمایان (قبلاً display:none بود و فقط پشت منوی همبرگری بود) */
+    .nav-auth { display: flex; gap: 8px; margin-right: 8px; }
+    .nav-auth .auth-btn { padding: 7px 14px; font-size: 0.74rem; }
+    .nav-auth .auth-user-chip { padding: 2px 10px 2px 8px; font-size: 0.74rem; gap: 6px; }
+    .nav-auth .auth-user-avatar { width: 22px; height: 22px; }
+    .nav-auth .auth-user-icon { width: 12px; height: 12px; }
+    .nav-auth .auth-btn-logout { padding: 7px 12px; font-size: 0.74rem; }
+    .mobile-toggle { display: block; }
+    section { padding: 100px 0; }
+    .page-header { padding: 140px 0 60px; }
+    .container { padding: 0 20px; }
+    .back-to-top { bottom: 20px; right: 20px; width: 40px; height: 40px; font-size: 1rem; }
+    .stat-value { transition: none; }
+    .footer { padding: 60px 0 0; }
+    .footer-grid { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+    .footer-brand { align-items: center; }
+    .footer-links-col .footer-links { align-items: center; }
+    .footer-social-col { align-items: center; }
+    .footer-social { justify-content: center; }
+    .footer-link:hover { transform: none; }
+}
+@media (max-width: 480px) {
+    .btn { padding: 12px 24px; font-size: 0.85rem; }
+    /* در صفحه‌های خیلی کوچک: نام کاربری در چیپ مخفی می‌شود (فقط آواتار) تا هدر شلوغ نشود */
+    .nav-auth .auth-user-name { display: none; }
+    .nav-auth .auth-btn { padding: 6px 12px; font-size: 0.72rem; }
+    /* پنل مدیریت در گوشی‌های خیلی کوچک: فقط آیکون چرخ‌دنده (متن مخفی می‌شود) */
+    .nav-auth .auth-btn-panel { padding: 8px; }
+    .nav-auth .auth-btn-panel-text { display: none; }
+    .auth-panel-icon { width: 15px; height: 15px; }
+    /* R5: فاصله‌گذاری و تایپوگرافی موبایل */
+    section { padding: 72px 0; }
+    .page-header { padding: 88px 0 40px; }
+    .page-desc { font-size: 1rem; line-height: 1.9; }
+    .section-label { margin-bottom: 40px; }
+}

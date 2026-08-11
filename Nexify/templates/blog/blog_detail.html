@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% load core_extras %}
+
+{% block title %}{{ post.title }} | Nexify{% endblock %}
+{% block meta %}<meta name="description" content="{{ post.excerpt }}">{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/blog.css' %}">{% endblock %}
+
+{% block content %}
+<section class="page-header"><div class="container"><p class="page-label reveal">{{ post.category }}</p><h1 class="page-title reveal reveal-delay-1">{{ post.title }}</h1><p class="page-desc reveal reveal-delay-2">{{ "📅"|icon_svg }} {{ post.published_at|date:"d F Y" }} &nbsp;·&nbsp; {{ "⏱"|icon_svg }} {{ post.read_time }} دقیقه مطالعه</p></div></section>
+<div class="divider"></div>
+
+<section><div class="container">
+    <div class="blog-article reveal">
+        <div class="blog-article-cover{% if post.cover_image %} blog-image-has-photo{% endif %}" style="--grad:linear-gradient({{ post.gradient }});">{% if post.cover_image %}<img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="blog-image-photo">{% else %}<span class="blog-image-icon">{{ post.icon|icon_svg }}</span>{% endif %}</div>
+        <div class="blog-article-content">{{ post.content|linebreaks }}</div>
+        <div class="blog-article-footer"><a href="{% url 'blog:list' %}" class="btn btn-outline">← بازگشت به مقالات</a></div>
+    </div>
+</div></section>
+<div class="divider"></div>
+{% endblock %}

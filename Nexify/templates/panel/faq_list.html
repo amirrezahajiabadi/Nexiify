@@ -1,0 +1,56 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}سوالات متداول{% endblock %}
+
+{% block content %}
+<section class="panel-section">
+    <div class="panel-page-head panel-page-head-row">
+        <div>
+            <h1>سوالات متداول</h1>
+            <p>سوال‌های بخش FAQ صفحه‌ی تماس.</p>
+        </div>
+        <a href="{% url 'panel:faq_new' %}" class="btn btn-primary">+ سوال جدید</a>
+    </div>
+
+    <div class="panel-card">
+        {% if faqs %}
+        <table class="panel-table">
+            <thead>
+                <tr>
+                    <th>سوال</th>
+                    <th>ترتیب</th>
+                    <th>وضعیت</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in faqs %}
+                <tr>
+                    <td><a href="{% url 'panel:faq_edit' f.pk %}" class="panel-title-link">{{ f.question|truncatechars:60 }}</a></td>
+                    <td>{{ f.order }}</td>
+                    <td>
+                        {% if f.is_published %}
+                        <span class="panel-badge badge-done">نمایش</span>
+                        {% else %}
+                        <span class="panel-badge badge-new">مخفی</span>
+                        {% endif %}
+                    </td>
+                    <td class="panel-actions">
+                        <a href="{% url 'panel:faq_edit' f.pk %}" class="btn btn-mini">ویرایش</a>
+                        <a href="{% url 'panel:faq_toggle' f.pk %}" class="btn btn-mini btn-mini-ghost">
+                            {% if f.is_published %}مخفی{% else %}نمایش{% endif %}
+                        </a>
+                        <form method="post" action="{% url 'panel:faq_delete' f.pk %}" class="inline-form confirm-form" data-confirm="حذف این سوال؟">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-mini btn-mini-danger">حذف</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="panel-empty">سوالی ثبت نشده است.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

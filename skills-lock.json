@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "html-css-best-practices": {
+      "source": "hack23/homepage",
+      "sourceType": "github",
+      "skillPath": ".github/skills/quality/html-css-best-practices/SKILL.md",
+      "computedHash": "7b1a6cbebfd306db3dad3568c2e5a12e5bc1ea929a1f4e20303bf083238be3fc"
+    },
+    "modern-web-design": {
+      "source": "kuse-ai/kuse-skills",
+      "sourceType": "github",
+      "skillPath": "modern-web-design/SKILL.md",
+      "computedHash": "c1d24d7e9894d4041fb1fe7b617f7fff1dfde5af0711db663f8e9492403b321c"
+    },
+    "vanilla-web": {
+      "source": "janjaszczak/cursor",
+      "sourceType": "github",
+      "skillPath": "skills/vanilla-web/SKILL.md",
+      "computedHash": "57b8fdfc7a2fe95f89346b3b1bb1bee23d7725e63cb340ed62866b5221d5bfac"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "a0074330888a3272285a12c39e6bc3cff143f870e09c3d5cdad2c5d00976542f"
+    }
+  }
+}

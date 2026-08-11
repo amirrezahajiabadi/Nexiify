@@ -1,0 +1,247 @@
+/* ==========================================================================
+   صفحات ورود / ثبت‌نام — انیمیشن‌های سبک (فقط transform/opacity → GPU)
+   ========================================================================== */
+
+.auth-section {
+    position: relative;
+    min-height: calc(100vh - 72px);
+    min-height: calc(100dvh - 72px); /* ارتفاع واقعی دید در موبایل */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 72px 0;
+    overflow: hidden;
+}
+
+/* ---------------------------------- پس‌زمینه ---------------------------------- */
+.auth-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+
+.auth-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.32;
+    will-change: transform;
+}
+.auth-orb-1 { width: 520px; height: 520px; top: -12%; right: -8%; background: radial-gradient(circle, #7c3aed, transparent 70%); animation: authOrbFloat1 22s ease-in-out infinite alternate; }
+.auth-orb-2 { width: 460px; height: 460px; bottom: -16%; left: -10%; background: radial-gradient(circle, #a78bfa, transparent 70%); animation: authOrbFloat2 26s ease-in-out infinite alternate; }
+.auth-orb-3 { width: 300px; height: 300px; top: 42%; left: 22%; background: radial-gradient(circle, #f59e0b, transparent 70%); opacity: 0.14; animation: authOrbFloat1 30s ease-in-out infinite alternate-reverse; }
+
+.auth-grid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 75%);
+    animation: authGridDrift 40s linear infinite;
+}
+
+@keyframes authOrbFloat1 {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to   { transform: translate3d(60px, 50px, 0) scale(1.12); }
+}
+@keyframes authOrbFloat2 {
+    from { transform: translate3d(0, 0, 0) scale(1.08); }
+    to   { transform: translate3d(-70px, -40px, 0) scale(0.95); }
+}
+@keyframes authGridDrift {
+    from { background-position: 0 0; }
+    to   { background-position: 0 340px; }
+}
+
+/* ---------------------------------- کارت ---------------------------------- */
+.auth-container { position: relative; z-index: 1; width: 100%; max-width: 460px; }
+
+.auth-card {
+    position: relative;
+    padding: 40px 36px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.02);
+    animation: authCardIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+/* خط گرادیان بالای کارت */
+.auth-card::before {
+    content: "";
+    position: absolute;
+    top: 0; right: 12%; left: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.7;
+}
+
+/* هاله‌ی دنبال‌کننده‌ی موس (JS فقط transform/opacity را ست می‌کند — GPU) */
+.auth-card-glow {
+    position: absolute;
+    top: 0; left: 0;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.16), transparent 65%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    will-change: transform;
+}
+
+@keyframes authCardIn {
+    from { opacity: 0; transform: translateY(28px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes authShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-7px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(3px); }
+}
+.auth-shake { animation: authCardIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both, authShake 0.45s ease 0.55s; }
+
+/* ---------------------------------- سربرگ ---------------------------------- */
+.auth-head { text-align: center; margin-bottom: 28px; }
+.auth-logo { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-weight: 700; letter-spacing: 2px; color: var(--text); text-decoration: none; margin-bottom: 18px; }
+.auth-title { font-size: 1.7rem; font-weight: 800; margin: 0 0 8px; }
+.auth-subtitle { color: var(--text-secondary); font-size: 0.92rem; margin: 0; }
+
+/* ---------------------------------- فرم ---------------------------------- */
+.auth-field { margin-bottom: 18px; }
+.auth-field .form-label { display: block; margin-bottom: 7px; }
+
+.auth-input-wrap { position: relative; }
+.auth-input-wrap .form-input {
+    width: 100%;
+    padding: 13px 44px 13px 44px;
+    border-radius: 12px;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+.auth-input-wrap .form-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.18), 0 8px 24px rgba(124, 58, 237, 0.12);
+}
+
+.auth-input-icon {
+    position: absolute;
+    top: 50%; right: 15px;
+    transform: translateY(-50%);
+    display: grid; place-items: center;
+    color: var(--text-muted);
+    pointer-events: none;
+    transition: color var(--transition-fast);
+}
+.auth-input-wrap:focus-within .auth-input-icon { color: var(--accent-light); }
+
+/* دکمه‌ی نمایش/پنهان‌کردن رمز */
+.auth-password-toggle {
+    position: absolute;
+    top: 50%; left: 6px;
+    transform: translateY(-50%);
+    display: grid; place-items: center;
+    width: 36px; height: 36px;
+    border: none; border-radius: 10px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color var(--transition-fast), background var(--transition-fast);
+}
+.auth-password-toggle:hover { color: var(--accent-light); background: rgba(124, 58, 237, 0.08); }
+.auth-password-toggle .auth-eye-off { display: none; }
+.auth-password-toggle.active .auth-eye { display: none; }
+.auth-password-toggle.active .auth-eye-off { display: block; }
+
+/* ---------------------------------- خطاها ---------------------------------- */
+.auth-errors { margin-bottom: 18px; border-radius: 12px; }
+
+/* ---------------------------------- دکمه‌ی ارسال ---------------------------------- */
+.auth-submit {
+    position: relative;
+    width: 100%;
+    justify-content: center; /* متن دکمه وسط باشد (.btn پایه inline-flex بدون justify-content است) */
+    margin-top: 6px;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.35);
+    animation: authBtnGlow 3.2s ease-in-out infinite;
+    transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+.auth-submit:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(124, 58, 237, 0.5); }
+.auth-submit:active { transform: translateY(0) scale(0.98); }
+
+/* موج نور شیب‌دار روی دکمه */
+.auth-submit::after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 60%;
+    left: 0;
+    background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: translateX(-250%);
+    animation: authBtnShine 3.2s ease-in-out infinite;
+}
+@keyframes authBtnShine {
+    0% { transform: translateX(-250%); }
+    45% { transform: translateX(300%); }
+    100% { transform: translateX(300%); }
+}
+@keyframes authBtnGlow {
+    0%, 100% { box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3); }
+    50% { box-shadow: 0 10px 44px rgba(124, 58, 237, 0.55); }
+}
+
+/* ---------------------------------- قدرت رمز ---------------------------------- */
+.auth-strength { display: flex; align-items: center; gap: 12px; margin: -8px 0 16px; padding: 0 2px; }
+.auth-strength[hidden] { display: none; }
+.auth-strength-bars { display: flex; gap: 5px; flex: 1; }
+.auth-strength-bars span { height: 4px; flex: 1; border-radius: 99px; background: var(--border-light); transition: background 0.3s ease; }
+.auth-strength-text { font-size: 0.75rem; color: var(--text-muted); transition: color 0.3s ease; min-width: 44px; text-align: left; }
+.auth-strength.strength-1 .auth-strength-bars span:nth-child(1) { background: #ef4444; }
+.auth-strength.strength-2 .auth-strength-bars span:nth-child(-n+2) { background: #f59e0b; }
+.auth-strength.strength-3 .auth-strength-bars span { background: var(--success); }
+.auth-strength.strength-1 .auth-strength-text { color: #ef4444; }
+.auth-strength.strength-2 .auth-strength-text { color: #f59e0b; }
+.auth-strength.strength-3 .auth-strength-text { color: var(--success); }
+
+/* ---------------------------------- پایین کارت ---------------------------------- */
+.auth-switch { text-align: center; margin: 22px 0 0; color: var(--text-secondary); font-size: 0.88rem; }
+.auth-switch a { color: var(--accent-light); font-weight: 600; text-decoration: none; transition: color var(--transition-fast); }
+.auth-switch a:hover { color: var(--accent); text-decoration: underline; }
+
+.auth-back { display: block; text-align: center; margin-top: 14px; color: var(--text-muted); font-size: 0.82rem; text-decoration: none; transition: color var(--transition-fast); }
+.auth-back:hover { color: var(--text-secondary); }
+
+/* ---------------------------------- ریسپانسیو ---------------------------------- */
+@media (max-width: 768px) {
+    /* اُرب‌ها در موبایل: کوچک‌تر و کم‌رنگ‌تر (blur گران است) — .auth-section overflow:hidden دارد پس اسکرول افقی نمی‌سازند */
+    .auth-orb-1 { width: 340px; height: 340px; top: -18%; right: -30%; }
+    .auth-orb-2 { width: 300px; height: 300px; bottom: -22%; left: -35%; }
+    .auth-orb-3 { width: 200px; height: 200px; }
+    .auth-orb { opacity: 0.22; }
+    .auth-grid { background-size: 26px 26px; }
+}
+@media (max-width: 520px) {
+    .auth-section { padding: 48px 16px; }
+    .auth-card { padding: 32px 22px; }
+    .auth-title { font-size: 1.4rem; }
+    /* دکمه‌ی نمایش رمز — هدف لمس بزرگ‌تر در موبایل */
+    .auth-password-toggle { width: 40px; height: 40px; }
+}
+
+/* ---------------------------------- دسترس‌پذیری ---------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .auth-orb, .auth-grid, .auth-submit, .auth-submit::after, .auth-card, .auth-shake { animation: none !important; }
+    .auth-card-glow { display: none; }
+    .auth-submit { box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3); }
+    .auth-card { animation: none; }
+}
+@media (hover: none) {
+    .auth-submit:hover { transform: none; box-shadow: 0 10px 30px rgba(124, 58, 237, 0.35); }
+}

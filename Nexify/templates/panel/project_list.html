@@ -1,0 +1,63 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}پروژه‌ها{% endblock %}
+
+{% block content %}
+<section class="panel-section">
+    <div class="panel-page-head panel-page-head-row">
+        <div>
+            <h1>پروژه‌ها / محصولات</h1>
+            <p>نمونه‌کارها و سرویس‌های قابل نمایش در سایت.</p>
+        </div>
+        <a href="{% url 'panel:project_new' %}" class="btn btn-primary">+ پروژه جدید</a>
+    </div>
+
+    <form method="get" class="panel-search">
+        <input type="search" name="q" value="{{ q }}" placeholder="جستجو در عنوان یا برچسب…" class="form-input">
+        <button type="submit" class="btn btn-outline">جستجو</button>
+    </form>
+
+    <div class="panel-card">
+        {% if projects %}
+        <table class="panel-table">
+            <thead>
+                <tr>
+                    <th>عنوان</th>
+                    <th>برچسب</th>
+                    <th>ترتیب</th>
+                    <th>وضعیت</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in projects %}
+                <tr>
+                    <td><a href="{% url 'panel:project_edit' p.pk %}" class="panel-title-link">{{ p.title }}</a><small class="panel-cell-sub">{{ p.category_label }}</small></td>
+                    <td>{{ p.categories|truncatechars:30 }}</td>
+                    <td>{{ p.order }}</td>
+                    <td>
+                        {% if p.is_published %}
+                        <span class="panel-badge badge-done">در سایت</span>
+                        {% else %}
+                        <span class="panel-badge badge-new">پنهان</span>
+                        {% endif %}
+                    </td>
+                    <td class="panel-actions">
+                        <a href="{% url 'panel:project_edit' p.pk %}" class="btn btn-mini">ویرایش</a>
+                        <a href="{% url 'panel:project_toggle' p.pk %}" class="btn btn-mini btn-mini-ghost">
+                            {% if p.is_published %}پنهان{% else %}نمایش{% endif %}
+                        </a>
+                        <form method="post" action="{% url 'panel:project_delete' p.pk %}" class="inline-form confirm-form" data-confirm="حذف این پروژه؟">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-mini btn-mini-danger">حذف</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="panel-empty">پروژه‌ای پیدا نشد.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

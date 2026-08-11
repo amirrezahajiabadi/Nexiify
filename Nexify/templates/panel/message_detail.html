@@ -1,0 +1,44 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}پیام {{ msg.name }}{% endblock %}
+
+{% block content %}
+<section class="panel-section panel-section-narrow">
+    <div class="panel-page-head">
+        <h1>جزئیات درخواست</h1>
+        <a href="{% url 'panel:message_list' %}" class="panel-link">← بازگشت به لیست</a>
+    </div>
+
+    <div class="panel-card">
+        <div class="message-meta">
+            <div class="panel-badge badge-{{ msg.status }}">{{ msg.get_status_display }}</div>
+            <span>{{ msg.created_at|date:"Y/m/d H:i" }}</span>
+        </div>
+
+        <dl class="panel-dl">
+            <dt>نام و نام خانوادگی</dt><dd>{{ msg.name }}</dd>
+            <dt>ایمیل</dt><dd><a href="mailto:{{ msg.email }}" dir="ltr" style="direction:ltr; display:inline-block">{{ msg.email }}</a></dd>
+            <dt>نوع درخواست</dt><dd>{{ msg.get_request_type_display }}</dd>
+            <dt>روش تماس</dt>
+            <dd>{% if msg.contact_method == 'telegram' %}تلگرام: <span dir="ltr">{{ msg.telegram_id }}</span>{% else %}تلفن: <span dir="ltr">{{ msg.phone }}</span>{% endif %}</dd>
+            {% if msg.subject %}<dt>موضوع</dt><dd>{{ msg.subject }}</dd>{% endif %}
+            <dt>توضیحات</dt><dd class="message-body">{{ msg.message|linebreaksbr }}</dd>
+        </dl>
+
+        <div class="panel-form-actions">
+            {% if msg.status != 'done' %}
+            <a href="{% url 'panel:message_status' msg.pk 'done' %}?next={% url 'panel:message_detail' msg.pk %}" class="btn btn-primary">انجام شد</a>
+            {% endif %}
+            {% if msg.status != 'in_progress' %}
+            <a href="{% url 'panel:message_status' msg.pk 'in_progress' %}?next={% url 'panel:message_detail' msg.pk %}" class="btn btn-outline">در حال بررسی</a>
+            {% endif %}
+            {% if msg.status != 'new' %}
+            <a href="{% url 'panel:message_status' msg.pk 'new' %}?next={% url 'panel:message_detail' msg.pk %}" class="btn btn-outline">بازگشت به جدید</a>
+            {% endif %}
+            <form method="post" action="{% url 'panel:message_delete' msg.pk %}" class="inline-form confirm-form" data-confirm="حذف این درخواست؟">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline">حذف</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
