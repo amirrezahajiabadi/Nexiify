@@ -83,7 +83,7 @@ Nexify/
 │   │                                # هر اپ یک tests.py دارد — ۸۷ تست pytest (فاز ۵-آماده)
 │   ├── __init__.py
 │   ├── core/                        # صفحه‌ی اصلی، درباره، خدمات + دستور seed_demo
-│   │   ├── icons.py                 # ⭐ منبع واحد آیکون‌های SVG (فاز U2): نگاشت ایموجی/کلید → SVG stroke-based (viewBox 24، currentColor) + ستاره‌ی پُر/خالی و گیومه (U5)
+│   │   ├── icons.py                 # ⭐ منبع واحد آیکون‌های SVG (فاز U2): نگاشت ایموجی/کلید → SVG stroke-based (viewBox 24، currentColor) + ستاره (U5) + صنایع (U6: 🛒🏦🏥🚚🎓🏭)
 │   │   └── templatetags/core_extras.py  # فیلتر icon_svg — {{ "📞"|icon_svg }} (mark_safe؛ برای آیکون دیتابیس: {{ post.icon|icon_svg }}) + stars (U5: {{ t.rating|stars }} → ردیف ستاره SVG) + fa_num (ارقام فارسی)
 │   │   ├── models.py                # (فعلاً خالی — فقط منبع دستور seed)
 │   │   ├── views.py                 # index، about، services
@@ -224,7 +224,7 @@ Nexify/
 | `/projects/` | `apps.projects.views.project_list` | `projects:list` | نمونه‌کارها (از DB) |
 | `/blog/` | `apps.blog.views.blog_list` | `blog:list` | لیست مقالات |
 | `/blog/<slug>/` | `apps.blog.views.blog_detail` | `blog:detail` | جزئیات مقاله |
-| `/contact/` | `apps.contact.views.contact` | `contact:index` | فرم تماس + FAQ |
+| `/contact/` | `apps.contact.views.contact` | `contact:index` | فرم تماس + FAQ — پری‌سلکت با `?type=` (مقادیر معتبر) و `?subject=` (U6: از ویجت مسیر انتخاب صفحه‌ی اصلی) |
 | `/accounts/login/` | `apps.accounts.views.NexifyLoginView` | `accounts:login` | ورود (مدیریت خودکار `?next=`) |
 | `/accounts/register/` | `apps.accounts.views.register` | `accounts:register` | ثبت‌نام + ورود خودکار |
 | `/accounts/logout/` | `apps.accounts.views.logout_view` | `accounts:logout` | خروج — فقط POST (CSRF-safe) |
@@ -471,7 +471,7 @@ python manage.py collectstatic --noinput
 python manage.py check
 python manage.py check --deploy
 
-# ⭐ اجرای تست‌ها (۹۷ تست)
+# ⭐ اجرای تست‌ها (۹۹ تست)
 pytest -v
 pytest apps/contact -v                # فقط اپ تماس
 pytest apps/accounts -v               # فقط اپ احراز هویت
@@ -538,7 +538,7 @@ python ../.agents/skills/ui-ux-pro-max/scripts/search.py "responsive layout" --s
 
 **انجام شده در فازهای قبل**: `_headers` (Netlify/Cloudflare)، `nginx-security.conf`، `production.py` کامل، `requirements-prod.txt`، `.env.example`.
 
-**انجام شده**: ✅ `pytest` (۹۷ تست) + ✅ `pytest.ini` + ✅ `requirements-dev.txt` + ✅ `.github/workflows/ci.yml`.
+**انجام شده**: ✅ `pytest` (۹۹ تست) + ✅ `pytest.ini` + ✅ `requirements-dev.txt` + ✅ `.github/workflows/ci.yml`.
 
 **CI (`.github/workflows/ci.yml`)** — روی هر push/PR به `main`، ماتریس Python 3.12 و 3.13، با کش pip (`requirements*.txt`):
 1. نصب وابستگی‌ها: `pip install -r requirements.txt -r requirements-dev.txt`
@@ -611,7 +611,7 @@ git log --oneline -5
 | ۴.۸ | **پنل ادمین سفارشی** (اپ `panel` — داشبورد، انتشار مقاله/پروژه، مدیریت سفارش‌ها با وضعیت، ویرایش متن‌های سایت بدون کد، چند ادمین) | ✅ |
 | ۴.۹ | **ممیزی UI/UX با اسکیل `ui-ux-pro-max`** — کنتراست شکست‌خورده‌ی `--text-muted`، ایموجی به‌جای آیکون، label بدون اتصال، مودال بدون focus-trap، تارگت لمس فوتر، preload فونت بیهوده + نقشه‌ی راه `UIUX-ROADMAP.md` (فازهای U1→U8) | ✅ (تحلیل) |
 | ۵ | دیپلوی (Docker، Gunicorn، Nginx، PostgreSQL، CI/CD) | ⏳ **بعدی** |
-| ۴.۱۰ | **بهبود UI/UX** — اجرای فازهای `UIUX-ROADMAP.md` (U1 کنتراست/فرم‌ها → U8 تایپوگرافی) | 🟡 U1+U2+U3+U4+U5 ✅ (U5: سکشن Social Proof — مدل Testimonial + آمار واقعی از دیتابیس + مارکی لوگو + ۳ کارت نظر + CRUD در پنل — ۹۷ تست) — بعدی U6 |
+| ۴.۱۰ | **بهبود UI/UX** — اجرای فازهای `UIUX-ROADMAP.md` (U1 کنتراست/فرم‌ها → U8 تایپوگرافی) | 🟡 U1+U2+U3+U4+U5+U6 ✅ (U6: سکشن «راه‌حل بر اساس صنعت» ۶ کارت + ویجت مسیر انتخاب «من یک...» با اتصال پری‌سلکت به فرم تماس — ۹۹ تست) — بعدی U7 |
 
 > **ریسپانسیو — خلاصه‌ی فازهای انجام‌شده (جزئیات کامل در `RESPONSIVE-ROADMAP.md`):**
 > - **R1 پایه/ایمنی**: `100dvh` منوی موبایل، safe-area ناچ، `tap-highlight` حذف، `touch-action: manipulation`، `overflow-x` بدن.

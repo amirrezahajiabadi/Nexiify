@@ -141,6 +141,21 @@ def test_get_renders_form_and_context(client):
     assert b"csrfmiddlewaretoken" in response.content
 
 
+@pytest.mark.django_db
+def test_get_preselects_type_and_subject_from_query(client):
+    """فاز U6: ویجت مسیر انتخاب با ?type= و ?subject= فرم را پری‌سلکت می‌کند."""
+    response = client.get(reverse("contact:index") + "?type=agent-ai&subject=استارتاپ — Agent هوشمند بسازم")
+    assert response.status_code == 200
+    form = response.context["form"]
+    assert form.initial.get("request_type") == "agent-ai"
+    assert form.initial.get("subject") == "استارتاپ — Agent هوشمند بسازم"
+
+    # مقدار نامعتبر type نادیده گرفته می‌شود
+    response2 = client.get(reverse("contact:index") + "?type=invalid-type&subject=x")
+    assert response2.context["form"].initial.get("request_type") is None
+    assert response2.context["form"].initial.get("subject") == "x"
+
+
 # ===========================================================================
 # دسترس‌پذیری (فاز U1): اتصال label ↔ input برای screen reader
 # ===========================================================================

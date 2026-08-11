@@ -195,6 +195,33 @@ _QUOTE = (
     '<path d="M3 21c3-1 5-3.5 5-7V7H2v7h4a6 6 0 0 1-3 7z"></path>'
     '<path d="M15 21c3-1 5-3.5 5-7V7h-6v7h4a6 6 0 0 1-3 7z"></path>'
 )
+# صنایع (فاز U6)
+_CART = (
+    '<circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle>'
+    '<path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>'
+)
+_LANDMARK = (
+    '<line x1="3" y1="22" x2="21" y2="22"></line>'
+    '<line x1="6" y1="18" x2="6" y2="11"></line><line x1="10" y1="18" x2="10" y2="11"></line>'
+    '<line x1="14" y1="18" x2="14" y2="11"></line><line x1="18" y1="18" x2="18" y2="11"></line>'
+    '<polygon points="12 2 20 7 4 7"></polygon>'
+)
+_CROSS = (
+    '<path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h5v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"></path>'
+)
+_TRUCK = (
+    '<path d="M10 17h4V5H2v12h3"></path>'
+    '<path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"></path>'
+    '<circle cx="7.5" cy="17.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle>'
+)
+_GRADUATION = (
+    '<path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>'
+    '<path d="M6 12v5c3 3 9 3 12 0v-5"></path>'
+)
+_FACTORY = (
+    '<path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>'
+    '<path d="M17 18h1"></path><path d="M12 18h1"></path><path d="M7 18h1"></path>'
+)
 
 # ---------------------------------------------------------------- نگاشت
 ICON_PATHS = {
@@ -215,6 +242,8 @@ ICON_PATHS = {
     "👥": _USERS, "▦": _GRID, "؟": _HELP,
     # نظرات مشتریان
     "⭐": _STAR, "☆": _STAR, "💬": _MESSAGE, "❝": _QUOTE,
+    # صنایع (U6)
+    "🛒": _CART, "🏦": _LANDMARK, "🏥": _CROSS, "🚚": _TRUCK, "🎓": _GRADUATION, "🏭": _FACTORY,
 }
 
 DEFAULT_KEY = "⚡"

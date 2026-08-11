@@ -129,3 +129,71 @@ function createParticle() {
 }
 const isMobile = window.innerWidth < 768;
 if (!reducedMotion) { for (let i = 0; i < (isMobile ? 12 : 25); i++) { createParticle(); } }
+
+/* ============================================================
+   فاز U6 — ویجت مسیر انتخاب «من یک...»
+   دو مرحله: نوع کسب‌وکار + نیاز → مسیر پیشنهادی + لینک تماس با پری‌سلکت
+   CSP-safe: فقط textContent / classList — بدون innerHTML
+   ============================================================ */
+(function () {
+    const card = document.querySelector('.path-card');
+    if (!card) return;
+    const contactUrl = card.dataset.contactUrl || '/contact/';
+    const resultText = card.querySelector('.path-result-text');
+    const resultCta = card.querySelector('.path-result-cta');
+
+    const WHO_LABELS = {
+        store: 'فروشگاه آنلاین',
+        startup: 'استارتاپ',
+        company: 'شرکت و سازمان',
+        clinic: 'کلینیک و سلامت'
+    };
+    const WANT = {
+        site:    { label: 'سایت و فروشگاه بسازم', type: 'web-design' },
+        agent:   { label: 'Agent هوشمند بسازم',   type: 'agent-ai' },
+        mlops:   { label: 'اتوماسیون و MLOps',    type: 'mlops' },
+        consult: { label: 'مشاوره بگیرم',         type: 'consulting' }
+    };
+    const TYPE_LABELS = {
+        'web-design': 'طراحی سایت',
+        'agent-ai': 'ساخت Agent AI',
+        'mlops': 'MLOps و استقرار مدل',
+        'consulting': 'مشاوره رایگان'
+    };
+
+    let who = null, want = null;
+
+    function setPills() {
+        card.querySelectorAll('.path-option').forEach(function (btn) {
+            const active = (btn.dataset.who && btn.dataset.who === who) ||
+                           (btn.dataset.want && btn.dataset.want === want);
+            btn.classList.toggle('selected', active);
+            btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+    }
+
+    function render() {
+        setPills();
+        if (!who || !want) return;
+        const wantMeta = WANT[want];
+        const params = new URLSearchParams({ type: wantMeta.type, subject: WHO_LABELS[who] + ' — ' + wantMeta.label });
+        resultCta.href = contactUrl + '?' + params.toString();
+        resultCta.hidden = false;
+
+        /* ساخت متن بدون innerHTML (CSP-safe) */
+        resultText.textContent = '';
+        resultText.appendChild(document.createTextNode('عالی! برای «' + WHO_LABELS[who] + '» که می‌خواهد «' + wantMeta.label + '»، بهترین مسیر '));
+        const strong = document.createElement('strong');
+        strong.textContent = TYPE_LABELS[wantMeta.type];
+        resultText.appendChild(strong);
+        resultText.appendChild(document.createTextNode(' است. همین حالا درخواست بده تا رایگان مشورت کنیم.'));
+    }
+
+    card.querySelectorAll('.path-option').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            if (btn.dataset.who) who = btn.dataset.who;
+            if (btn.dataset.want) want = btn.dataset.want;
+            render();
+        });
+    });
+})();

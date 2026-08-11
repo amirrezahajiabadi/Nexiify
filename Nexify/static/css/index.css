@@ -314,15 +314,125 @@
 .testimonial-name { font-weight: 600; font-size: 0.92rem; color: var(--text); }
 .testimonial-company { font-size: 0.78rem; color: var(--text-muted); }
 
+/* ==================== راه‌حل بر اساس صنعت (فاز U6) ====================
+   ۶ کارت صنعت با رنگ هویتی — افزوده‌شده به Bento Grid، نه جایگزین
+   ================================================================= */
+.industry-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.industry-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 26px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.industry-card:hover { transform: translateY(-6px); }
+.industry-icon {
+    width: 52px;
+    height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    color: #fff;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.industry-icon .icon-svg { width: 24px; height: 24px; }
+.industry-card:hover .industry-icon { transform: translateY(-3px) scale(1.05); }
+.industry-body { display: flex; flex-direction: column; gap: 6px; }
+.industry-title { font-size: 1.15rem; font-weight: 600; }
+.industry-desc { font-size: 0.85rem; line-height: 1.9; color: var(--text-muted); }
+.industry-link {
+    margin-top: auto;
+    font-size: 0.83rem;
+    font-weight: 500;
+    opacity: 0.75;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.industry-card:hover .industry-link { opacity: 1; transform: translateX(-4px); }
+
+/* رنگ هویتی هر صنعت — با --ic تنظیم می‌شود */
+.industry-blue   { --ic: #3b82f6; }
+.industry-green  { --ic: #10b981; }
+.industry-orange { --ic: #f97316; }
+.industry-amber  { --ic: #f59e0b; }
+.industry-purple { --ic: #8b5cf6; }
+.industry-red    { --ic: #ef4444; }
+.industry-icon { background: linear-gradient(135deg, var(--ic), color-mix(in srgb, var(--ic) 45%, #fff)); }
+.industry-card:hover { border-color: color-mix(in srgb, var(--ic) 55%, var(--border)); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22), 0 0 0 1px color-mix(in srgb, var(--ic) 30%, transparent); }
+.industry-link { color: var(--ic); }
+
+/* ==================== مسیر انتخاب «من یک...» (فاز U6) ====================
+   ویجت دو مرحله‌ای — کاربر را به فرم تماس با پارامترهای پری‌سلکت هدایت می‌کند
+   ======================================================================== */
+.path-card {
+    padding: 36px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+.path-step { display: flex; flex-direction: column; gap: 14px; }
+.path-step-label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.3px; }
+.path-options { display: flex; flex-wrap: wrap; gap: 12px; }
+.path-option {
+    min-height: 44px;
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: 1px solid var(--border-light);
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+.path-option:hover { border-color: rgba(124, 58, 237, 0.5); color: var(--text); }
+.path-option:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.path-option.selected {
+    border-color: var(--accent);
+    background: rgba(124, 58, 237, 0.1);
+    color: var(--accent-light);
+    box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.3), 0 6px 18px rgba(124, 58, 237, 0.15);
+}
+[data-theme="light"] .path-option.selected { color: var(--accent); }
+.path-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+}
+.path-result-text { margin: 0; font-size: 0.95rem; line-height: 1.9; color: var(--text-secondary); font-weight: 300; }
+.path-result-text strong { color: var(--accent-light); font-weight: 600; }
+[data-theme="light"] .path-result-text strong { color: var(--accent); }
+.path-result-cta { flex-shrink: 0; }
+
+@media (max-width:1024px) { .industry-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width:768px) { .services-bento{grid-template-columns:1fr;} .service-card-feature{grid-column:auto;grid-row:auto;} .stats-row{gap:40px;} .stat-value{font-size:2.5rem;} .hero-title{font-size:2rem;} .hero-subtitle{font-size:1rem;} /* پس‌زمینه‌های متحرک در موبایل: کم‌رنگ‌تر (باتری/پرفورمنس) */ .bg-gradient-mesh{opacity:0.18;} #neuralCanvas{opacity:0.3;} .bg-particles{opacity:0.35;} }
 @media (max-width:768px) {
     .testimonials-grid { grid-template-columns: 1fr; }
+    .industry-grid { grid-template-columns: 1fr; }
+    .path-card { padding: 26px; }
 }
-@media (max-width:480px) { .services-bento{grid-template-columns:1fr;} .service-card{padding:20px;} .stats-row{gap:24px;} .stat-value{font-size:2rem;} .stat-item{min-width:120px;} .hero-title{font-size:1.85rem;} .hero-subtitle{margin-bottom:40px;} }
+@media (max-width:480px) { .services-bento{grid-template-columns:1fr;} .service-card{padding:20px;} .stats-row{gap:24px;} .stat-value{font-size:2rem;} .stat-item{min-width:120px;} .hero-title{font-size:1.85rem;} .hero-subtitle{margin-bottom:40px;} .path-option{padding:10px 16px;} }
 
 /* reduced-motion: مارکی ثابت (بدون حرکت) — قانون طلایی پروژه */
 @media (prefers-reduced-motion: reduce) {
     .client-marquee-track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; }
     .testimonial-card { transition: none; }
     .testimonial-card::before { display: none; }
+    .industry-card { transition: none; }
+    .industry-card:hover { transform: none; }
+    .industry-card:hover .industry-icon { transform: none; }
+    .path-option { transition: none; }
 }

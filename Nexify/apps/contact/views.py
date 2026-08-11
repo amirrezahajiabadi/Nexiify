@@ -37,6 +37,15 @@ def contact(request):
     ]
     context = {"faqs": faqs, "options": options}
 
+    # فاز U6: پری‌سلکت از مسیر انتخاب (?type=agent-ai&subject=...) — ویجت «من یک...» در صفحه‌ی اصلی
+    initial = {}
+    req_type = (request.GET.get("type") or "").strip()
+    if req_type in dict(ContactMessage.REQUEST_TYPES):
+        initial["request_type"] = req_type
+    subject = (request.GET.get("subject") or "").strip()
+    if subject:
+        initial["subject"] = subject[:200]
+
     if request.method == "POST":
         form = ContactForm(request.POST)
 
@@ -55,7 +64,7 @@ def contact(request):
         context["form"] = form
         return render(request, "contact.html", context)
 
-    context["form"] = ContactForm()
+    context["form"] = ContactForm(initial=initial)
     return render(request, "contact.html", context)
 
 

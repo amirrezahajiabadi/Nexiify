@@ -72,6 +72,21 @@ def test_index_renders_real_stats_and_testimonials(client):
 
 
 @pytest.mark.django_db
+def test_index_has_industry_solutions_and_path_select(client):
+    """فاز U6: سکشن صنایع + ویجت مسیر انتخاب در صفحه‌ی اصلی."""
+    content = client.get(reverse("core:index")).content.decode("utf-8")
+    # ۶ کارت صنعت
+    assert content.count("industry-card") == 6
+    assert "فینتک" in content and "سلامت" in content and "فروشگاه آنلاین" in content
+    # ویجت مسیر انتخاب
+    assert "path-card" in content
+    assert "من یک" in content and "و می‌خواهم" in content
+    assert "دریافت مشاوره رایگان" in content
+    # آیکون‌های صنعت SVG هستند نه ایموجی
+    assert "industry-icon" in content
+
+
+@pytest.mark.django_db
 def test_index_hides_social_proof_when_empty(client):
     content = client.get(reverse("core:index")).content.decode("utf-8")
     # بدون داده، سکشن نظرات رندر نمی‌شود و آمار صفر است
