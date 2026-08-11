@@ -95,6 +95,8 @@ function openModalFromCard(card) {
     const children = [closeBtn];
     if (card.dataset.cover) {
         const cover = el('img', 'modal-cover');
+        /* U7: مودال فقط درخواستی باز می‌شود — تصویر lazy بارگذاری شود */
+        cover.loading = 'lazy';
         cover.src = card.dataset.cover;
         cover.alt = card.dataset.title;
         children.push(cover);

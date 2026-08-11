@@ -357,14 +357,15 @@ urlpatterns = [
 - `{% block content %}` — محتوای اصلی
 - `{% block extra_js %}` — JS صفحه
 
-**ترتیب لود در پایین body**: Lenis از CDN (defer) ← `js/main.js` (defer) ← اسکریپت صفحه.
+**ترتیب لود در پایین body**: `js/vendor/lenis.min.js` (self-hosted، فاز U7 — بدون CDN) (defer) ← `js/main.js` (defer) ← اسکریپت صفحه.
 
 **CSP متا در head** همه‌ی صفحات (مهم، دست‌نزنید):
 ```
-default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'
+default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'
 ```
+(فاز U7: `https://cdn.jsdelivr.net` از script-src حذف شد — Lenis self-host شد.)
 
-**پیش‌لود فونت‌ها**: دو فونت Variable با `as="font"` در head.
+**فونت‌ها (فاز U7)**: `@font-face` و preload هر دو در `partials/fonts.html` با URL نسخه‌دار `{% static %}` — دقیقاً منطبق → هر فونت یک بار دانلود می‌شود (در توسعه `?v=<mtime>`، در تولید نام هش‌شده). از `style.css` حذف شد.
 
 ### قوانین مهم تمپلیت
 - همه‌ی فایل‌های استاتیک با `{% static 'css/...' %}` و `{% static 'js/...' %}` ارجاع می‌شوند (اول `{% load static %}`).
@@ -611,7 +612,7 @@ git log --oneline -5
 | ۴.۸ | **پنل ادمین سفارشی** (اپ `panel` — داشبورد، انتشار مقاله/پروژه، مدیریت سفارش‌ها با وضعیت، ویرایش متن‌های سایت بدون کد، چند ادمین) | ✅ |
 | ۴.۹ | **ممیزی UI/UX با اسکیل `ui-ux-pro-max`** — کنتراست شکست‌خورده‌ی `--text-muted`، ایموجی به‌جای آیکون، label بدون اتصال، مودال بدون focus-trap، تارگت لمس فوتر، preload فونت بیهوده + نقشه‌ی راه `UIUX-ROADMAP.md` (فازهای U1→U8) | ✅ (تحلیل) |
 | ۵ | دیپلوی (Docker، Gunicorn، Nginx، PostgreSQL، CI/CD) | ⏳ **بعدی** |
-| ۴.۱۰ | **بهبود UI/UX** — اجرای فازهای `UIUX-ROADMAP.md` (U1 کنتراست/فرم‌ها → U8 تایپوگرافی) | 🟡 U1+U2+U3+U4+U5+U6 ✅ (U6: سکشن «راه‌حل بر اساس صنعت» ۶ کارت + ویجت مسیر انتخاب «من یک...» با اتصال پری‌سلکت به فرم تماس — ۹۹ تست) — بعدی U7 |
+| ۴.۱۰ | **بهبود UI/UX** — اجرای فازهای `UIUX-ROADMAP.md` (U1 کنتراست/فرم‌ها → U8 تایپوگرافی) | 🟡 U1+U2+U3+U4+U5+U6+U7 ✅ (U7: رفع دانلود دوبل فونت با partial نسخه‌دار + self-host Lenis + lazy مودال — کنسول صفر هشدار — ۹۹ تست) — U8 اختیاری |
 
 > **ریسپانسیو — خلاصه‌ی فازهای انجام‌شده (جزئیات کامل در `RESPONSIVE-ROADMAP.md`):**
 > - **R1 پایه/ایمنی**: `100dvh` منوی موبایل، safe-area ناچ، `tap-highlight` حذف، `touch-action: manipulation`، `overflow-x` بدن.

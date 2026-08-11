@@ -1,0 +1,29 @@
+{% load static %}
+{% comment %}
+    فونت‌های متغیر self-hosted (فاز U7 — رفع دانلود دوبل):
+    - preload با همان URL نسخه‌دار {% static %} که @font-face استفاده می‌کند → «یک دانلود به‌جای دو تا».
+    - @font-face اینجا اعلام می‌شود تا با preload تطبیق داشته باشد
+      (در توسعه: ?v=<mtime> از MtimeStaticFilesStorage؛ در تولید: نام هش‌شده توسط whitenoise).
+    - از style.css حذف شد تا اعلام تکراری نباشد (فقط base.html و base_panel.html این partial را دارند).
+{% endcomment %}
+<link rel="preload" href="{% static 'fonts/Vazirmatn-Variable.woff2' %}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{% static 'fonts/JetBrainsMono-Variable.woff2' %}" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url("{% static 'fonts/Vazirmatn-Variable.woff2' %}") format('woff2-variations');
+    src: url("{% static 'fonts/Vazirmatn-Variable.woff2' %}") format('woff2') tech('variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url("{% static 'fonts/JetBrainsMono-Variable.woff2' %}") format('woff2-variations');
+    src: url("{% static 'fonts/JetBrainsMono-Variable.woff2' %}") format('woff2') tech('variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+</style>

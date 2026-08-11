@@ -3,28 +3,11 @@
    Version: 5.2 - Final
    ============================================================ */
 
-/* ==================== Self-hosted Variable Fonts ====================
-   Vazirmatn و JetBrains Mono به‌صورت محلی (فاز ۳: حذف Google Fonts)
-   هر کدام یک فایل woff2 متغیر برای تمام وزن‌ها هستند.
-   font-display: swap → متن بلافاصله با فونت جایگزین رندر می‌شود
-   ==================================================================== */
-@font-face {
-    font-family: 'Vazirmatn';
-    src: url('../fonts/Vazirmatn-Variable.woff2') format('woff2-variations');
-    src: url('../fonts/Vazirmatn-Variable.woff2') format('woff2') tech('variations');
-    font-weight: 100 900;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'JetBrains Mono';
-    src: url('../fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');
-    src: url('../fonts/JetBrainsMono-Variable.woff2') format('woff2') tech('variations');
-    font-weight: 100 900;
-    font-style: normal;
-    font-display: swap;
-}
+/* ==================== Variable Fonts ====================
+   Vazirmatn و JetBrains Mono محلی هستند (فاز ۳: حذف Google Fonts).
+   اعلام @font-face به `partials/fonts.html` منتقل شد (فاز U7) تا URL آن
+   دقیقاً با `<link rel="preload">` نسخه‌دار مطابقت داشته باشد — یک دانلود نه دو تا.
+   ======================================================= */
 
 :root {
     --bg: #0a0a0a;
