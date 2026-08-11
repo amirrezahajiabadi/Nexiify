@@ -2,7 +2,7 @@
 
 وب‌سایت معرفی و نمونه‌کار Nexify؛ **فارسی و راست‌چین (RTL)** با تم تیره/روشن — اکنون با بک‌اند **Django**.
 
-> 📖 فاز ۰ تا ۴ از `ROADMAP.md` انجام شده؛ فاز ۵ (دیپلوی) در پیش است.
+> 📖 فازهای ۰ تا ۴.x از `ROADMAP.md` انجام شده؛ فاز ۵ (دیپلوی) در پیش است. وضعیت زنده و جزئیات فنی در `AI-CONTEXT.md`.
 
 ---
 
@@ -20,8 +20,8 @@ python manage.py seed_demo          # ۶ پروژه + ۶ مقاله + ۶ سوا�
 python manage.py createsuperuser    # برای ورود به /admin/
 
 # ۳) اجرای سرور
-python manage.py runserver
-# → http://127.0.0.1:8000   (ادمین: /admin/)
+python manage.py runserver 127.0.0.1:8471
+# → http://127.0.0.1:8471   (ادمین: /admin/)
 ```
 
 ---
@@ -31,7 +31,7 @@ python manage.py runserver
 ```bash
 cd Nexify
 python -m pip install -r requirements-dev.txt   # pytest + pytest-django
-pytest -v                                        # ۳۹ تست
+pytest -v                                        # ۹۴ تست
 ```
 
 پوشش تست‌ها:
@@ -42,6 +42,7 @@ pytest -v                                        # ۳۹ تست
 - **مدل‌ها**: Project / BlogPost / ContactMessage / FAQ (پیش‌فرض‌ها، مرتب‌سازی، استرینگ، slug یکتا)
 - **ویوها**: فیلتر `is_published` در پروژه‌ها/مقالات، 404 برای اسلاگ ناموجود یا پیش‌نویس
 - **smoke تست**: همه‌ی مسیرهای عمومی ۲۰۰
+- **پنل ادمین + احراز هویت**: انتشار/حذف محتوا، مدیریت پیام‌ها، آمار بازدید، هانی‌پات دولایه‌ی ثبت‌نام، بلاک ریدایرکت خارجی
 
 ### CI (GitHub Actions)
 
@@ -59,7 +60,9 @@ Python 3.12 و 3.13 → نصب وابستگی‌ها → `manage.py check` → `
 | `/about/` | درباره ما |
 | `/blog/` و `/blog/<slug>/` | مقالات + جزئیات (دیتابیس) |
 | `/contact/` | تماس (فرم امن) |
+| `/accounts/login/` `/register/` `/logout/` | ورود / ثبت‌نام / خروج |
 | `/admin/` | پنل مدیریت جنگو |
+| `/panel/` | پنل ادمین سفارشی (داشبورد + آمار بازدید) — فقط staff |
 
 ---
 
@@ -81,20 +84,25 @@ Nexify/
 │   │   └── production.py   # تولید (PostgreSQL، HTTPS، env)
 │   ├── urls.py  wsgi.py  asgi.py
 ├── apps/
-│   ├── core/               # خانه، درباره، خدمات + دستور seed_demo
+│   ├── core/               # خانه، درباره، خدمات + آیکون‌های SVG + دستور seed_demo
 │   ├── projects/           # مدل Project
 │   ├── blog/               # مدل BlogPost
-│   └── contact/            # مدل‌های ContactMessage + FAQ و فرم امن
+│   ├── contact/            # مدل‌های ContactMessage + FAQ و فرم امن
+│   ├── accounts/           # ورود/ثبت‌نام/خروج (هانی‌پات دولایه)
+│   └── panel/              # پنل ادمین سفارشی (داشبورد، مقاله/پروژه/FAQ/پیام/تنظیمات/کاربران)
 ├── templates/
 │   ├── base.html           # قالب پایه (بلاک‌ها + preload فونت + CSP)
-│   ├── partials/           # navbar, footer, preloader, mobile_menu
+│   ├── partials/           # navbar, footer, preloader, mobile_menu, auth_*
 │   ├── index.html  about.html  services.html  projects.html  contact.html
-│   └── blog/               # blog_list.html + blog_detail.html
+│   ├── blog/               # blog_list.html + blog_detail.html
+│   ├── accounts/           # login.html + register.html
+│   └── panel/              # داشبورد + فرم‌ها/لیست‌های مدیریت
 ├── static/
 │   ├── css/  js/  fonts/   # فونت‌های self-host (فاز ۳)
 ├── legacy/                 # بایگانی HTML های استاتیک قبل از جنگو
 ├── _headers                # هدرهای امنیتی (Netlify/Cloudflare Pages)
 ├── nginx-security.conf     # هدرهای امنیتی (VPS)
+├── start_tunnel.sh         # تانل عمومی pinggy برای نمایش به دیگران
 └── ROADMAP.md
 ```
 
@@ -116,6 +124,12 @@ Nexify/
 - ✅ **فاز ۲** — امنیت: مودال بدون innerHTML، هانی‌پات، CSP + هدرهای امنیتی
 - ✅ **فاز ۳** — سرعت: فونت self-host، `font-display: swap`، preload، defer
 - ✅ **فاز ۴** — **جنگو**: settings سه‌تایی، ۴ اپ، `base.html` + partials، مدل‌ها (Project/BlogPost/ContactMessage/FAQ)، فرم امن با CSRF و هانی‌پات سمت سرور
+- ✅ **فاز ۴.۵** — تست + CI: ۹۴ تست pytest + workflow گیت‌هاب (Python 3.12/3.13)
+- ✅ **فاز ۴.۶** — احراز هویت: ورود/ثبت‌نام با انیمیشن + خروج POST-only + هانی‌پات دولایه
+- ✅ **فاز ۴.۷** — ریسپانسیو: R1–R6 (جزئیات در `RESPONSIVE-ROADMAP.md`)
+- ✅ **فاز ۴.۸** — پنل ادمین سفارشی (`apps/panel`): انتشار مقاله/پروژه، مدیریت سفارش‌ها، ویرایش متن‌های سایت، چند ادمین، آمار بازدید
+- ✅ **فاز ۴.۹** — ممیزی UI/UX با اسکیل `ui-ux-pro-max` → `UIUX-ROADMAP.md`
+- 🟡 **فاز ۴.۱۰** — بهبود UI/UX: U1 (کنتراست AA + فرم‌ها) و U2 (آیکون‌های SVG) انجام شد — بعدی U3 (مودال + کیبورد)
 - ⏳ **فاز ۵** — دیپلوی: Docker Compose، Gunicorn، Nginx، PostgreSQL، CI/CD (جزئیات در ROADMAP)
 
 ---
@@ -124,6 +138,6 @@ Nexify/
 
 - فرم تماس در توسعه پیام را در `db.sqlite3` ذخیره می‌کند (در تولید: PostgreSQL + ایمیل SMTP)
 - فونت‌ها self-host هستند (Vazirmatn + JetBrains Mono، همه‌ی وزن‌ها در یک فایل woff2)
-- صفحات `index/about/services` فعلاً محتوای استاتیک دارند؛ مدل‌های داینامیک (Service, Skill, ...) در فاز بعدی
+- پروژه‌ها و مقالات از دیتابیس می‌آیند؛ محتوای `index/about/services` فعلاً از خود قالب است (مدل‌های `Service`/`Skill` در فاز بعدی)
 
 © ۱۴۰۳ Nexify. تمام حقوق محفوظ است.
