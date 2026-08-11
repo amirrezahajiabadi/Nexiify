@@ -114,7 +114,7 @@
 .auth-input-wrap { position: relative; }
 .auth-input-wrap .form-input {
     width: 100%;
-    padding: 13px 44px 13px 44px;
+    padding: 13px 44px 13px 52px; /* U4: فضای بیشتر سمت چپ برای دکمه‌ی چشم ۴۴px */
     border-radius: 12px;
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
 }
@@ -137,10 +137,10 @@
 /* دکمه‌ی نمایش/پنهان‌کردن رمز */
 .auth-password-toggle {
     position: absolute;
-    top: 50%; left: 6px;
+    top: 50%; left: 2px;
     transform: translateY(-50%);
     display: grid; place-items: center;
-    width: 36px; height: 36px;
+    width: 44px; height: 44px; /* U4: تارگت لمسی ≥۴۴px */
     border: none; border-radius: 10px;
     background: transparent;
     color: var(--text-muted);

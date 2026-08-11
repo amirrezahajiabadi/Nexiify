@@ -112,6 +112,7 @@ section { padding: 140px 0; position: relative; z-index: 1; }
     font-family: var(--font-mono); font-size: 1.05rem; font-weight: 400;
     letter-spacing: 3px; color: var(--text); text-decoration: none;
     display: flex; align-items: center; gap: 10px; transition: opacity 0.3s; z-index: 101;
+    min-height: 44px; /* U4: تارگت لمسی ≥۴۴px */
 }
 .nav-logo:hover { opacity: 0.7; }
 .nav-logo-dot {
@@ -124,11 +125,12 @@ section { padding: 140px 0; position: relative; z-index: 1; }
 .nav-link {
     color: var(--text-secondary); text-decoration: none; font-size: 0.83rem;
     font-weight: 400; letter-spacing: 0.5px; transition: color 0.3s;
-    position: relative; padding-bottom: 6px; cursor: pointer;
+    position: relative; cursor: pointer;
     background: none; border: none; font-family: var(--font-sans);
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; /* U4: تارگت لمسی ≥۴۴px */
 }
 .nav-link::after {
-    content: ''; position: absolute; bottom: 0; right: 0;
+    content: ''; position: absolute; top: calc(50% + 12px); right: 0;
     width: 0; height: 1px; background: var(--accent);
     transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -140,9 +142,10 @@ section { padding: 140px 0; position: relative; z-index: 1; }
 
 .theme-toggle {
     background: none; border: 1px solid var(--border-light);
-    width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
+    width: 44px; height: 44px; border-radius: 50%; cursor: pointer; /* U4: تارگت لمسی ≥۴۴px */
     font-size: 1rem; display: flex; align-items: center; justify-content: center;
     transition: all 0.3s ease; margin-right: 12px;
+    flex-shrink: 0; /* U4: در هدر شلوغ موبایل جمع نشود */
 }
 .theme-toggle:hover { border-color: var(--accent); }
 .theme-icon-dark { display: inline; }
@@ -150,7 +153,7 @@ section { padding: 140px 0; position: relative; z-index: 1; }
 [data-theme="light"] .theme-icon-dark { display: none; }
 [data-theme="light"] .theme-icon-light { display: inline; }
 
-.mobile-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; padding: 8px; z-index: 101; transition: opacity 0.3s; }
+.mobile-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; width: 44px; height: 44px; padding: 0; align-items: center; justify-content: center; z-index: 101; transition: opacity 0.3s; flex-shrink: 0; } /* U4: تارگت لمسی ≥۴۴px */
 .mobile-toggle:hover { opacity: 0.7; }
 
 /* ==================== Auth Buttons (ورود / ثبت‌نام) ====================
@@ -170,6 +173,7 @@ section { padding: 140px 0; position: relative; z-index: 1; }
     align-items: center;
     justify-content: center;
     padding: 9px 20px;
+    min-height: 44px; min-width: 44px; flex-shrink: 0; /* U4: تارگت لمسی ≥۴۴px */
     border-radius: 999px;
     font-family: var(--font-sans);
     font-size: 0.8rem;
@@ -493,6 +497,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     align-items: center;
     gap: 10px;
     transition: opacity 0.3s;
+    min-height: 44px; /* U4: تارگت لمسی ≥۴۴px */
 }
 
 .footer-logo:hover { opacity: 0.7; }
@@ -509,26 +514,27 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 .footer-heading {
     font-size: 0.8rem; font-weight: 600;
-    color: var(--text); margin-bottom: 16px;
+    color: var(--text); margin-bottom: 20px; /* U4: فاصله‌گذاری بهتر */
     letter-spacing: 0.5px;
 }
 
 .footer-links-col .footer-links {
     display: flex; flex-direction: column;
-    gap: 10px; list-style: none;
+    gap: 2px; list-style: none; /* U4: فاصله‌گذاری کمتر — ارتفاع لمس از min-height لینک‌ها می‌آید */
 }
 
 .footer-link {
     color: var(--text-muted); text-decoration: none;
     font-size: 0.85rem; font-weight: 300;
     transition: color 0.3s ease, transform 0.3s ease;
-    display: inline-block; position: relative;
-    padding-bottom: 2px;
+    display: inline-flex; align-items: center; position: relative;
+    min-height: 44px; min-width: 44px; padding: 0 6px; /* U4: تارگت لمسی ≥۴۴px */
 }
 
 .footer-link::after {
-    content: ''; position: absolute; bottom: 0; left: 0;
-    width: 0; height: 1px; background: var(--accent);
+    content: ''; position: absolute; left: 0;
+    top: calc(50% + 12px); width: 0; height: 1px;
+    background: var(--accent);
     transition: width 0.3s ease;
 }
 
@@ -537,11 +543,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 .footer-social-col { display: flex; flex-direction: column; }
 
-.footer-social { display: flex; gap: 10px; flex-wrap: wrap; }
+.footer-social { display: flex; gap: 12px; flex-wrap: wrap; } /* U4: فاصله‌گذاری بهتر */
 
 .footer-social-link {
     display: flex; align-items: center; justify-content: center;
-    width: 42px; height: 42px; border-radius: 12px;
+    width: 44px; height: 44px; border-radius: 12px; /* U4: تارگت لمسی ≥۴۴px */
     border: 1px solid var(--border-light);
     color: var(--text-secondary);
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -602,11 +608,11 @@ html.lenis, html.lenis body { height: auto; }
     .nav-auth .auth-user-avatar { width: 22px; height: 22px; }
     .nav-auth .auth-user-icon { width: 12px; height: 12px; }
     .nav-auth .auth-btn-logout { padding: 7px 12px; font-size: 0.74rem; }
-    .mobile-toggle { display: block; }
+    .mobile-toggle { display: flex; }
     section { padding: 100px 0; }
     .page-header { padding: 140px 0 60px; }
     .container { padding: 0 20px; }
-    .back-to-top { bottom: 20px; right: 20px; width: 40px; height: 40px; font-size: 1rem; }
+    .back-to-top { bottom: 20px; right: 20px; width: 44px; height: 44px; font-size: 1rem; } /* U4: تارگت لمسی ≥۴۴px */
     .stat-value { transition: none; }
     .footer { padding: 60px 0 0; }
     .footer-grid { grid-template-columns: 1fr; gap: 36px; text-align: center; }

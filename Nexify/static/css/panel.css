@@ -60,6 +60,7 @@
     padding: 10px 12px; border-radius: 12px;
     color: var(--text-secondary); text-decoration: none;
     font-size: 0.88rem; transition: all var(--transition-fast);
+    min-height: 44px; /* U4: تارگت لمسی ≥۴۴px */
 }
 
 .panel-nav-link:hover { background: var(--glass-bg-hover); color: var(--text); transform: translateX(-3px); }
@@ -76,12 +77,13 @@
 }
 
 .panel-foot-link {
-    display: block; text-align: center;
+    display: flex; align-items: center; justify-content: center;
     padding: 9px 12px; border-radius: 12px;
     color: var(--text-secondary); text-decoration: none;
     font-size: 0.82rem; border: 1px solid var(--border);
     transition: all var(--transition-fast);
     background: transparent; font-family: var(--font-sans); cursor: pointer; width: 100%;
+    min-height: 44px; /* U4: تارگت لمسی ≥۴۴px */
 }
 .panel-foot-link:hover { border-color: var(--accent); color: var(--accent-light); }
 .panel-logout:hover { border-color: #ef4444; color: #f87171; }
@@ -146,7 +148,7 @@
 .panel-page-head p { color: var(--text-secondary); font-size: 0.9rem; margin: 0; }
 .panel-page-head-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
 
-.panel-link { color: var(--accent-light); text-decoration: none; font-size: 0.82rem; }
+.panel-link { color: var(--accent-light); text-decoration: none; font-size: 0.82rem; display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px; } /* U4: تارگت لمسی ≥۴۴px */
 .panel-link:hover { text-decoration: underline; }
 
 /* ---------- کارت آمار ---------- */
@@ -224,7 +226,7 @@
 .panel-table tbody tr:hover { background: var(--glass-bg-hover); }
 .panel-row-unread td { background: rgba(124,58,237,0.05); }
 
-.panel-title-link { color: var(--text); text-decoration: none; font-weight: 500; }
+.panel-title-link { color: var(--text); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px; } /* U4: تارگت لمسی ≥۴۴px */
 .panel-title-link:hover { color: var(--accent-light); }
 .panel-cell-sub { display: block; color: var(--text-muted); font-size: 0.72rem; margin-top: 3px; }
 .panel-cell-value { color: var(--text-secondary); max-width: 260px; }
@@ -240,6 +242,7 @@
     border: 1px solid var(--border-light); cursor: pointer;
     text-decoration: none; font-family: var(--font-sans);
     transition: all var(--transition-fast);
+    min-height: 44px; /* U4: تارگت لمسی ≥۴۴px */
 }
 .btn-mini:hover { border-color: var(--accent); color: var(--accent-light); }
 .btn-mini-ghost:hover { border-color: var(--accent-light); color: var(--accent-light); }
@@ -255,6 +258,7 @@
     padding: 8px 16px; border-radius: 999px; font-size: 0.8rem;
     color: var(--text-secondary); text-decoration: none;
     border: 1px solid var(--border-light); transition: all var(--transition-fast);
+    display: inline-flex; align-items: center; min-height: 44px; /* U4: تارگت لمسی ≥۴۴px */
 }
 .panel-tab:hover { border-color: var(--accent); color: var(--accent-light); }
 .panel-tab.active { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff; border-color: transparent; }

@@ -4,7 +4,7 @@
 
 .projects-section { padding: 48px 0 80px; }
 .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 0 48px; }
-.filter-btn { padding: 8px 20px; background: transparent; border: 1px solid var(--border-light); color: var(--text-muted); font-family: var(--font-sans); font-size: 0.82rem; font-weight: 300; cursor: pointer; border-radius: 50px; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 6px; }
+.filter-btn { padding: 8px 20px; background: transparent; border: 1px solid var(--border-light); color: var(--text-muted); font-family: var(--font-sans); font-size: 0.82rem; font-weight: 300; cursor: pointer; border-radius: 50px; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; } /* U4: تارگت لمسی ≥۴۴px */
 .filter-btn:hover { border-color: var(--text); color: var(--text); }
 .filter-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 /* فیلتر MLOps «به‌زودی» — رنگ کهربایی متمایز */
@@ -40,13 +40,13 @@
 .project-tag { padding: 3px 10px; border: 1px solid var(--border-light); border-radius: 50px; font-size: 0.7rem; color: var(--text-muted); font-weight: 300; transition: all 0.3s ease; }
 .project-card:hover .project-tag { border-color: rgba(124,58,237,0.3); color: var(--text-secondary); }
 .project-links { display: flex; gap: 12px; }
-.project-link { font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; font-weight: 400; transition: color 0.3s; display: flex; align-items: center; gap: 4px; background: none; border: none; font-family: var(--font-sans); cursor: pointer; }
+.project-link { font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; font-weight: 400; transition: color 0.3s; display: flex; align-items: center; gap: 4px; background: none; border: none; font-family: var(--font-sans); cursor: pointer; min-height: 44px; padding: 0 4px; } /* U4: تارگت لمسی ≥۴۴px */
 .project-link:hover { color: var(--accent-light); }
 .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index:300; display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition: opacity 0.4s ease, visibility 0.4s ease; padding:24px; }
 .modal-overlay.open { opacity:1; visibility:visible; }
 .modal { background: var(--surface); border:1px solid var(--border); border-radius:24px; max-width:580px; width:100%; padding:48px; position:relative; transform: translateY(20px); transition: transform 0.4s ease; max-height:85vh; overflow-y:auto; overscroll-behavior: contain; /* اسکرول مودال به صفحه منتقل نشود */ }
 .modal-overlay.open .modal { transform: translateY(0); }
-.modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:var(--text); font-size:1.5rem; cursor:pointer; padding:8px; transition: opacity 0.3s; }
+.modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:var(--text); font-size:1.5rem; cursor:pointer; width:44px; height:44px; display:flex; align-items:center; justify-content:center; padding:0; transition: opacity 0.3s; } /* U4: تارگت لمسی ≥۴۴px */
 .modal-close:hover { opacity:0.6; }
 .modal-icon { font-size:3rem; margin-bottom:16px; }
 .modal-title { font-size:1.6rem; font-weight:500; margin-bottom:8px; }
@@ -59,4 +59,4 @@
 .modal-tech { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:24px; }
 .modal-tech .project-tag { border-color: rgba(124,58,237,0.3); color: var(--text-secondary); }
 @media (max-width:768px) { .projects-grid { grid-template-columns:1fr; } .project-visual { height:180px; font-size:3rem; } .modal { padding:32px 24px; } .modal-stats { grid-template-columns:1fr; } }
-@media (max-width:480px) { .modal { padding:28px 20px; max-height:90vh; } .modal-close { top:10px; right:10px; padding:10px; font-size:1.6rem; } /* هدف لمس بزرگ‌تر در موبایل */ .modal-title { font-size:1.3rem; } .modal-icon { font-size:2.4rem; } }
+@media (max-width:480px) { .modal { padding:28px 20px; max-height:90vh; } .modal-close { top:10px; right:10px; font-size:1.6rem; } /* هدف لمس بزرگ‌تر در موبایل */ .modal-title { font-size:1.3rem; } .modal-icon { font-size:2.4rem; } }
