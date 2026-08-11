@@ -1,0 +1,61 @@
+{% extends "panel/base_panel.html" %}
+{% load core_extras %}
+{% block title %}نظرات مشتریان{% endblock %}
+
+{% block content %}
+<section class="panel-section">
+    <div class="panel-page-head panel-page-head-row">
+        <div>
+            <h1>نظرات مشتریان</h1>
+            <p>سکشن Social Proof صفحه‌ی اصلی — نمایش در سایت فقط نظرات «نمایش» شده.</p>
+        </div>
+        <a href="{% url 'panel:testimonial_new' %}" class="btn btn-primary">+ نظر جدید</a>
+    </div>
+
+    <div class="panel-card">
+        {% if testimonials %}
+        <table class="panel-table">
+            <thead>
+                <tr>
+                    <th>مشتری</th>
+                    <th>امتیاز</th>
+                    <th>ترتیب</th>
+                    <th>وضعیت</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in testimonials %}
+                <tr>
+                    <td>
+                        <a href="{% url 'panel:testimonial_edit' t.pk %}" class="panel-title-link">{{ t.name }}{% if t.company %} — {{ t.company }}{% endif %}</a>
+                    </td>
+                    <td><span class="testimonial-stars">{{ t.rating|stars }}</span></td>
+                    <td>{{ t.order }}</td>
+                    <td>
+                        {% if t.is_published %}
+                        <span class="panel-badge badge-done">نمایش</span>
+                        {% else %}
+                        <span class="panel-badge badge-new">مخفی</span>
+                        {% endif %}
+                    </td>
+                    <td class="panel-actions">
+                        <a href="{% url 'panel:testimonial_edit' t.pk %}" class="btn btn-mini">ویرایش</a>
+                        <a href="{% url 'panel:testimonial_toggle' t.pk %}" class="btn btn-mini btn-mini-ghost">
+                            {% if t.is_published %}مخفی{% else %}نمایش{% endif %}
+                        </a>
+                        <form method="post" action="{% url 'panel:testimonial_delete' t.pk %}" class="inline-form confirm-form" data-confirm="حذف این نظر؟">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-mini btn-mini-danger">حذف</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="panel-empty">نظری ثبت نشده است. اولین نظر را اضافه کنید.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

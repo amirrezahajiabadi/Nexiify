@@ -7,7 +7,7 @@ from apps.blog.models import BlogPost
 from apps.contact.models import FAQ
 from apps.projects.models import Project
 
-from .models import SiteSetting
+from .models import SiteSetting, Testimonial
 
 
 class BlogPostForm(forms.ModelForm):
@@ -84,6 +84,13 @@ class FAQForm(forms.ModelForm):
         fields = ["question", "answer", "order", "is_published"]
         widgets = {"answer": forms.Textarea(attrs={"rows": 4})}
         labels = {"order": "ترتیب نمایش (کوچک‌تر = بالاتر)"}
+
+
+class TestimonialForm(forms.ModelForm):
+    class Meta:
+        model = Testimonial
+        fields = ["name", "company", "text", "rating", "order", "is_published"]
+        widgets = {"text": forms.Textarea(attrs={"rows": 4})}
 
 
 class SiteSettingForm(forms.ModelForm):

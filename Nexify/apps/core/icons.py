@@ -188,6 +188,13 @@ _HELP = (
     '<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>'
     '<line x1="12" y1="17" x2="12.01" y2="17"></line>'
 )
+_STAR = (
+    '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>'
+)
+_QUOTE = (
+    '<path d="M3 21c3-1 5-3.5 5-7V7H2v7h4a6 6 0 0 1-3 7z"></path>'
+    '<path d="M15 21c3-1 5-3.5 5-7V7h-6v7h4a6 6 0 0 1-3 7z"></path>'
+)
 
 # ---------------------------------------------------------------- نگاشت
 ICON_PATHS = {
@@ -206,6 +213,8 @@ ICON_PATHS = {
     # پنل
     "📝": _FILE_TEXT, "🧩": _PUZZLE, "✏️": _EDIT, "✏": _EDIT, "✎": _EDIT,
     "👥": _USERS, "▦": _GRID, "؟": _HELP,
+    # نظرات مشتریان
+    "⭐": _STAR, "☆": _STAR, "💬": _MESSAGE, "❝": _QUOTE,
 }
 
 DEFAULT_KEY = "⚡"
@@ -214,13 +223,19 @@ _SVG_TMPL = (
     '<svg class="icon-svg {cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
     'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{body}</svg>'
 )
+# برای ستاره‌های پُر (rating) — fill از currentColor می‌آید تا با تم هماهنگ بماند
+_SVG_TMPL_FILL = (
+    '<svg class="icon-svg {cls}" viewBox="0 0 24 24" fill="currentColor" stroke="none" '
+    'aria-hidden="true">{body}</svg>'
+)
 
 
-def build_icon(key, class_name=""):
+def build_icon(key, class_name="", filled=False):
     """SVG کامل برای یک کلید (ایموجی/کاراکتر) — با fallback به پیش‌فرض."""
     body = ICON_PATHS.get(str(key).strip(), ICON_PATHS[DEFAULT_KEY])
     cls = f" {class_name}" if class_name else ""
-    return _SVG_TMPL.format(cls=cls, body=body)
+    tmpl = _SVG_TMPL_FILL if filled else _SVG_TMPL
+    return tmpl.format(cls=cls, body=body)
 
 
 def icon_svg(key, class_name=""):

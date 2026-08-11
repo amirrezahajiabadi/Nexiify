@@ -27,6 +27,8 @@
                 <span class="pn-ico">{{ "📝"|icon_svg }}</span> مقالات</a>
             <a href="{% url 'panel:project_list' %}" class="panel-nav-link {% if request.resolver_match.url_name|slice:':8' == 'project_' or request.resolver_match.url_name == 'project_list' %}active{% endif %}">
                 <span class="pn-ico">{{ "🧩"|icon_svg }}</span> پروژه‌ها / محصولات</a>
+            <a href="{% url 'panel:testimonial_list' %}" class="panel-nav-link {% if request.resolver_match.url_name|slice:':13' == 'testimonial_' or request.resolver_match.url_name == 'testimonial_list' %}active{% endif %}">
+                <span class="pn-ico">{{ "❝"|icon_svg }}</span> نظرات مشتریان</a>
             <a href="{% url 'panel:message_list' %}" class="panel-nav-link {% if request.resolver_match.url_name|slice:':8' == 'message_' or request.resolver_match.url_name == 'message_list' %}active{% endif %}">
                 <span class="pn-ico">{{ "✉"|icon_svg }}</span> سفارش‌ها / پیام‌ها</a>
             <a href="{% url 'panel:faq_list' %}" class="panel-nav-link {% if request.resolver_match.url_name|slice:':4' == 'faq_' or request.resolver_match.url_name == 'faq_list' %}active{% endif %}">

@@ -37,6 +37,13 @@ urlpatterns = [
     path("faq/<int:pk>/toggle/", views.faq_toggle, name="faq_toggle"),
     path("faq/<int:pk>/delete/", views.faq_delete, name="faq_delete"),
 
+    # نظرات مشتریان
+    path("testimonials/", views.testimonial_list, name="testimonial_list"),
+    path("testimonials/new/", views.testimonial_edit, name="testimonial_new"),
+    path("testimonials/<int:pk>/", views.testimonial_edit, name="testimonial_edit"),
+    path("testimonials/<int:pk>/toggle/", views.testimonial_toggle, name="testimonial_toggle"),
+    path("testimonials/<int:pk>/delete/", views.testimonial_delete, name="testimonial_delete"),
+
     # متن‌های سایت
     path("settings/", views.setting_list, name="setting_list"),
     path("settings/new/", views.setting_add, name="setting_add"),

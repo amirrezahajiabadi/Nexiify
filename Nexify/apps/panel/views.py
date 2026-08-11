@@ -16,8 +16,14 @@ from apps.blog.models import BlogPost
 from apps.contact.models import ContactMessage, FAQ
 from apps.projects.models import Project
 
-from .forms import BlogPostForm, FAQForm, ProjectForm, SiteSettingForm
-from .models import PageView, SiteSetting
+from .forms import (
+    BlogPostForm,
+    FAQForm,
+    ProjectForm,
+    SiteSettingForm,
+    TestimonialForm,
+)
+from .models import PageView, SiteSetting, Testimonial
 
 LOGIN_URL = "accounts:login"
 
@@ -70,6 +76,8 @@ def dashboard(request):
         "project_published": Project.objects.filter(is_published=True).count(),
         "message_new": ContactMessage.objects.filter(status="new").count(),
         "message_total": ContactMessage.objects.count(),
+        "testimonial_count": Testimonial.objects.count(),
+        "testimonial_published": Testimonial.objects.filter(is_published=True).count(),
         "user_count": User.objects.count(),
         "user_staff": User.objects.filter(is_staff=True).count(),
         "recent_messages": ContactMessage.objects.all()[:5],
@@ -261,6 +269,48 @@ def faq_delete(request, pk):
         faq.delete()
         messages.success(request, "سوال حذف شد.")
     return redirect("panel:faq_list")
+
+
+# -------------------------------------------------------- نظرات مشتریان
+@staff_member_required(login_url=LOGIN_URL)
+def testimonial_list(request):
+    testimonials = Testimonial.objects.all()
+    return render(request, "panel/testimonial_list.html", {"testimonials": testimonials})
+
+
+@staff_member_required(login_url=LOGIN_URL)
+def testimonial_edit(request, pk=None):
+    testimonial = get_object_or_404(Testimonial, pk=pk) if pk else None
+    form = TestimonialForm(request.POST or None, instance=testimonial)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "نظر مشتری ذخیره شد.")
+        return redirect("panel:testimonial_list")
+    ctx = {
+        "form": form,
+        "testimonial": testimonial,
+        "title": "ویرایش نظر" if testimonial else "نظر جدید",
+    }
+    return render(request, "panel/testimonial_form.html", ctx)
+
+
+@staff_member_required(login_url=LOGIN_URL)
+def testimonial_toggle(request, pk):
+    testimonial = get_object_or_404(Testimonial, pk=pk)
+    testimonial.is_published = not testimonial.is_published
+    testimonial.save(update_fields=["is_published"])
+    state = "نمایش داده شد" if testimonial.is_published else "از نمایش خارج شد"
+    messages.success(request, f"نظر «{testimonial.name}» {state}.")
+    return redirect("panel:testimonial_list")
+
+
+@staff_member_required(login_url=LOGIN_URL)
+def testimonial_delete(request, pk):
+    testimonial = get_object_or_404(Testimonial, pk=pk)
+    if request.method == "POST":
+        testimonial.delete()
+        messages.success(request, "نظر حذف شد.")
+    return redirect("panel:testimonial_list")
 
 
 # -------------------------------------------------------- متن‌های سایت

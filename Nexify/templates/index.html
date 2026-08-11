@@ -18,11 +18,42 @@
 <div class="divider"></div>
 
 <section><div class="container"><div class="stats-row">
-    <div class="stat-item reveal"><div class="stat-value">۱۵+</div><div class="stat-label">پروژه موفق</div></div>
-    <div class="stat-item reveal reveal-delay-1"><div class="stat-value">۲+</div><div class="stat-label">سال تجربه</div></div>
-    <div class="stat-item reveal reveal-delay-2"><div class="stat-value">۶+</div><div class="stat-label">خدمات تخصصی</div></div>
-    <div class="stat-item reveal reveal-delay-3"><div class="stat-value">۱۰۰٪</div><div class="stat-label">رضایت مشتری</div></div>
+    <div class="stat-item reveal"><div class="stat-value">{{ stats.projects|fa_num }}+</div><div class="stat-label">پروژه موفق</div></div>
+    <div class="stat-item reveal reveal-delay-1"><div class="stat-value">{{ stats.clients|fa_num }}+</div><div class="stat-label">مشتری راضی</div></div>
+    <div class="stat-item reveal reveal-delay-2"><div class="stat-value">{{ stats.satisfaction|fa_num }}٪</div><div class="stat-label">رضایت مشتری</div></div>
+    <div class="stat-item reveal reveal-delay-3"><div class="stat-value">{{ stats.posts|fa_num }}+</div><div class="stat-label">مقاله منتشرشده</div></div>
 </div></div></section>
+<div class="divider"></div>
+
+<section class="social-proof"><div class="container">
+    <p class="section-label reveal">مشتریان ما</p>
+    {% if client_logos %}
+    <div class="client-marquee reveal" aria-label="نام مشتریان">
+        <div class="client-marquee-track">
+            {% for c in client_logos %}<span class="client-logo-chip">{{ "❝"|icon_svg }}<span class="client-logo-name">{{ c }}</span></span>{% endfor %}
+            {% for c in client_logos %}<span class="client-logo-chip" aria-hidden="true">{{ "❝"|icon_svg }}<span class="client-logo-name">{{ c }}</span></span>{% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    {% if testimonials %}
+    <div class="testimonials-grid">
+        {% for t in testimonials %}
+        <figure class="testimonial-card reveal{% if forloop.counter0 %} reveal-delay-{{ forloop.counter0 }}{% endif %}">
+            <span class="testimonial-quote-mark" aria-hidden="true">{{ "❝"|icon_svg }}</span>
+            <div class="testimonial-rating">{{ t.rating|stars }}</div>
+            <blockquote class="testimonial-text">«{{ t.text }}»</blockquote>
+            <figcaption class="testimonial-author">
+                <span class="testimonial-avatar" aria-hidden="true">{{ t.name|first }}</span>
+                <span class="testimonial-author-meta">
+                    <span class="testimonial-name">{{ t.name }}</span>
+                    {% if t.company %}<span class="testimonial-company">{{ t.company }}</span>{% endif %}
+                </span>
+            </figcaption>
+        </figure>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div></section>
 <div class="divider"></div>
 
 <section><div class="container">

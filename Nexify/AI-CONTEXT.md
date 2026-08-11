@@ -83,8 +83,8 @@ Nexify/
 │   │                                # هر اپ یک tests.py دارد — ۸۷ تست pytest (فاز ۵-آماده)
 │   ├── __init__.py
 │   ├── core/                        # صفحه‌ی اصلی، درباره، خدمات + دستور seed_demo
-│   │   ├── icons.py                 # ⭐ منبع واحد آیکون‌های SVG (فاز U2): نگاشت ایموجی/کلید → SVG stroke-based (viewBox 24، currentColor)
-│   │   └── templatetags/core_extras.py  # فیلتر icon_svg — {{ "📞"|icon_svg }} (mark_safe؛ برای آیکون دیتابیس: {{ post.icon|icon_svg }})
+│   │   ├── icons.py                 # ⭐ منبع واحد آیکون‌های SVG (فاز U2): نگاشت ایموجی/کلید → SVG stroke-based (viewBox 24، currentColor) + ستاره‌ی پُر/خالی و گیومه (U5)
+│   │   └── templatetags/core_extras.py  # فیلتر icon_svg — {{ "📞"|icon_svg }} (mark_safe؛ برای آیکون دیتابیس: {{ post.icon|icon_svg }}) + stars (U5: {{ t.rating|stars }} → ردیف ستاره SVG) + fa_num (ارقام فارسی)
 │   │   ├── models.py                # (فعلاً خالی — فقط منبع دستور seed)
 │   │   ├── views.py                 # index، about، services
 │   │   ├── urls.py                  # app_name = "core"
@@ -115,9 +115,9 @@ Nexify/
 │       ├── urls.py                  # app_name = "accounts"
 │       ├── apps.py  ─  tests.py
 │   └── panel/                       # ⭐ پنل ادمین سفارشی (طراحی شیشه‌ای هماهنگ با سایت) — فقط staff
-│       ├── models.py                # SiteSetting (متن‌های قابل ویرایش سایت)
-│       ├── forms.py                 # BlogPostForm / ProjectForm / FAQForm / SiteSettingForm
-│       ├── views.py                 # dashboard + CRUD مقاله/پروژه/FAQ/پیام/متن + مدیریت کاربران
+│       ├── models.py                # SiteSetting (متن‌ها) + Testimonial (نظر مشتری — فاز U5) + PageView
+│       ├── forms.py                 # BlogPostForm / ProjectForm / FAQForm / TestimonialForm / SiteSettingForm
+│       ├── views.py                 # dashboard + CRUD مقاله/پروژه/نظر مشتری/FAQ/پیام/متن + مدیریت کاربران
 │       ├── urls.py                  # app_name = "panel" — همه زیر /panel/
 │       ├── context_processors.py    # ⭐ site_settings — متن‌ها را به همه‌ی تمپلیت‌ها می‌دهد ({{ site_settings.hero_title_1 }})
 │       ├── templatetags/panel_extras.py  # فیلتر get_item برای دیکشنری‌ها
@@ -138,9 +138,10 @@ Nexify/
 │   ├── accounts/                    # ⭐ صفحات احراز هویت
 │   │   ├── login.html               # ورود (کارت شیشه‌ای + اُرب‌های شناور + هاله‌ی موس + eye toggle)
 │   │   └── register.html            # ثبت‌نام (+ متر قدرت رمز + هانی‌پات + ?next=)
-│   └── panel/                       # ⭐ تمپلیت‌های پنل ادمین (base_panel + ۱۲ صفحه)
+│   └── panel/                       # ⭐ تمپلیت‌های پنل ادمین (base_panel + ۱۴ صفحه)
 │       ├── base_panel.html          # قالب پنل: سایدبار + هدر + جداول/کارت‌های شیشه‌ای RTL
-│       ├── dashboard.html           # آمار (مقالات/پروژه/سفارش/کاربران) + آخرین سفارش‌ها/مقالات
+│       ├── dashboard.html           # آمار (مقالات/پروژه/سفارش/کاربران/نظرات) + آخرین سفارش‌ها/مقالات
+│       ├── testimonial_list.html  testimonial_form.html   # نظرات مشتریان (فاز U5)
 │       ├── blog_list.html  blog_form.html
 │       ├── project_list.html  project_form.html
 │       ├── message_list.html  message_detail.html  # سفارش‌ها با تغییر وضعیت (new/in_progress/done)
@@ -233,6 +234,7 @@ Nexify/
 | `/panel/projects/` (+new/`<pk>`/toggle/delete) | `apps.panel.views` | `panel:project_*` | مدیریت پروژه‌ها/محصولات |
 | `/panel/messages/` (+`<pk>`/status/delete) | `apps.panel.views` | `panel:message_*` | مدیریت سفارش‌ها/پیام‌های تماس (وضعیت: new/in_progress/done) |
 | `/panel/faq/` (+new/`<pk>`/toggle/delete) | `apps.panel.views` | `panel:faq_*` | مدیریت سوالات متداول |
+| `/panel/testimonials/` (+new/`<pk>`/toggle/delete) | `apps.panel.views` | `panel:testimonial_*` | نظرات مشتریان (سکشن Social Proof صفحه‌ی اصلی — فاز U5) |
 | `/panel/settings/` (+new/`<pk>`/delete) | `apps.panel.views` | `panel:setting_*` | ⭐ ویرایش متن‌های سایت بدون کد (هیرو/CTA/ایمیل/تلگرام...) |
 | `/panel/users/` (+`<pk>/toggle-staff`) | `apps.panel.views` | `panel:user_*` | چند ادمین — فقط سوپریوزر ادمین می‌دهد/برمی‌دارد |
 
@@ -282,6 +284,12 @@ urlpatterns = [
 ### `FAQ` (apps/contact/models.py)
 - فیلدها: `question`، `answer`، `order`، `is_published` — ترتیب: `["order"]`
 
+### `Testimonial` (apps/panel/models.py) — نظر مشتری (فاز U5)
+- فیلدها: `name`، `company` (شرکت/سمت — «لوگو»ی متنی)، `text`، `rating` (۱-۵ با validator)، `order`، `is_published`، `created_at` — ترتیب: `["order", "id"]`
+- **نمایش در صفحه‌ی اصلی**: `apps/core/views.py` → نظرات منتشرشده (حداکثر ۳) + لوگو/نام مشتریان = شرکت‌های یکتا + **آمار واقعی**: پروژه‌ی موفق/مقاله = شمارش منتشرشده، مشتری راضی = شرکت‌های یکتا، رضایت = میانگین امتیاز ×۲۰
+- **پنل**: `/panel/testimonials/` (CRUD + toggle) — ستاره‌ها با فیلتر `{{ t.rating|stars }}` (SVG، فاز U5)
+- در Django Admin نیز ثبت شده (list_editable: order/is_published)
+
 ### `PageView` (apps/panel/models.py) — آمار بازدید
 - فیلدها: `path` (مسیر)، `session_key` (اختیاری — شمارش بازدیدکننده‌ی تقریبی)، `created_at`
 - توسط **`VisitTrackingMiddleware`** (config/middleware.py — آخرین در MIDDLEWARE، بعد از SessionMiddleware) ثبت می‌شود: فقط GET موفق (200) صفحات عمومی؛ `/panel`، `/admin`، `/static/`، `/media/`، `/accounts/`، `/favicon.ico`، `/robots.txt` ثبت نمی‌شوند؛ **fail-safe** (خطا هرگز جریان اصلی را نمی‌شکند).
@@ -298,6 +306,7 @@ urlpatterns = [
 - **پروژه‌ها**: لیست + فرم + toggle + حذف — `ProjectForm` (فیلد `tags` متن با ویرگول → JSONField؛ `gradient` رشته‌ی CSS خام مثل `135deg,#1e1b4b,#312e81`).
 - **تصویر شاخص (⭐ آپلود)**: هر دو مدل `cover_image` (ImageField اختیاری) دارند — در فرم‌های پنل با پیش‌نمایش زنده (`panel.js` → `#coverPreview`، بدون inline handler). فایل‌ها در `media/blog_covers/` و `media/project_covers/` ذخیره می‌شوند و در سایت: کارت‌های بلاگ (`blog-image-photo`)، صفحه‌ی جزئیات مقاله، کارت پروژه (`project-visual-photo`) و مودال (`data-cover` → `modal-cover` در `projects.js`). اگر تصویری نباشد گرادیان قبلی نمایش داده می‌شود. **نیازمند Pillow** (در requirements.txt). `MEDIA_URL`/`MEDIA_ROOT` در `base.py` + سرو شدن در DEBUG در `config/urls.py`.
 - **سفارش‌ها/پیام‌ها**: لیست با فیلتر وضعیت + جزئیات + تغییر وضعیت (`new`/`in_progress`/`done` — از `ContactMessage.status`) + حذف.
+- **نظرات مشتریان (⭐ فاز U5)**: لیست + فرم (new/edit) + toggle نمایش + حذف — `TestimonialForm`. سکشن Social Proof صفحه‌ی اصلی (مارکی لوگو + ۳ کارت نظر + آمار واقعی) کاملاً از همین‌جا کنترل می‌شود.
 - **FAQ**: لیست + فرم + toggle + حذف.
 - **متن‌های سایت** (⭐): `SiteSetting` با `key` یکتا (مثل `hero_title_1`، `cta_title_2`، `contact_email`) — ویرایش بلافاصله در سایت بازتاب می‌یابد. Context processor `site_settings` همه‌ی کلیدهای فعال را به `{{ site_settings.<key> }}` می‌دهد. کلیدها را بعد از ساخت تغییر نده (در قالب‌ها استفاده شده‌اند). seed: `python manage.py seed_settings` (۱۰ متن پیش‌فرض — idempotent).
 - **کاربران (چند ادمین)**: فقط **سوپریوزر** می‌تواند `is_staff` بدهد/بردارد (`user_toggle_staff` — POST-only، نمی‌تواند خودش را حذف کند).
@@ -462,7 +471,7 @@ python manage.py collectstatic --noinput
 python manage.py check
 python manage.py check --deploy
 
-# ⭐ اجرای تست‌ها (۹۴ تست)
+# ⭐ اجرای تست‌ها (۹۷ تست)
 pytest -v
 pytest apps/contact -v                # فقط اپ تماس
 pytest apps/accounts -v               # فقط اپ احراز هویت
@@ -529,7 +538,7 @@ python ../.agents/skills/ui-ux-pro-max/scripts/search.py "responsive layout" --s
 
 **انجام شده در فازهای قبل**: `_headers` (Netlify/Cloudflare)، `nginx-security.conf`، `production.py` کامل، `requirements-prod.txt`، `.env.example`.
 
-**انجام شده**: ✅ `pytest` (۹۴ تست) + ✅ `pytest.ini` + ✅ `requirements-dev.txt` + ✅ `.github/workflows/ci.yml`.
+**انجام شده**: ✅ `pytest` (۹۷ تست) + ✅ `pytest.ini` + ✅ `requirements-dev.txt` + ✅ `.github/workflows/ci.yml`.
 
 **CI (`.github/workflows/ci.yml`)** — روی هر push/PR به `main`، ماتریس Python 3.12 و 3.13، با کش pip (`requirements*.txt`):
 1. نصب وابستگی‌ها: `pip install -r requirements.txt -r requirements-dev.txt`
@@ -602,7 +611,7 @@ git log --oneline -5
 | ۴.۸ | **پنل ادمین سفارشی** (اپ `panel` — داشبورد، انتشار مقاله/پروژه، مدیریت سفارش‌ها با وضعیت، ویرایش متن‌های سایت بدون کد، چند ادمین) | ✅ |
 | ۴.۹ | **ممیزی UI/UX با اسکیل `ui-ux-pro-max`** — کنتراست شکست‌خورده‌ی `--text-muted`، ایموجی به‌جای آیکون، label بدون اتصال، مودال بدون focus-trap، تارگت لمس فوتر، preload فونت بیهوده + نقشه‌ی راه `UIUX-ROADMAP.md` (فازهای U1→U8) | ✅ (تحلیل) |
 | ۵ | دیپلوی (Docker، Gunicorn، Nginx، PostgreSQL، CI/CD) | ⏳ **بعدی** |
-| ۴.۱۰ | **بهبود UI/UX** — اجرای فازهای `UIUX-ROADMAP.md` (U1 کنتراست/فرم‌ها → U8 تایپوگرافی) | 🟡 U1+U2+U3+U4 ✅ (U4: فوتر بازطراحی + تارگت لمسی ≥۴۴px در همه‌ی صفحات — اسکن DOM صفر زیر ۴۴px) — بعدی U5 |
+| ۴.۱۰ | **بهبود UI/UX** — اجرای فازهای `UIUX-ROADMAP.md` (U1 کنتراست/فرم‌ها → U8 تایپوگرافی) | 🟡 U1+U2+U3+U4+U5 ✅ (U5: سکشن Social Proof — مدل Testimonial + آمار واقعی از دیتابیس + مارکی لوگو + ۳ کارت نظر + CRUD در پنل — ۹۷ تست) — بعدی U6 |
 
 > **ریسپانسیو — خلاصه‌ی فازهای انجام‌شده (جزئیات کامل در `RESPONSIVE-ROADMAP.md`):**
 > - **R1 پایه/ایمنی**: `100dvh` منوی موبایل، safe-area ناچ، `tap-highlight` حذف، `touch-action: manipulation`، `overflow-x` بدن.

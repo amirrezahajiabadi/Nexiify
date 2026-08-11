@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """مدل‌های پنل ادمین — متن‌های قابل ویرایش سایت."""
 
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 
@@ -39,6 +40,32 @@ class SiteSetting(models.Model):
 
     def __str__(self):
         return f"{self.label} ({self.key})"
+
+
+class Testimonial(models.Model):
+    """نظر/بازخورد مشتری — نمایش در سکشن Social Proof صفحه‌ی اصلی."""
+
+    name = models.CharField(max_length=100, verbose_name="نام مشتری")
+    company = models.CharField(
+        max_length=150, blank=True, verbose_name="شرکت / سمت",
+        help_text="مثلاً: مدیرعامل فروشگاه آنلاین",
+    )
+    text = models.TextField(verbose_name="متن نظر")
+    rating = models.PositiveSmallIntegerField(
+        default=5, verbose_name="امتیاز (۱ تا ۵)",
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+    )
+    order = models.PositiveIntegerField(default=0, verbose_name="ترتیب نمایش")
+    is_published = models.BooleanField(default=True, verbose_name="نمایش در سایت")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ثبت")
+
+    class Meta:
+        ordering = ["order", "id"]
+        verbose_name = "نظر مشتری"
+        verbose_name_plural = "نظرات مشتریان"
+
+    def __str__(self):
+        return f"{self.name} — {self.company or 'بدون سمت'}"
 
 
 class PageView(models.Model):

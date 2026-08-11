@@ -7,6 +7,7 @@ from django.core.management.base import BaseCommand
 
 from apps.blog.models import BlogPost
 from apps.contact.models import FAQ
+from apps.panel.models import Testimonial
 from apps.projects.models import Project
 
 GITHUB = "https://github.com/amirrezahajiabadi"
@@ -203,6 +204,51 @@ POSTS = [
     },
 ]
 
+TESTIMONIALS = [
+    {
+        "name": "سارا محمدی",
+        "company": "فروشگاه آنلاین دیجی‌استایل",
+        "text": "طراحی سایت فروشگاهی‌مون خیلی حرفه‌ای انجام شد؛ سرعت لود و ظاهر سایت دقیقاً همون چیزی بود که می‌خواستیم.",
+        "rating": 5,
+        "order": 1,
+    },
+    {
+        "name": "رضا کریمی",
+        "company": "استارتاپ هوشمند چت‌یار",
+        "text": "Agent پشتیبانی مشتری که برامون ساختن، تیکت‌های تکراری رو خودکار جواب می‌ده و تیم پشتیبانی‌مون آزاد شد.",
+        "rating": 5,
+        "order": 2,
+    },
+    {
+        "name": "مینا احمدی",
+        "company": "کلینیک آنلاین سلامت",
+        "text": "نقشه راه هوش مصنوعی که گرفتم شفاف و عملی بود؛ حالا دقیقاً می‌دونیم از کجا شروع کنیم و چطور مقیاس بدیم.",
+        "rating": 4,
+        "order": 3,
+    },
+    {
+        "name": "امیر رضایی",
+        "company": "پلتفرم لجستیک سریع‌پی",
+        "text": "Pipeline استقرار مدل‌هاشون خطای دستی رو به صفر رسوند؛ دیپلوی‌ها الان کاملاً خودکار و قابل اعتمادن.",
+        "rating": 5,
+        "order": 4,
+    },
+    {
+        "name": "نگار حسینی",
+        "company": "آکادمی آنلاین یادو",
+        "text": "پنل مدیریتی که برامون طراحی کردن کار با اون رو برای تیم غیرفنی‌مون فوق‌العاده ساده کرده.",
+        "rating": 5,
+        "order": 5,
+    },
+    {
+        "name": "حمید نوروزی",
+        "company": "شرکت نرم‌افزاری فناوران",
+        "text": "مشاوره‌ی معماری که گرفتم باعث شد هزینه‌ی زیرساخت‌مون ۴۰٪ کم بشه. خیلی دقیق و به‌موقع.",
+        "rating": 4,
+        "order": 6,
+    },
+]
+
 FAQS = [
     {"question": "💬 هزینه پروژه‌ها چطور محاسبه میشه؟", "answer": "بر اساس scope پروژه، تکنولوژی‌های مورد نیاز و زمان تحویل. یه جلسه مشاوره رایگان داریم تا برآورد شفاف ارائه بدیم.", "order": 1},
     {"question": "⏱ چقدر طول میکشه پروژه آماده بشه؟", "answer": "Landing Page: ۱-۲ هفته، Web App: ۴-۸ هفته، پروژه AI: ۸-۱۲ هفته.", "order": 2},
@@ -225,10 +271,12 @@ class Command(BaseCommand):
             )
         for data in FAQS:
             FAQ.objects.get_or_create(question=data["question"], defaults=data)
+        for data in TESTIMONIALS:
+            Testimonial.objects.get_or_create(name=data["name"], defaults=data)
 
         self.stdout.write(
             self.style.SUCCESS(
                 f"{Project.objects.count()} project, {BlogPost.objects.count()} post, "
-                f"{FAQ.objects.count()} faq ready."
+                f"{FAQ.objects.count()} faq, {Testimonial.objects.count()} testimonial ready."
             )
         )

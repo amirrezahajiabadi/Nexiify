@@ -27,11 +27,56 @@ def test_all_public_urls_return_200(client, url):
     assert response.status_code == 200
 
 
+@pytest.mark.django_db
 def test_index_contains_rtl_lang_and_title(client):
     response = client.get(reverse("core:index"))
     content = response.content.decode("utf-8")
     assert 'lang="fa"' in content
     assert "Nexify" in content
+
+
+# ===========================================================================
+# فاز U5 — سکشن Social Proof: آمار واقعی + نظرات مشتریان
+# ===========================================================================
+
+@pytest.mark.django_db
+def test_index_renders_real_stats_and_testimonials(client):
+    from apps.blog.models import BlogPost
+    from apps.panel.models import Testimonial
+    from apps.projects.models import Project
+
+    Project.objects.create(
+        order=1, title="پروژه نمونه", categories="web",
+        category_label="طراحی سایت", short_description="توضیح کوتاه",
+    )
+    BlogPost.objects.create(
+        title="مقاله نمونه", slug="sample-post", category="توسعه",
+        excerpt="خلاصه", published_at="2023-01-01",
+    )
+    Testimonial.objects.create(
+        name="سارا محمدی", company="فروشگاه آنلاین",
+        text="همکاری عالی بود", rating=5, order=1,
+    )
+    Testimonial.objects.create(
+        name="رضا کریمی", company="فروشگاه آنلاین",
+        text="نتیجه دقیق", rating=4, order=2,
+    )
+
+    content = client.get(reverse("core:index")).content.decode("utf-8")
+    # نظرات + لوگو/نام مشتریان (شرکت‌های یکتا)
+    assert "سارا محمدی" in content
+    assert "فروشگاه آنلاین" in content
+    # آمار واقعی: ۱ پروژه + ۱ مقاله + ۱ مشتری یکتا + رضایت ۹۰٪ (میانگین ۴.۵)
+    assert "۱+" in content
+    assert "۹۰٪" in content
+
+
+@pytest.mark.django_db
+def test_index_hides_social_proof_when_empty(client):
+    content = client.get(reverse("core:index")).content.decode("utf-8")
+    # بدون داده، سکشن نظرات رندر نمی‌شود و آمار صفر است
+    assert "testimonial-card" not in content
+    assert "۰+" in content
 
 
 # ===========================================================================

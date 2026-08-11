@@ -13,7 +13,7 @@ from PIL import Image
 from apps.blog.models import BlogPost
 from apps.contact.models import ContactMessage, FAQ
 from apps.projects.models import Project
-from .models import PageView, SiteSetting
+from .models import PageView, SiteSetting, Testimonial
 
 
 def make_admin(username="admin"):
@@ -239,6 +239,57 @@ def test_faq_create(client_admin):
     )
     assert r.status_code == 302
     assert FAQ.objects.filter(question="سوال؟").exists()
+
+
+# ===========================================================================
+# نظرات مشتریان (سکشن Social Proof — فاز U5)
+# ===========================================================================
+
+@pytest.mark.django_db
+def test_testimonial_crud(client_admin):
+    # ساخت
+    r = client_admin.post(
+        reverse("panel:testimonial_new"),
+        {
+            "name": "علی محمدی",
+            "company": "فروشگاه آنلاین",
+            "text": "همکاری فوق‌العاده‌ای بود.",
+            "rating": 5,
+            "order": 1,
+            "is_published": "on",
+        },
+    )
+    assert r.status_code == 302
+    t = Testimonial.objects.get(name="علی محمدی")
+    assert t.rating == 5
+
+    # لیست + ویرایش
+    assert client_admin.get(reverse("panel:testimonial_list")).status_code == 200
+    r = client_admin.post(
+        reverse("panel:testimonial_edit", args=[t.pk]),
+        {
+            "name": t.name,
+            "company": "فروشگاه آنلاین ۲",
+            "text": t.text,
+            "rating": 4,
+            "order": 2,
+            "is_published": "",
+        },
+    )
+    assert r.status_code == 302
+    t.refresh_from_db()
+    assert t.company == "فروشگاه آنلاین ۲"
+    assert t.rating == 4
+    assert t.is_published is False
+
+    # toggle (مخفی → نمایش)
+    client_admin.get(reverse("panel:testimonial_toggle", args=[t.pk]))
+    t.refresh_from_db()
+    assert t.is_published is True
+
+    # حذف
+    client_admin.post(reverse("panel:testimonial_delete", args=[t.pk]))
+    assert not Testimonial.objects.filter(pk=t.pk).exists()
 
 
 # ===========================================================================

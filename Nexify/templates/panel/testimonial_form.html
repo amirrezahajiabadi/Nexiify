@@ -1,0 +1,28 @@
+{% extends "panel/base_panel.html" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<section class="panel-section panel-section-narrow">
+    <div class="panel-page-head">
+        <h1>{{ title }}</h1>
+    </div>
+
+    <div class="panel-card">
+        <form method="post" class="panel-form" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span class="required-star">*</span>{% endif %}</label>
+                {{ field }}
+                {% if field.help_text %}<small class="field-help">{{ field.help_text }}</small>{% endif %}
+                {% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+            </div>
+            {% endfor %}
+            <div class="panel-form-actions">
+                <button type="submit" class="btn btn-primary">ذخیره</button>
+                <a href="{% url 'panel:testimonial_list' %}" class="btn btn-outline">انصراف</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
