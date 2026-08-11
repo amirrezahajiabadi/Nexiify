@@ -378,6 +378,9 @@
     display: flex;
     flex-direction: column;
     gap: 28px;
+    /* دسکتاپ: کارت ویجت کمی باریک‌تر و وسط‌چین (در موبایل عرض کامل می‌ماند) */
+    max-width: 880px;
+    margin-inline: auto;
 }
 .path-step { display: flex; flex-direction: column; gap: 14px; }
 .path-step-label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.3px; }
@@ -416,6 +419,8 @@
 .path-result-text strong { color: var(--accent-light); font-weight: 600; }
 [data-theme="light"] .path-result-text strong { color: var(--accent); }
 .path-result-cta { flex-shrink: 0; }
+/* رفع باگ: .btn با display:inline-flex مقدار [hidden] را override می‌کرد — دکمه قبل از انتخاب دیده می‌شد */
+.path-result-cta[hidden] { display: none !important; }
 
 @media (max-width:1024px) { .industry-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width:768px) { .services-bento{grid-template-columns:1fr;} .service-card-feature{grid-column:auto;grid-row:auto;} .stats-row{gap:40px;} .stat-value{font-size:2.5rem;} .hero-title{font-size:2rem;} .hero-subtitle{font-size:1rem;} /* پس‌زمینه‌های متحرک در موبایل: کم‌رنگ‌تر (باتری/پرفورمنس) */ .bg-gradient-mesh{opacity:0.18;} #neuralCanvas{opacity:0.3;} .bg-particles{opacity:0.35;} }
