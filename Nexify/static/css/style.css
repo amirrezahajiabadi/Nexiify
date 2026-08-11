@@ -408,9 +408,10 @@ section { padding: 140px 0; position: relative; z-index: 1; }
     white-space: nowrap; background: transparent;
 }
 .btn:active { transform: scale(0.97) !important; }
-.btn-primary { background: var(--text); color: var(--bg); border-color: var(--text); }
-.btn-primary:hover { background: transparent; color: var(--text); transform: translateY(-2px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-.btn-outline { background: transparent; color: var(--text); border-color: var(--border-light); }
+/* U8: سلسله‌مراتب CTA — اصلی پررنگ‌تر (weight ۶۰۰ + هاله‌ی accent) از ثانویه */
+.btn-primary { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 600; box-shadow: 0 8px 24px rgba(124, 58, 237, 0.22); }
+.btn-primary:hover { background: transparent; color: var(--text); transform: translateY(-2px); box-shadow: 0 14px 36px rgba(124, 58, 237, 0.32); }
+.btn-outline { background: transparent; color: var(--text); border-color: var(--border-light); font-weight: 500; }
 .btn-outline:hover { border-color: var(--text); transform: translateY(-2px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
 
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

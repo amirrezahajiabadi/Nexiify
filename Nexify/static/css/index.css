@@ -6,13 +6,15 @@
 .hero { min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; padding-top: 100px; }
 .hero-content { max-width: 800px; }
 .hero-label { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 5px; color: var(--accent-light); text-transform: uppercase; margin-bottom: 40px; }
-.hero-title { font-size: clamp(2.5rem, 5.2vw, 4.2rem); font-weight: 200; line-height: 1.25; letter-spacing: -1px; margin-bottom: 32px; }
+/* U8: وزن ۲۰۰ → ۳۰۰ (در برخی نمایشگرها خیلی نازک بود) و letter-spacing منفی حذف شد —
+   در خط فارسی spacing بین حروف متصل را می‌شکند */
+.hero-title { font-size: clamp(2.5rem, 5.2vw, 4.2rem); font-weight: 300; line-height: 1.3; letter-spacing: 0; margin-bottom: 32px; }
 .hero-title-line { display: block; }
 .hero-subtitle { font-size: 1.15rem; font-weight: 300; color: var(--text-secondary); max-width: 480px; line-height: 2; margin-bottom: 56px; }
 .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
 .stats-row { display: flex; gap: 80px; flex-wrap: wrap; }
 .stat-item { flex: 1; min-width: 140px; }
-.stat-value { font-size: 3.5rem; font-weight: 200; letter-spacing: -1px; margin-bottom: 8px; transition: color 0.5s ease; }
+.stat-value { font-size: 3.5rem; font-weight: 300; letter-spacing: 0; margin-bottom: 8px; transition: color 0.5s ease; }
 .stat-item:hover .stat-value { color: var(--accent); }
 .stat-label { font-size: 0.83rem; color: var(--text-muted); font-weight: 300; transition: color 0.3s ease; }
 .stat-item:hover .stat-label { color: var(--text-secondary); }
