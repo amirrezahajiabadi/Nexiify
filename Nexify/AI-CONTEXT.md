@@ -572,7 +572,8 @@ CONTACT_NOTIFY_EMAIL=amirrezahajiabadi480@gmail.com
 
 ریشه‌ی مخزن: **ریشه‌ی پروژه** (`D:/Nexify`) — شامل `Nexify/` + اسکیل‌ها (`.agents/`, `.claude/`) + `skills-lock.json`. برنچ پیش‌فرض: `main`. اولین کامیت: `cd96bbd` (۲۵۵ فایل). پیام‌های کامیت به **انگلیسی**.
 
-- `.gitignore` دولایه: ریشه‌ی پروژه (`.freebuff/`, `__pycache__/`, ابزار/سیستم‌عامل) + `Nexify/.gitignore` (django: `db.sqlite3`, `staticfiles/`, `media/`, `media-test/`, `.env`).
+- `.gitignore` دولایه: ریشه‌ی پروژه (`.freebuff/`, `__pycache__/`, قالب‌های common Python/Node/IDE/OS) + `Nexify/.gitignore` (django: `db.sqlite3` + journal/wal/shm, `staticfiles/`, `media/`, `media-test/`, `.env`, venv‌ها، کَش‌های ابزار).
+- `.gitattributes` (ریشه): همه‌ی متن‌ها LF ذخیره/خروجی می‌شوند (هماهنگ با دیپلوی لینوکس؛ `*.bat/.cmd/.ps1` استثنا CRLF) + فونت‌ها/تصاویر/دیتابیس `binary` (دست‌نخورده). اگر فایل جدیدی با فرمت غیرمتن اضافه کردی، پسوندش را به بخش binary اضافه کن.
 - **هرگز کامیت نکن**: `.freebuff/` (لاگ‌ها + دیتابیس داخلی ابزار — حاوی توکن ngrok)، `db.sqlite3`، `.env`، `media-test/` (خروجی تست آپلود)، `__pycache__`.
 
 ```bash
