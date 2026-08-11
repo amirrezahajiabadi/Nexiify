@@ -462,7 +462,7 @@ python manage.py collectstatic --noinput
 python manage.py check
 python manage.py check --deploy
 
-# ⭐ اجرای تست‌ها (۷۳ تست)
+# ⭐ اجرای تست‌ها (۹۴ تست)
 pytest -v
 pytest apps/contact -v                # فقط اپ تماس
 pytest apps/accounts -v               # فقط اپ احراز هویت
@@ -568,7 +568,24 @@ CONTACT_NOTIFY_EMAIL=amirrezahajiabadi480@gmail.com
 
 ---
 
-## ۱۵) وضعیت فازها (Roadmap)
+## ۱۵) گیت — نسخه‌بندی
+
+ریشه‌ی مخزن: **ریشه‌ی پروژه** (`D:/Nexify`) — شامل `Nexify/` + اسکیل‌ها (`.agents/`, `.claude/`) + `skills-lock.json`. برنچ پیش‌فرض: `main`. اولین کامیت: `cd96bbd` (۲۵۵ فایل). پیام‌های کامیت به **انگلیسی**.
+
+- `.gitignore` دولایه: ریشه‌ی پروژه (`.freebuff/`, `__pycache__/`, ابزار/سیستم‌عامل) + `Nexify/.gitignore` (django: `db.sqlite3`, `staticfiles/`, `media/`, `media-test/`, `.env`).
+- **هرگز کامیت نکن**: `.freebuff/` (لاگ‌ها + دیتابیس داخلی ابزار — حاوی توکن ngrok)، `db.sqlite3`، `.env`، `media-test/` (خروجی تست آپلود)، `__pycache__`.
+
+```bash
+cd /d D:/Nexify
+git status                      # وضعیت فعلی
+git add <فایل‌های مرتبط>        # بدون git add -A (فایل‌های دیگر را نبر)
+git commit -m "..."             # انگلیسی + فوتر Codebuff
+git log --oneline -5
+```
+
+---
+
+## ۱۶) وضعیت فازها (Roadmap)
 
 | فاز | عنوان | وضعیت |
 |-----|-------|--------|
@@ -595,7 +612,7 @@ CONTACT_NOTIFY_EMAIL=amirrezahajiabadi480@gmail.com
 
 ---
 
-## ۱۶) قوانین طلایی برای هر AI که روی این پروژه کار می‌کند
+## ۱۷) قوانین طلایی برای هر AI که روی این پروژه کار می‌کند
 
 1. **همیشه از پوشه‌ی `Nexify/` کار کن** — همه‌ی دستورات را با `cd Nexify` اجرا کن.
 2. **هرگز CSP را نشکن**: بدون اسکریپت/استایل inline، بدون `innerHTML` با داده‌ی کاربری. تنها استثنای مجاز: `--grad` برای گرادیان‌های دیتا-محور و `--i:N` برای تأخیر انیمیشن. هر منبع خارجی جدید → به‌روزرسانی `script-src` در `base.html` + `_headers` + `nginx-security.conf`.
