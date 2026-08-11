@@ -3,6 +3,12 @@
    فیلتر دسته‌بندی + مودال جزئیات پروژه
    دیتا از data-* های کارت می‌آید که سمت سرور جنگو رندر شده
    (بدون innerHTML — امن در برابر XSS حتی با دیتای داینامیک)
+
+   U3: دسترس‌پذیری مودال —
+   - role="dialog" + aria-modal + aria-labelledby
+   - Focus trap (Tab/Shift+Tab داخل مودال می‌ماند)
+   - فوکوس اولیه روی دکمه‌ی بستن
+   - بعد از بستن، فوکوس به دکمه‌ی مبدا برمی‌گردد
    ============================================================ */
 
 /* --- فیلتر دسته‌بندی --- */
@@ -35,6 +41,20 @@ filterBtns.forEach(btn => {
 /* --- مودال جزئیات --- */
 const modalOverlay = document.getElementById('modalOverlay');
 const modalContent = document.getElementById('modalContent');
+
+/* U3: معناشناسی مودال برای Screen Reader */
+modalContent.setAttribute('role', 'dialog');
+modalContent.setAttribute('aria-modal', 'true');
+modalContent.setAttribute('aria-labelledby', 'modal-title');
+
+let lastTrigger = null;   /* دکمه‌ی مبدا — برای بازگرداندن فوکوس بعد از بستن */
+
+const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+function getFocusable(container) {
+    return [...container.querySelectorAll(FOCUSABLE_SELECTOR)]
+        .filter(n => n.getClientRects().length > 0);
+}
 
 function el(tag, className, text) {
     const node = document.createElement(tag);
@@ -89,8 +109,10 @@ function openModalFromCard(card) {
             children.push(el('div', 'modal-icon', card.dataset.icon));
         }
     }
+    const title = el('h3', 'modal-title', card.dataset.title);
+    title.id = 'modal-title';   /* U3: هدف aria-labelledby مودال */
     children.push(
-        el('h3', 'modal-title', card.dataset.title),
+        title,
         el('p', 'modal-category', card.dataset.cat),
         el('p', 'modal-desc', card.dataset.desc),
         statsWrap,
@@ -99,13 +121,28 @@ function openModalFromCard(card) {
     );
     modalContent.replaceChildren(...children);
 
+    /* U3: دکمه‌ی مبدا را برای بازگرداندن فوکوس نگه می‌داریم */
+    lastTrigger = card.querySelector('button.project-link') || card;
+
     modalOverlay.classList.add('open');
     lockScroll();
+
+    /* U3: فوکوس اولیه روی دکمه‌ی بستن */
+    closeBtn.focus();
 }
 
 function closeModal() {
     modalOverlay.classList.remove('open');
     unlockScroll();
+    /* U3: بازگرداندن فوکوس به دکمه‌ی مبدا */
+    if (lastTrigger) {
+        lastTrigger.focus();
+        lastTrigger = null;
+    }
+}
+
+function isModalOpen() {
+    return modalOverlay.classList.contains('open');
 }
 
 /* رویدادهای مودال — delegation به‌جای onclick اینلاین */
@@ -115,4 +152,29 @@ document.addEventListener('click', (e) => {
     if (trigger) { openModalFromCard(trigger.closest('.project-card')); return; }
     if (e.target.closest('.modal-close') || e.target === modalOverlay) closeModal();
 });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+/* U3: کیبورد — Esc برای بستن + Focus trap با Tab/Shift+Tab */
+document.addEventListener('keydown', (e) => {
+    if (!isModalOpen()) return;
+
+    if (e.key === 'Escape') { closeModal(); return; }
+
+    if (e.key === 'Tab') {
+        const items = getFocusable(modalContent);
+        if (!items.length) { e.preventDefault(); return; }
+        const first = items[0];
+        const last = items[items.length - 1];
+
+        if (!modalContent.contains(document.activeElement)) {
+            /* فوکوس بیرون از مودال افتاده → به داخل برمی‌گردانیم */
+            e.preventDefault();
+            (e.shiftKey ? last : first).focus();
+        } else if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+        }
+    }
+});
