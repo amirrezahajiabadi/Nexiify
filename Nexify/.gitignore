@@ -1,28 +1,52 @@
-# Python
+# ---------- Python ----------
 __pycache__/
 *.py[cod]
+*$py.class
 *.egg-info/
+*.egg
 .venv/
 venv/
+env/
+ENV/
+.env/
+.tox/
+.mypy_cache/
+.ruff_cache/
+.pytype/
 
-# Django
+# ---------- Django ----------
 db.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
 staticfiles/
 media/
 media-test/
 
-# محیط و رازها
+# ---------- محیط و رازها ----------
 .env
+.env.*
+!.env.example
 
-# ابزارها
+# ---------- ابزارها / IDE ها ----------
 .idea/
 .vscode/
-.DS_Store
+.fleet/
+*.swp
+.project
+.classpath
+.settings/
 
-# pytest و پوشش کد
+# ---------- سیستم‌عامل ----------
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ---------- pytest و پوشش کد ----------
 .pytest_cache/
 .coverage
+.coverage.*
 htmlcov/
 
-# لاگ‌ها
+# ---------- لاگ‌ها ----------
 *.log

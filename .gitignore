@@ -1,12 +1,71 @@
-# Freebuff workspace internals (logs, db, pids, settings) — never commit
+# ============================================================
+# Root .gitignore — patterns apply to the WHOLE repo (any depth)
+# Django-specific ignores live in Nexify/.gitignore
+# ============================================================
+
+# ---------- Freebuff workspace internals (logs, db, pids) — never commit ----------
 .freebuff/
 
-# Python caches (also covers .agents/ and .claude/ skill scripts)
+# ---------- Python ----------
 __pycache__/
 *.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+.eggs/
+.venv/
+venv/
+env/
+ENV/
+.env/
+build/
+dist/
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
 
-# Editor / OS noise (safety net at repo root)
+# ---------- Node / frontend tooling (safety net) ----------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.npm/
+.pnpm-store/
+.yarn/
+.eslintcache
+.stylelintcache
+.parcel-cache/
+.vite/
+
+# ---------- Environment / secrets ----------
+.env
+.env.*
+!.env.example
+
+# ---------- Editors / IDEs ----------
 .idea/
 .vscode/
+.fleet/
+*.code-workspace
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+.nbproject/
+.idea_modules/
+
+# ---------- OS ----------
 .DS_Store
 Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
