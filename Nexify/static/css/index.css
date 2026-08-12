@@ -19,8 +19,11 @@
 .stats-panel {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    background: var(--surface);
-    border: 1px solid var(--border);
+    /* شیشه‌ای: پس‌زمینه‌ی شفاف + بلور تا با بقیه‌ی صفحه ادغام شود (نه بلوک توپُر) */
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
     border-radius: 20px;
     overflow: hidden;
     position: relative;
