@@ -25,37 +25,6 @@
 </div></div></section>
 <div class="divider"></div>
 
-<section class="social-proof"><div class="container">
-    <p class="section-label reveal">مشتریان ما</p>
-    {% if client_logos %}
-    <div class="client-marquee reveal" aria-label="نام مشتریان">
-        <div class="client-marquee-track">
-            {% for c in client_logos %}<span class="client-logo-chip">{{ "❝"|icon_svg }}<span class="client-logo-name">{{ c }}</span></span>{% endfor %}
-            {% for c in client_logos %}<span class="client-logo-chip" aria-hidden="true">{{ "❝"|icon_svg }}<span class="client-logo-name">{{ c }}</span></span>{% endfor %}
-        </div>
-    </div>
-    {% endif %}
-    {% if testimonials %}
-    <div class="testimonials-grid">
-        {% for t in testimonials %}
-        <figure class="testimonial-card reveal{% if forloop.counter0 %} reveal-delay-{{ forloop.counter0 }}{% endif %}">
-            <span class="testimonial-quote-mark" aria-hidden="true">{{ "❝"|icon_svg }}</span>
-            <div class="testimonial-rating">{{ t.rating|stars }}</div>
-            <blockquote class="testimonial-text">«{{ t.text }}»</blockquote>
-            <figcaption class="testimonial-author">
-                <span class="testimonial-avatar" aria-hidden="true">{{ t.name|first }}</span>
-                <span class="testimonial-author-meta">
-                    <span class="testimonial-name">{{ t.name }}</span>
-                    {% if t.company %}<span class="testimonial-company">{{ t.company }}</span>{% endif %}
-                </span>
-            </figcaption>
-        </figure>
-        {% endfor %}
-    </div>
-    {% endif %}
-</div></section>
-<div class="divider"></div>
-
 <section><div class="container">
     <p class="section-label reveal">خدمات ما</p>
     <div class="services-bento">
@@ -103,87 +72,35 @@
 </div></section>
 <div class="divider"></div>
 
-<section class="industry-solutions"><div class="container">
-    <p class="section-label reveal">راه‌حل بر اساس صنعت</p>
-    <div class="industry-grid">
-        <a href="{% url 'contact:index' %}?type=web-design&amp;subject=راه‌حل فینتک" class="industry-card industry-blue reveal">
-            <span class="industry-icon" aria-hidden="true">{{ "🏦"|icon_svg }}</span>
-            <div class="industry-body">
-                <h3 class="industry-title">فینتک</h3>
-                <p class="industry-desc">درگاه‌های پرداخت، داشبورد مالی و ربات‌های تحلیل بازار</p>
-            </div>
-            <span class="industry-link">دریافت راه‌حل <span aria-hidden="true">←</span></span>
-        </a>
-        <a href="{% url 'contact:index' %}?type=agent-ai&amp;subject=راه‌حل سلامت" class="industry-card industry-green reveal reveal-delay-1">
-            <span class="industry-icon" aria-hidden="true">{{ "🏥"|icon_svg }}</span>
-            <div class="industry-body">
-                <h3 class="industry-title">سلامت</h3>
-                <p class="industry-desc">نوبت‌دهی آنلاین، کلینیک مجازی و Agent پشتیبانی بیمار</p>
-            </div>
-            <span class="industry-link">دریافت راه‌حل <span aria-hidden="true">←</span></span>
-        </a>
-        <a href="{% url 'contact:index' %}?type=web-design&amp;subject=راه‌حل فروشگاه آنلاین" class="industry-card industry-orange reveal reveal-delay-2">
-            <span class="industry-icon" aria-hidden="true">{{ "🛒"|icon_svg }}</span>
-            <div class="industry-body">
-                <h3 class="industry-title">فروشگاه آنلاین</h3>
-                <p class="industry-desc">فروشگاه سریع، سبد خرید هوشمند و اتوماسیون بازاریابی</p>
-            </div>
-            <span class="industry-link">دریافت راه‌حل <span aria-hidden="true">←</span></span>
-        </a>
-        <a href="{% url 'contact:index' %}?type=mlops&amp;subject=راه‌حل لجستیک" class="industry-card industry-amber reveal reveal-delay-3">
-            <span class="industry-icon" aria-hidden="true">{{ "🚚"|icon_svg }}</span>
-            <div class="industry-body">
-                <h3 class="industry-title">لجستیک</h3>
-                <p class="industry-desc">رهگیری بلادرنگ، بهینه‌سازی مسیر و اتوماسیون انبار</p>
-            </div>
-            <span class="industry-link">دریافت راه‌حل <span aria-hidden="true">←</span></span>
-        </a>
-        <a href="{% url 'contact:index' %}?type=education&amp;subject=راه‌حل آموزش" class="industry-card industry-purple reveal reveal-delay-4">
-            <span class="industry-icon" aria-hidden="true">{{ "🎓"|icon_svg }}</span>
-            <div class="industry-body">
-                <h3 class="industry-title">آموزش</h3>
-                <p class="industry-desc">پلتفرم آموزش، تصحیح خودکار و شخصی‌سازی یادگیری</p>
-            </div>
-            <span class="industry-link">دریافت راه‌حل <span aria-hidden="true">←</span></span>
-        </a>
-        <a href="{% url 'contact:index' %}?type=mlops&amp;subject=راه‌حل تولید" class="industry-card industry-red reveal reveal-delay-5">
-            <span class="industry-icon" aria-hidden="true">{{ "🏭"|icon_svg }}</span>
-            <div class="industry-body">
-                <h3 class="industry-title">تولید</h3>
-                <p class="industry-desc">پایش خط تولید، نگهداری پیش‌بینانه و اینترنت اشیا</p>
-            </div>
-            <span class="industry-link">دریافت راه‌حل <span aria-hidden="true">←</span></span>
-        </a>
-    </div>
-</div></section>
-<div class="divider"></div>
-
-<section class="path-select" data-contact-url="{% url 'contact:index' %}"><div class="container">
-    <p class="section-label reveal">مسیرت را انتخاب کن</p>
-    <div class="path-card reveal">
-        <div class="path-step">
-            <span class="path-step-label">۱) من یک...</span>
-            <div class="path-options" role="group" aria-label="نوع کسب‌وکار">
-                <button type="button" class="path-option" data-who="store" aria-pressed="false">فروشگاه آنلاین</button>
-                <button type="button" class="path-option" data-who="startup" aria-pressed="false">استارتاپ</button>
-                <button type="button" class="path-option" data-who="company" aria-pressed="false">شرکت و سازمان</button>
-                <button type="button" class="path-option" data-who="clinic" aria-pressed="false">کلینیک و سلامت</button>
-            </div>
-        </div>
-        <div class="path-step">
-            <span class="path-step-label">۲) و می‌خواهم...</span>
-            <div class="path-options" role="group" aria-label="نیاز">
-                <button type="button" class="path-option" data-want="site" aria-pressed="false">سایت و فروشگاه بسازم</button>
-                <button type="button" class="path-option" data-want="agent" aria-pressed="false">Agent هوشمند بسازم</button>
-                <button type="button" class="path-option" data-want="mlops" aria-pressed="false">اتوماسیون و MLOps</button>
-                <button type="button" class="path-option" data-want="consult" aria-pressed="false">مشاوره بگیرم</button>
-            </div>
-        </div>
-        <div class="path-result" aria-live="polite">
-            <p class="path-result-text">گزینه‌ها را انتخاب کن تا مسیر پیشنهادی را ببینی.</p>
-            <a href="{% url 'contact:index' %}" class="btn btn-primary path-result-cta" hidden>دریافت مشاوره رایگان ←</a>
+<!-- نظرات مشتریان — طبق درخواست مشتری به انتهای صفحه (دقیقاً قبل از CTA تماس) منتقل شد -->
+<section class="social-proof"><div class="container">
+    <p class="section-label reveal">مشتریان ما</p>
+    {% if client_logos %}
+    <div class="client-marquee reveal" aria-label="نام مشتریان">
+        <div class="client-marquee-track">
+            {% for c in client_logos %}<span class="client-logo-chip">{{ "❝"|icon_svg }}<span class="client-logo-name">{{ c }}</span></span>{% endfor %}
+            {% for c in client_logos %}<span class="client-logo-chip" aria-hidden="true">{{ "❝"|icon_svg }}<span class="client-logo-name">{{ c }}</span></span>{% endfor %}
         </div>
     </div>
+    {% endif %}
+    {% if testimonials %}
+    <div class="testimonials-grid">
+        {% for t in testimonials %}
+        <figure class="testimonial-card reveal{% if forloop.counter0 %} reveal-delay-{{ forloop.counter0 }}{% endif %}">
+            <span class="testimonial-quote-mark" aria-hidden="true">{{ "❝"|icon_svg }}</span>
+            <div class="testimonial-rating">{{ t.rating|stars }}</div>
+            <blockquote class="testimonial-text">«{{ t.text }}»</blockquote>
+            <figcaption class="testimonial-author">
+                <span class="testimonial-avatar" aria-hidden="true">{{ t.name|first }}</span>
+                <span class="testimonial-author-meta">
+                    <span class="testimonial-name">{{ t.name }}</span>
+                    {% if t.company %}<span class="testimonial-company">{{ t.company }}</span>{% endif %}
+                </span>
+            </figcaption>
+        </figure>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div></section>
 <div class="divider"></div>
 

@@ -84,18 +84,18 @@ def test_index_renders_real_stats_and_testimonials(client):
 
 
 @pytest.mark.django_db
-def test_index_has_industry_solutions_and_path_select(client):
-    """فاز U6: سکشن صنایع + ویجت مسیر انتخاب در صفحه‌ی اصلی."""
+def test_index_section_order_and_u6_sections_hidden(client):
+    """سکشن‌های صنایع + مسیر انتخاب (U6) طبق درخواست مشتری حذف شدند و
+    نظرات مشتریان به انتهای صفحه (دقیقاً قبل از CTA تماس) منتقل شد."""
     content = client.get(reverse("core:index")).content.decode("utf-8")
-    # ۶ کارت صنعت
-    assert content.count("industry-card") == 6
-    assert "فینتک" in content and "سلامت" in content and "فروشگاه آنلاین" in content
-    # ویجت مسیر انتخاب
-    assert "path-card" in content
-    assert "من یک" in content and "و می‌خواهم" in content
-    assert "دریافت مشاوره رایگان" in content
-    # آیکون‌های صنعت SVG هستند نه ایموجی
-    assert "industry-icon" in content
+    # U6 موقتاً حذف شده
+    assert "industry-card" not in content
+    assert "path-card" not in content
+    assert "من یک" not in content
+    # نظرات مشتریان قبل از بخش CTA (تماس با ما) قرار دارد
+    assert content.index("مشتریان ما") < content.index("cta-title")
+    # و خدمات قبل از نظرات مشتریان است
+    assert content.index("خدمات ما") < content.index("مشتریان ما")
 
 
 @pytest.mark.django_db

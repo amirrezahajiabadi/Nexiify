@@ -224,7 +224,7 @@ Nexify/
 | `/projects/` | `apps.projects.views.project_list` | `projects:list` | نمونه‌کارها (از DB) |
 | `/blog/` | `apps.blog.views.blog_list` | `blog:list` | لیست مقالات |
 | `/blog/<slug>/` | `apps.blog.views.blog_detail` | `blog:detail` | جزئیات مقاله |
-| `/contact/` | `apps.contact.views.contact` | `contact:index` | فرم تماس + FAQ — پری‌سلکت با `?type=` (مقادیر معتبر) و `?subject=` (U6: از ویجت مسیر انتخاب صفحه‌ی اصلی) |
+| `/contact/` | `apps.contact.views.contact` | `contact:index` | فرم تماس + FAQ — پری‌سلکت با `?type=` (مقادیر معتبر) و `?subject=` (U6: از ویجت مسیر انتخاب صفحه‌ی اصلی — ویجت موقتاً از صفحه‌ی اصلی حذف شده ولی پری‌سلکت فعال است) |
 | `/accounts/login/` | `apps.accounts.views.NexifyLoginView` | `accounts:login` | ورود (مدیریت خودکار `?next=`) |
 | `/accounts/register/` | `apps.accounts.views.register` | `accounts:register` | ثبت‌نام + ورود خودکار |
 | `/accounts/logout/` | `apps.accounts.views.logout_view` | `accounts:logout` | خروج — فقط POST (CSRF-safe) |
@@ -614,6 +614,7 @@ git log --oneline -5
 | ۵ | دیپلوی (Docker، Gunicorn، Nginx، PostgreSQL، CI/CD) | ⏳ **بعدی** |
 | ۴.۱۰ | **بهبود UI/UX** — اجرای فازهای `UIUX-ROADMAP.md` (U1 کنتراست/فرم‌ها → U8 تایپوگرافی) | ✅ **U1–U9 همه انجام شد** — رودمپ UI/UX کامل (U8: وزن هیرو ۳۰۰ + spacing فارسی + سلسله‌مراتب CTA؛ U9: استانداردسازی تماس/درباره — page-title سراسری، دکمه‌های بدون spacing، چیپ‌های شیشه‌ای — ۹۹ تست) |
 | ۴.۱۱ | **رفع باگ «محتوای حذف‌شده برمی‌گردد»** — سرور توسعه هدر کش نمی‌فرستاد و مرورگر صفحات داینامیک را کش می‌کرد؛ میان‌افزار `NoStoreCacheMiddleware` در `config/middleware.py` حالا روی همه‌ی پاسخ‌های داینامیک `Cache-Control: no-store` ست می‌کند (بعد از WhiteNoise — استاتیک دست‌نخورده). اثبات: حذف رکورد + ریاستارت سرور → برنگشت. +۶ تست (۱۰۵ تست) | ✅ |
+| ۴.۱۲ | **چیدمان صفحه‌ی اصلی (درخواست مشتری، ۱۲ اوت ۲۰۲۶)** — سکشن‌های «راه‌حل بر اساس صنعت» و «مسیر انتخاب» (U6) از صفحه‌ی اصلی حذف شدند (CSS/JS عمداً حفظ شد — بازگردانی با paste HTML) و «نظرات مشتریان» به انتهای صفحه (دقیقاً قبل از CTA تماس) منتقل شد. ترتیب فعلی: هیرو → آمار → خدمات → نظرات مشتریان → CTA | ✅ |
 
 > **ریسپانسیو — خلاصه‌ی فازهای انجام‌شده (جزئیات کامل در `RESPONSIVE-ROADMAP.md`):**
 > - **R1 پایه/ایمنی**: `100dvh` منوی موبایل، safe-area ناچ، `tap-highlight` حذف، `touch-action: manipulation`، `overflow-x` بدن.
