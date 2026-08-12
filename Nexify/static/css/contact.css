@@ -2,24 +2,32 @@
    Nexify - تماس با ما (contact.html)
    ============================================================ */
 
-.contact-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.contact-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .contact-info-cards { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.info-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 14px; transition: all 0.35s ease; text-decoration: none; color: var(--text); }
-a.info-card:hover { border-color: rgba(124,58,237,0.3); background: var(--glass-bg-hover); transform: translateX(-4px); }
-.info-card-icon { width: 44px; height: 44px; background: var(--glass-bg); border: 1px solid var(--border-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; transition: all 0.35s ease; }
-a.info-card:hover .info-card-icon { border-color: var(--accent); background: rgba(124,58,237,0.1); }
-.info-card-content h4 { font-size: 0.9rem; font-weight: 500; margin-bottom: 2px; }
+/* کارت‌های اطلاعات — هم‌سبک کارت‌های شیشه‌ای جدید (شعاع ۱۸px، hover با گرادیان آیکون) */
+.info-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 22px; display: flex; align-items: center; gap: 14px; transition: all 0.35s ease; text-decoration: none; color: var(--text); }
+a.info-card:hover { border-color: rgba(124,58,237,0.45); background: var(--glass-bg-hover); transform: translateX(-4px); box-shadow: 0 16px 36px rgba(0,0,0,0.12); }
+.info-card-icon { width: 44px; height: 44px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; transition: all 0.35s ease; color: var(--text-secondary); }
+/* U8-std: گرادیان بنفش آیکون روی hover — هویت رنگی مثل کارت‌های خدمات */
+a.info-card:hover .info-card-icon {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.3), 0 8px 24px rgba(124, 58, 237, 0.35);
+    transform: scale(1.06);
+}
+.info-card-content h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 2px; }
 .info-card-content span { font-size: 0.83rem; color: var(--text-muted); font-weight: 300; }
 .social-block { margin-top: 4px; }
 .social-block-title { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; font-weight: 300; }
 .social-row { display: flex; gap: 8px; margin-top: 8px; }
 .social-dot { width: 44px; height: 44px; border: 1px solid var(--border-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease; }
-.social-dot:hover { border-color: var(--accent); color: var(--accent-light); background: rgba(124,58,237,0.08); }
+.social-dot:hover { border-color: rgba(124,58,237,0.4); color: var(--accent-light); background: rgba(124,58,237,0.08); transform: translateY(-3px); box-shadow: 0 10px 24px rgba(124,58,237,0.12); }
 .form-card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 40px; position: relative; overflow: visible; }
 .form-card::before { content: ''; position: absolute; top: -30%; right: -30%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(124,58,237,0.06) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
-.form-card h3 { font-size: 1.4rem; font-weight: 500; margin-bottom: 6px; position: relative; z-index: 1; }
-.form-subtitle { font-size: 0.88rem; color: var(--text-muted); font-weight: 300; margin-bottom: 28px; position: relative; z-index: 1; }
-.form-group { margin-bottom: 18px; position: relative; }
+.form-card h3 { font-size: 1.4rem; font-weight: 600; margin-bottom: 6px; position: relative; z-index: 1; }
+.form-subtitle { font-size: 0.88rem; color: var(--text-muted); font-weight: 300; margin-bottom: 32px; position: relative; z-index: 1; }
+.form-group { margin-bottom: 20px; position: relative; }
 .form-group-select { z-index: 20; }
 .form-group-static { z-index: 1; position: relative; }
 .form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
@@ -92,7 +100,7 @@ a.info-card:hover .info-card-icon { border-color: var(--accent); background: rgb
 .method-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .method-title { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); transition: color 0.3s ease; white-space: nowrap; }
 .method-radio:checked + .method-card .method-title { color: var(--text); font-weight: 600; }
-.method-sub { font-size: 0.7rem; color: var(--text-muted); font-weight: 300; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.method-sub { font-size: 0.72rem; color: var(--text-muted); font-weight: 300; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .method-radio:checked + .method-card .method-sub { color: rgba(167, 139, 250, 0.85); }
 /* نشان ✓ — با پاپ فنری هنگام انتخاب ظاهر می‌شود */
 .method-check .icon-svg { width: 12px; height: 12px; } /* U2: تیک SVG داخل دایره‌ی ۲۱px */
@@ -152,7 +160,7 @@ a.info-card:hover .info-card-icon { border-color: var(--accent); background: rgb
 .success-icon { font-size: 3rem; margin-bottom: 12px; }
 .success-title { font-size: 1.3rem; font-weight: 500; margin-bottom: 6px; }
 .success-desc { font-size: 0.9rem; color: var(--text-secondary); font-weight: 300; }
-.faq-section-wrap { padding: 100px 0 120px; }
+.faq-section-wrap { padding: 96px 0 112px; }
 .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; align-items: start; } /* align-items:start — کارت مقابل در ردیف مشترک کش نمی‌آید و شبیه بازشده دیده نمی‌شود */
 .faq-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; }
 .faq-card:hover { border-color: rgba(124,58,237,0.2); }

@@ -404,7 +404,8 @@ section { padding: 140px 0; position: relative; z-index: 1; }
     font-family: var(--font-sans); font-size: 0.88rem; font-weight: 500;
     text-decoration: none; cursor: pointer;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    letter-spacing: 0.3px; border: 1px solid transparent;
+    /* U8: spacing صفر — در خط فارسی فاصله‌ی بین حروف متصل را می‌شکند */
+    letter-spacing: 0; border: 1px solid transparent;
     white-space: nowrap; background: transparent;
 }
 .btn:active { transform: scale(0.97) !important; }
@@ -433,9 +434,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 5px;
     color: var(--accent-light); text-transform: uppercase; margin-bottom: 32px;
 }
+/* استاندارد U8 (هماهنگ با hero-title صفحه اصلی): وزن ۳۰۰، بدون spacing منفی، line-height ۱.۳ */
 .page-title {
-    font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 200;
-    letter-spacing: -1px; line-height: 1.1; margin-bottom: 24px; max-width: 700px;
+    font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 300;
+    letter-spacing: 0; line-height: 1.3; margin-bottom: 24px; max-width: 700px;
 }
 .page-desc { font-size: 1.1rem; color: var(--text-secondary); font-weight: 300; max-width: 500px; line-height: 2; }
 .section-label { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 5px; color: var(--accent-light); text-transform: uppercase; margin-bottom: 64px; }
