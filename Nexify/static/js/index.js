@@ -131,6 +131,51 @@ const isMobile = window.innerWidth < 768;
 if (!reducedMotion) { for (let i = 0; i < (isMobile ? 12 : 25); i++) { createParticle(); } }
 
 /* ============================================================
+   شمارنده‌ی نرم آمار — هنگام ورود به دید، از صفر تا مقدار نهایی می‌شمارد
+   (IntersectionObserver + requestAnimationFrame + easeOutExpo + ارقام فارسی)
+   CSP-safe: فقط textContent — بدون innerHTML
+   ============================================================ */
+(function () {
+    const counters = document.querySelectorAll('.stat-count[data-count]');
+    if (!counters.length) return;
+
+    const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
+    const toFa = (n) => String(n).replace(/[0-9]/g, (d) => FA_DIGITS[+d]);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const DURATION = 1600;        // ms — نرم و آرام
+    const STAGGER = 140;          // ms — تأخیر پلکانی بین آیتم‌ها
+
+    function animate(el, delay) {
+        const target = parseInt(el.dataset.count, 10) || 0;
+        if (reducedMotion) {
+            el.textContent = toFa(target);
+            return;
+        }
+        el.textContent = toFa(0);
+        const start = performance.now() + delay;
+        function frame(now) {
+            const t = Math.max(0, Math.min((now - start) / DURATION, 1));
+            const eased = 1 - Math.pow(1 - t, 4); // easeOutQuart — شروع تند، پایان نرم
+            el.textContent = toFa(Math.round(eased * target));
+            if (t < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+    }
+
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            const index = Array.prototype.indexOf.call(counters, el);
+            animate(el, index * STAGGER);
+            obs.unobserve(el);
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach((el) => obs.observe(el));
+})();
+
+/* ============================================================
    فاز U6 — ویجت مسیر انتخاب «من یک...»
    دو مرحله: نوع کسب‌وکار + نیاز → مسیر پیشنهادی + لینک تماس با پری‌سلکت
    CSP-safe: فقط textContent / classList — بدون innerHTML

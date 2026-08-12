@@ -17,11 +17,27 @@
 </div></div></section>
 <div class="divider"></div>
 
-<section><div class="container"><div class="stats-row">
-    <div class="stat-item reveal"><div class="stat-value">{{ stats.projects|fa_num }}+</div><div class="stat-label">پروژه موفق</div></div>
-    <div class="stat-item reveal reveal-delay-1"><div class="stat-value">{{ stats.clients|fa_num }}+</div><div class="stat-label">مشتری راضی</div></div>
-    <div class="stat-item reveal reveal-delay-2"><div class="stat-value">{{ stats.satisfaction|fa_num }}٪</div><div class="stat-label">رضایت مشتری</div></div>
-    <div class="stat-item reveal reveal-delay-3"><div class="stat-value">{{ stats.posts|fa_num }}+</div><div class="stat-label">مقاله منتشرشده</div></div>
+<section><div class="container"><div class="stats-panel reveal">
+    <div class="stat-item">
+        <span class="stat-icon stat-icon-purple" aria-hidden="true">{{ "🚀"|icon_svg }}</span>
+        <div class="stat-value"><span class="stat-count" data-count="{{ stats.projects }}">{{ stats.projects|fa_num }}</span>+</div>
+        <div class="stat-label">پروژه موفق</div>
+    </div>
+    <div class="stat-item">
+        <span class="stat-icon stat-icon-green" aria-hidden="true">{{ "👥"|icon_svg }}</span>
+        <div class="stat-value"><span class="stat-count" data-count="{{ stats.clients }}">{{ stats.clients|fa_num }}</span>+</div>
+        <div class="stat-label">مشتری راضی</div>
+    </div>
+    <div class="stat-item">
+        <span class="stat-icon stat-icon-amber" aria-hidden="true">{{ "⭐"|icon_svg }}</span>
+        <div class="stat-value"><span class="stat-count" data-count="{{ stats.satisfaction }}">{{ stats.satisfaction|fa_num }}</span>٪</div>
+        <div class="stat-label">رضایت مشتری</div>
+    </div>
+    <div class="stat-item">
+        <span class="stat-icon stat-icon-blue" aria-hidden="true">{{ "📚"|icon_svg }}</span>
+        <div class="stat-value"><span class="stat-count" data-count="{{ stats.posts }}">{{ stats.posts|fa_num }}</span>+</div>
+        <div class="stat-label">مقاله منتشرشده</div>
+    </div>
 </div></div></section>
 <div class="divider"></div>
 

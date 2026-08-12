@@ -79,8 +79,9 @@ def test_index_renders_real_stats_and_testimonials(client):
     assert "سارا محمدی" in content
     assert "فروشگاه آنلاین" in content
     # آمار واقعی: ۱ پروژه + ۱ مقاله + ۱ مشتری یکتا + رضایت ۹۰٪ (میانگین ۴.۵)
-    assert "۱+" in content
-    assert "۹۰٪" in content
+    # ساختار جدید: عدد داخل span.stat-count (برای شمارنده‌ی JS) + پسوند خارج از آن
+    assert 'class="stat-count" data-count="1">۱</span>+' in content
+    assert 'class="stat-count" data-count="90">۹۰</span>٪' in content
 
 
 @pytest.mark.django_db
@@ -103,7 +104,7 @@ def test_index_hides_social_proof_when_empty(client):
     content = client.get(reverse("core:index")).content.decode("utf-8")
     # بدون داده، سکشن نظرات رندر نمی‌شود و آمار صفر است
     assert "testimonial-card" not in content
-    assert "۰+" in content
+    assert content.count('class="stat-count" data-count="0"') == 4
 
 
 # ===========================================================================
