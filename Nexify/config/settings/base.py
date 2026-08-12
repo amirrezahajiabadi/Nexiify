@@ -47,6 +47,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "config.middleware.VisitTrackingMiddleware",  # آمار بازدید — بعد از SessionMiddleware (نیاز به session)
+    "config.middleware.NoStoreCacheMiddleware",  # ضد کش مرورگر صفحات داینامیک — بعد از WhiteNoise (استاتیک دست‌نخورده بماند)
 ]
 
 ROOT_URLCONF = "config.urls"

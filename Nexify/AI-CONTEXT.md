@@ -472,7 +472,7 @@ python manage.py collectstatic --noinput
 python manage.py check
 python manage.py check --deploy
 
-# ⭐ اجرای تست‌ها (۹۹ تست)
+# ⭐ اجرای تست‌ها (۱۰۵ تست)
 pytest -v
 pytest apps/contact -v                # فقط اپ تماس
 pytest apps/accounts -v               # فقط اپ احراز هویت
@@ -613,6 +613,7 @@ git log --oneline -5
 | ۴.۹ | **ممیزی UI/UX با اسکیل `ui-ux-pro-max`** — کنتراست شکست‌خورده‌ی `--text-muted`، ایموجی به‌جای آیکون، label بدون اتصال، مودال بدون focus-trap، تارگت لمس فوتر، preload فونت بیهوده + نقشه‌ی راه `UIUX-ROADMAP.md` (فازهای U1→U8) | ✅ (تحلیل) |
 | ۵ | دیپلوی (Docker، Gunicorn، Nginx، PostgreSQL، CI/CD) | ⏳ **بعدی** |
 | ۴.۱۰ | **بهبود UI/UX** — اجرای فازهای `UIUX-ROADMAP.md` (U1 کنتراست/فرم‌ها → U8 تایپوگرافی) | ✅ **U1–U9 همه انجام شد** — رودمپ UI/UX کامل (U8: وزن هیرو ۳۰۰ + spacing فارسی + سلسله‌مراتب CTA؛ U9: استانداردسازی تماس/درباره — page-title سراسری، دکمه‌های بدون spacing، چیپ‌های شیشه‌ای — ۹۹ تست) |
+| ۴.۱۱ | **رفع باگ «محتوای حذف‌شده برمی‌گردد»** — سرور توسعه هدر کش نمی‌فرستاد و مرورگر صفحات داینامیک را کش می‌کرد؛ میان‌افزار `NoStoreCacheMiddleware` در `config/middleware.py` حالا روی همه‌ی پاسخ‌های داینامیک `Cache-Control: no-store` ست می‌کند (بعد از WhiteNoise — استاتیک دست‌نخورده). اثبات: حذف رکورد + ریاستارت سرور → برنگشت. +۶ تست (۱۰۵ تست) | ✅ |
 
 > **ریسپانسیو — خلاصه‌ی فازهای انجام‌شده (جزئیات کامل در `RESPONSIVE-ROADMAP.md`):**
 > - **R1 پایه/ایمنی**: `100dvh` منوی موبایل، safe-area ناچ، `tap-highlight` حذف، `touch-action: manipulation`، `overflow-x` بدن.

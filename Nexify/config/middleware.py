@@ -39,6 +39,33 @@ class AdminSecurityHeadersMiddleware:
         return response
 
 
+class NoStoreCacheMiddleware:
+    """رفع باگ «محتوای حذف‌شده بعد از بستن/باز کردن سایت برمی‌گردد».
+
+    سرور توسعه‌ی Django هیچ هدر Cache-Control نمی‌فرستد؛ در نتیجه مرورگر/وب‌ویو
+    ممکن است صفحات داینامیک را به‌صورت heuristic کش کند و نسخه‌ی قدیمی (با
+    محتوای حذف‌شده) را بعد از بستن/باز کردن سایت یا گذشت زمان نشان دهد — حتی
+    وقتی دیتابیس درست است.
+
+    این میان‌افزار برای همه‌ی پاسخ‌های داینامیک `Cache-Control: no-store`
+    ست می‌کند (معادل استاندارد `never_cache` جنگو) تا مرورگر هر بار صفحه را
+    تازه از سرور بگیرد. چون بعد از WhiteNoise در MIDDLEWARE قرار دارد، درخواست‌های
+    استاتیک به اینجا نمی‌رسند و کش استاتیک WhiteNoise دست‌نخورده می‌ماند.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        # استاتیک هرگز به اینجا نمی‌رسد (WhiteNoise زودتر intercept می‌کند) — فقط احتیاط:
+        if request.path.startswith("/static/") or request.path.startswith("/media/"):
+            return response
+        response["Cache-Control"] = "no-store, max-age=0, must-revalidate"
+        response["Pragma"] = "no-cache"
+        return response
+
+
 # مسیرهای داخلی که بازدیدشان ثبت نمی‌شود (پنل، ادمین، استاتیک، مدیا)
 TRACKING_EXCLUDED_PREFIXES = (
     "/panel",

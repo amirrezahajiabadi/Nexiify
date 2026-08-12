@@ -28,6 +28,18 @@ def test_all_public_urls_return_200(client, url):
 
 
 @pytest.mark.django_db
+@pytest.mark.parametrize("url", ["/", "/about/", "/services/", "/projects/", "/blog/", "/contact/"])
+def test_dynamic_pages_are_not_cached_by_browser(client, url):
+    """رفع باگ «محتوای حذف‌شده بعد از بستن/باز کردن سایت برمی‌گردد» —
+    صفحات داینامیک باید Cache-Control: no-store بگیرند تا مرورگر نسخه‌ی قدیمی
+    را کش نکند (میان‌افزار NoStoreCacheMiddleware)."""
+    response = client.get(url)
+    assert response.status_code == 200
+    assert response["Cache-Control"] == "no-store, max-age=0, must-revalidate"
+    assert response["Pragma"] == "no-cache"
+
+
+@pytest.mark.django_db
 def test_index_contains_rtl_lang_and_title(client):
     response = client.get(reverse("core:index"))
     content = response.content.decode("utf-8")
