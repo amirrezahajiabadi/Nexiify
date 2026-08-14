@@ -30,6 +30,28 @@
         </div>
     </div>
 
+    {% if panel_stats %}
+    <!-- خلاصه‌ی پنل مدیریت — فقط staff -->
+    <div class="profile-panel-stats reveal reveal-delay-1">
+        <div class="profile-panel-stat">
+            <span class="profile-panel-stat-icon">{{ "✉"|icon_svg }}</span>
+            <div class="profile-panel-stat-body">
+                <span class="profile-panel-stat-value">{{ panel_stats.new_messages }}</span>
+                <span class="profile-panel-stat-label">سفارش جدید</span>
+            </div>
+            <a href="{% url 'panel:message_list' %}" class="profile-panel-stat-link">مشاهده ←</a>
+        </div>
+        <div class="profile-panel-stat">
+            <span class="profile-panel-stat-icon">{{ "💬"|icon_svg }}</span>
+            <div class="profile-panel-stat-body">
+                <span class="profile-panel-stat-value">{{ panel_stats.pending_comments }}</span>
+                <span class="profile-panel-stat-label">کامنت منتظر تأیید</span>
+            </div>
+            <span class="profile-panel-stat-sub">از {{ panel_stats.total_comments }} کل</span>
+        </div>
+    </div>
+    {% endif %}
+
     <div class="profile-grid">
         <!-- درخواست‌ها -->
         <section class="profile-panel reveal reveal-delay-1">

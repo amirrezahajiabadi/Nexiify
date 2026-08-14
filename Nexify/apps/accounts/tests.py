@@ -326,3 +326,50 @@ def test_profile_shows_user_comments(client):
     content = response.content.decode("utf-8")
     assert "دیدگاه‌های من" in content
     assert "دیدگاه من روی مقاله" in content
+
+
+@pytest.mark.django_db
+def test_profile_panel_stats_only_for_staff(client):
+    """کاربر عادی → آمار پنل در پروفایل نیست؛ staff → با شمارنده‌های درست."""
+    from datetime import date
+
+    from apps.blog.models import BlogPost, Comment
+    from apps.contact.models import ContactMessage
+
+    # کاربر عادی: آمار پنل نباید باشد
+    regular = User.objects.create_user("ali", "ali@example.com", PASSWORD)
+    client.login(username="ali", password=PASSWORD)
+    resp = client.get(reverse("accounts:profile"))
+    assert "panel_stats" not in resp.context
+    assert "سفارش جدید" not in resp.content.decode("utf-8")
+
+    # ادمین: آمار درست محاسبه شود
+    admin = User.objects.create_user("boss", "boss@example.com", PASSWORD, is_staff=True)
+    client.login(username="boss", password=PASSWORD)
+    post = BlogPost.objects.create(
+        title="مقاله", slug="article2", category="AI",
+        excerpt="خلاصه", published_at=date.today(), is_published=True,
+    )
+    Comment.objects.create(post=post, author=regular, body="منتظر تأیید", is_visible=False)
+    Comment.objects.create(post=post, author=regular, body="نمایان")
+    ContactMessage.objects.create(
+        user=regular, name="ali", email="ali@example.com",
+        contact_method="phone", phone="09123456789",
+        request_type="agent-ai", subject="ساخت Agent",
+        message="سلام", status="new",
+    )
+    ContactMessage.objects.create(
+        user=regular, name="ali", email="ali@example.com",
+        contact_method="phone", phone="09123456789",
+        request_type="consulting", subject="مشاوره",
+        message="دوم", status="done",
+    )
+
+    resp = client.get(reverse("accounts:profile"))
+    stats = resp.context["panel_stats"]
+    assert stats["new_messages"] == 1
+    assert stats["pending_comments"] == 1
+    assert stats["total_comments"] == 2
+    content = resp.content.decode("utf-8")
+    assert "سفارش جدید" in content
+    assert "کامنت منتظر تأیید" in content

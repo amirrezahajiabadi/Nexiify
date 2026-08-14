@@ -114,7 +114,7 @@ Nexify/
 │       ├── forms.py                 # LoginForm (AuthenticationForm فارسی) + RegisterForm (UserCreationForm + ایمیل + هانی‌پات)
 │       ├── views.py                 # NexifyLoginView (LoginView) + register + logout_view (POST-only)
 │       ├── urls.py                  # app_name = "accounts" (+ profile)
-│       ├── profile.html             # پروفایل: درخواست‌های من + دیدگاه‌های من + (staff) پنل مدیریت
+│       ├── profile.html             # پروفایل: درخواست‌های من + دیدگاه‌های من + (staff) خلاصه پنل + پنل مدیریت
 │       ├── apps.py  ─  tests.py
 │   └── panel/                       # ⭐ پنل ادمین سفارشی (طراحی شیشه‌ای هماهنگ با سایت) — فقط staff
 │       ├── models.py                # SiteSetting (متن‌ها) + Testimonial (نظر مشتری — فاز U5) + PageView
@@ -230,7 +230,7 @@ Nexify/
 | `/accounts/login/` | `apps.accounts.views.NexifyLoginView` | `accounts:login` | ورود (مدیریت خودکار `?next=`) |
 | `/accounts/register/` | `apps.accounts.views.register` | `accounts:register` | ثبت‌نام + ورود خودکار |
 | `/accounts/logout/` | `apps.accounts.views.logout_view` | `accounts:logout` | خروج — فقط POST (CSRF-safe) |
-| `/accounts/profile/` | `apps.accounts.views.profile` | `accounts:profile` | پروفایل کاربر (لاگین الزامی) — درخواست‌های تماس + دیدگاه‌ها + لینک پنل برای staff |
+| `/accounts/profile/` | `apps.accounts.views.profile` | `accounts:profile` | پروفایل کاربر (لاگین الزامی) — درخواست‌های تماس + دیدگاه‌ها + لینک پنل + **آمار خلاصه‌ی پنل** برای staff |
 | `/admin/` | Django Admin | — | پنل مدیریت جنگو |
 | `/panel/` | `apps.panel.views.dashboard` | `panel:dashboard` | ⭐ پنل ادمین سفارشی (فقط staff — مهمان → ورود) |
 | `/panel/blog/` (+new/`<pk>`/toggle/delete) | `apps.panel.views` | `panel:blog_*` | مدیریت و انتشار مقالات |
@@ -475,7 +475,7 @@ python manage.py collectstatic --noinput
 python manage.py check
 python manage.py check --deploy
 
-# ⭐ اجرای تست‌ها (۱۱۴ تست)
+# ⭐ اجرای تست‌ها (۱۱۵ تست)
 pytest -v
 pytest apps/contact -v                # فقط اپ تماس
 pytest apps/accounts -v               # فقط اپ احراز هویت
@@ -619,7 +619,7 @@ git log --oneline -5
 | ۴.۱۱ | **رفع باگ «محتوای حذف‌شده برمی‌گردد»** — سرور توسعه هدر کش نمی‌فرستاد و مرورگر صفحات داینامیک را کش می‌کرد؛ میان‌افزار `NoStoreCacheMiddleware` در `config/middleware.py` حالا روی همه‌ی پاسخ‌های داینامیک `Cache-Control: no-store` ست می‌کند (بعد از WhiteNoise — استاتیک دست‌نخورده). اثبات: حذف رکورد + ریاستارت سرور → برنگشت. +۶ تست (۱۰۵ تست) | ✅ |
 | ۴.۱۲ | **چیدمان صفحه‌ی اصلی (درخواست مشتری، ۱۲ اوت ۲۰۲۶)** — سکشن‌های «راه‌حل بر اساس صنعت» و «مسیر انتخاب» (U6) از صفحه‌ی اصلی حذف شدند (CSS/JS عمداً حفظ شد — بازگردانی با paste HTML) و «نظرات مشتریان» به انتهای صفحه (دقیقاً قبل از CTA تماس) منتقل شد. ترتیب فعلی: هیرو → آمار → خدمات → نظرات مشتریان → CTA | ✅ |
 | ۴.۱۳ | **بازطراحی آمار صفحه‌ی اصلی (۱۲ اوت ۲۰۲۶)** — پنل شیشه‌ای (`--glass-bg` + `blur(16px)` + بوردر نیمه‌شفاف — با صفحه ادغام می‌شود نه بلوک توپُر) + خط نور بالایی + جداکننده‌های درست در RTL + آیکون‌های هویتی رنگی (🚀 بنفش / 👥 سبز / ⭐ کهربایی / 📚 آبی — گرادیان روی hover) + **شمارنده‌ی نرم** (index.js: IntersectionObserver + rAF + easeOutQuart ۱.۶s + تأخیر پلکانی ۱۴۰ms + ارقام فارسی + `tabular-nums` + reduced-motion → مقدار نهایی). موبایل: ۲×۲ با جداکننده‌های اصلاح‌شده. تست‌های آمار به ساختار `span.stat-count` به‌روز شدند (۱۰۵ تست) | ✅ |
-| ۴.۱۴ | **هدر + پروفایل کاربر (اوت ۲۰۲۶)** — ۱) رفع باگ آیکون ماه در دارک‌مود: `.theme-toggle` بدون `color` صریح بود → UA button رنگ سیاه می‌داد؛ حالا `color: var(--text)` + سایز SVG 20px. ۲) چیپ نام کاربری در نوبار **لینک به `accounts:profile`** شد؛ دکمه‌ی «پنل مدیریت» از هدر حذف و فقط داخل پروفایل برای staff نمایش داده می‌شود. ۳) صفحه‌ی پروفایل (`profile.html`): آواتار SVG + «درخواست‌های من» (`ContactMessage.user` — وقتی لاگین باشد به کاربر وصل می‌شود) + «دیدگاه‌های من» (مدل جدید `Comment` بلاگ — `apps/blog/models.py` + فرم + نمایش در `blog_detail`) + وضعیت پیام (new/in_progress/done). ۴) فاصله‌گذاری هدر بهینه (nav-links 34px، nav-auth gap 12px). +۹ تست (۱۱۴ تست) | ✅ |
+| ۴.۱۴ | **هدر + پروفایل کاربر (اوت ۲۰۲۶)** — ۱) رفع باگ آیکون ماه در دارک‌مود: `.theme-toggle` بدون `color` صریح بود → UA button رنگ سیاه می‌داد؛ حالا `color: var(--text)` + سایز SVG 20px. ۲) چیپ نام کاربری در نوبار **لینک به `accounts:profile`** شد؛ دکمه‌ی «پنل مدیریت» از هدر حذف و فقط داخل پروفایل برای staff نمایش داده می‌شود. ۳) صفحه‌ی پروفایل (`profile.html`): آواتار SVG + «درخواست‌های من» (`ContactMessage.user` — وقتی لاگین باشد به کاربر وصل می‌شود) + «دیدگاه‌های من» (مدل جدید `Comment` بلاگ — `apps/blog/models.py` + فرم + نمایش در `blog_detail`) + وضعیت پیام (new/in_progress/done). ۴) فاصله‌گذاری هدر بهینه (nav-links 34px، nav-auth gap 12px). ۵) **آمار خلاصه‌ی پنل در پروفایل staff** (`.profile-panel-stats`): سفارش‌های جدید (`status="new"`، لینک به `panel:message_list`) + کامنت‌های منتظر تأیید (`is_visible=False`). +۱۰ تست (۱۱۵ تست) | ✅ |
 | ۴.۱۴ | **بازطراحی «فرآیند همکاری» صفحه‌ی خدمات (۱۲ اوت ۲۰۲۶)** — بج‌های شیشه‌ای دایره‌ای با **اعداد انگلیسی** ۰۱–۰۴ (خطاها: فارسی بود → انگلیسی) + خط اتصال گرادیانی که هنگام ورود به دید رسم می‌شود (scaleX با origin راست در RTL) + پاپ فنری پلکانی بج‌ها (easeOutBack + تأخیر ۲۰۰ms — با `nth-of-type` چون `.process-line` شاخص `nth-child` را جابه‌جا می‌کرد، باگ وسط انیمیشن پیدا و رفع شد) + hover گرادیان بنفش. خط با `calc((100% - 72px)/8)` دقیقاً به مرکز بج اول/آخر تراز است (گپ ۲۴px ستون‌ها را می‌کشد). موبایل: عمودی با اتصال‌های scaleY بین قدم‌ها. reduced-motion → حالت نهایی. فقط CSS + مکانیزم reveal موجود (بدون JS جدید) | ✅ |
 
 > **ریسپانسیو — خلاصه‌ی فازهای انجام‌شده (جزئیات کامل در `RESPONSIVE-ROADMAP.md`):**

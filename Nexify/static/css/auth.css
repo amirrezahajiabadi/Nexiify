@@ -265,6 +265,33 @@
 .profile-email { font-size: 0.85rem; color: var(--text-secondary); font-weight: 300; }
 .profile-joined { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
 .profile-actions { display: flex; gap: 12px; align-items: center; }
+/* خلاصه‌ی پنل مدیریت — فقط staff */
+.profile-panel-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin-bottom: 32px;
+}
+.profile-panel-stat {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 22px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 18px;
+    transition: border-color 0.3s, transform 0.3s;
+}
+.profile-panel-stat:hover { border-color: rgba(124, 58, 237, 0.35); transform: translateY(-2px); }
+.profile-panel-stat-icon {
+    flex-shrink: 0; display: grid; place-items: center;
+    width: 44px; height: 44px; border-radius: 12px;
+    color: var(--accent-light); background: rgba(124, 58, 237, 0.1);
+}
+.profile-panel-stat-icon .icon-svg { width: 20px; height: 20px; }
+.profile-panel-stat-body { display: flex; flex-direction: column; gap: 2px; }
+.profile-panel-stat-value { font-size: 1.5rem; font-weight: 600; line-height: 1; }
+.profile-panel-stat-label { font-size: 0.75rem; color: var(--text-muted); }
+.profile-panel-stat-link {
+    margin-inline-start: auto; font-size: 0.75rem; color: var(--accent-light); text-decoration: none;
+    white-space: nowrap;
+}
+.profile-panel-stat-sub { margin-inline-start: auto; font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
+@media (max-width: 640px) { .profile-panel-stats { grid-template-columns: 1fr; } }
 .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .profile-panel {
     background: var(--surface); border: 1px solid var(--border); border-radius: 20px;

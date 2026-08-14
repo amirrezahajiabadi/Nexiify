@@ -66,11 +66,21 @@ def logout_view(request):
 
 @login_required
 def profile(request):
-    """پروفایل کاربر: درخواست‌های ارسالی + دیدگاه‌هایش + (برای staff) لینک پنل مدیریت."""
+    """پروفایل کاربر: درخواست‌های ارسالی + دیدگاه‌هایش + (برای staff) لینک پنل مدیریت + آمار پنل."""
     messages_qs = request.user.contact_messages.order_by("-created_at")
     comments = request.user.blog_comments.select_related("post").order_by("-created_at")
-    return render(
-        request,
-        "accounts/profile.html",
-        {"user_messages": messages_qs, "user_comments": comments},
-    )
+
+    ctx = {"user_messages": messages_qs, "user_comments": comments}
+
+    # آمار خلاصه‌ی پنل — فقط برای staff (کامنت‌های مخفی = منتظر تأیید)
+    if request.user.is_staff:
+        from apps.blog.models import Comment
+        from apps.contact.models import ContactMessage
+
+        ctx["panel_stats"] = {
+            "new_messages": ContactMessage.objects.filter(status="new").count(),
+            "pending_comments": Comment.objects.filter(is_visible=False).count(),
+            "total_comments": Comment.objects.count(),
+        }
+
+    return render(request, "accounts/profile.html", ctx)
