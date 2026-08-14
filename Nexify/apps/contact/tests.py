@@ -135,7 +135,7 @@ def test_get_renders_form_and_context(client):
     assert isinstance(response.context["form"], ContactForm)
     # فقط FAQ های منتشرشده
     assert len(response.context["faqs"]) == 1
-    # ۷ گزینه‌ی نوع درخواست
+    # همه‌ی گزینه‌های نوع درخواست
     assert len(response.context["options"]) == len(ContactMessage.REQUEST_TYPES)
     # CSRF توکن در فرم
     assert b"csrfmiddlewaretoken" in response.content
@@ -299,7 +299,7 @@ def test_contact_message_str_and_ordering():
     )
     # مرتب‌سازی نزولی بر اساس تاریخ ایجاد
     assert list(ContactMessage.objects.all()) == [second, first]
-    assert str(first) == "علی محمدی — طراحی سایت"
+    assert str(first) == "علی محمدی — طراحی وب"
 
 
 @pytest.mark.django_db

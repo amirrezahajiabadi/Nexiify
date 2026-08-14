@@ -29,6 +29,20 @@
 .service-reveal-card-soon:hover .service-reveal-tag { border-color: rgba(251, 191, 36, 0.35); background: rgba(251, 191, 36, 0.06); }
 .service-reveal-card-soon .service-reveal-icon { animation: soonSpin 6s linear infinite; }
 .service-reveal-card-soon:hover .service-reveal-icon { animation-duration: 1.2s; }
+/* اسکیل مکمل (طراحی وب/اپ) — بج ظریف خاکستری برای تمایز از تمرکز اصلی */
+.side-skill-badge {
+    display: inline-block;
+    vertical-align: middle;
+    margin-inline-start: 6px;
+    padding: 2px 8px;
+    border: 1px solid var(--border-light);
+    border-radius: 50px;
+    font-size: 0.62rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    background: rgba(128, 128, 128, 0.06);
+    white-space: nowrap;
+}
 @media (prefers-reduced-motion: reduce) {
     .service-reveal-card-soon .service-reveal-icon { animation: none; }
     .coming-soon-badge { box-shadow: 0 0 10px rgba(251, 191, 36, 0.3); }

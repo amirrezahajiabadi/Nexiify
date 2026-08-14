@@ -14,11 +14,12 @@ logger = logging.getLogger(__name__)
 
 # آیکون‌های نمایشی هر نوع درخواست (فقط UI) — کلیدهای نگاشت به SVG در apps/core/icons.py
 REQUEST_TYPE_ICONS = {
+    "agent-ai": "🤖",
+    "automation": "⚡",
+    "mlops": "⚙️",
     "consulting": "🧠",
     "web-design": "🌐",
     "app-development": "📱",
-    "agent-ai": "🤖",
-    "mlops": "⚙️",
     "education": "📚",
     "other": "💡",
 }

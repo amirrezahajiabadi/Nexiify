@@ -7,15 +7,16 @@
 {% block extra_css %}<link rel="stylesheet" href="{% static 'css/projects.css' %}">{% endblock %}
 
 {% block content %}
-<section class="page-header"><div class="container"><p class="page-label reveal">Our Work</p><h1 class="page-title reveal reveal-delay-1">پروژه‌های <span class="accent-text">اخیر</span></h1><p class="page-desc reveal reveal-delay-2">مجموعه‌ای از پروژه‌های متنوع در حوزه طراحی سایت، هوش مصنوعی و MLOps</p></div></section>
+<section class="page-header"><div class="container"><p class="page-label reveal">Our Work</p><h1 class="page-title reveal reveal-delay-1">پروژه‌های <span class="accent-text">اخیر</span></h1><p class="page-desc reveal reveal-delay-2">نمونه‌کارهای ما در ساخت Agent هوش مصنوعی، اتوماسیون و وب</p></div></section>
 <div class="divider"></div>
 
 <section class="projects-section"><div class="container">
     <div class="filter-bar reveal">
         <button class="filter-btn active" data-filter="all">همه</button>
-        <button class="filter-btn" data-filter="web">طراحی سایت</button>
         <button class="filter-btn" data-filter="ai">Agent AI</button>
-        <button class="filter-btn filter-btn-soon" data-filter="mlops">MLOps <span class="coming-soon-badge">به‌زودی</span></button>
+        <button class="filter-btn" data-filter="automation">اتوماسیون</button>
+        <button class="filter-btn filter-btn-soon" data-filter="mlops">استقرار مدل <span class="coming-soon-badge">به‌زودی</span></button>
+        <button class="filter-btn" data-filter="web">طراحی وب</button>
         <button class="filter-btn" data-filter="app">اپلیکیشن</button>
     </div>
     <div class="projects-grid" id="projectsGrid">

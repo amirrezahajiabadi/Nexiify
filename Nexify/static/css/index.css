@@ -175,14 +175,46 @@
     color: #1c1917;
     box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.3), 0 8px 24px rgba(251, 191, 36, 0.3);
 }
-/* هویت رنگی هر سرویس — گرادیان hover آیکون متمایز (پیش‌فرض بنفش برای مشاوره AI) */
+/* هویت رنگی هر سرویس — گرادیان hover آیکون متمایز */
 .service-card-green:hover .service-card-icon {
     background: linear-gradient(135deg, #10b981, #059669);
     box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.3), 0 8px 24px rgba(16, 185, 129, 0.35);
 }
+/* اتوماسیون — فیروزه‌ای (n8n) */
+.service-card-cyan:hover .service-card-icon {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.3), 0 8px 24px rgba(6, 182, 212, 0.35);
+}
+.service-card-cyan:hover { border-color: rgba(6, 182, 212, 0.5); }
+.service-card-cyan:hover .service-card-title { color: #22d3ee; }
+.service-card-cyan:hover .service-card-arrow { color: #22d3ee; }
+.service-card-cyan:hover .service-card-tag { border-color: rgba(6, 182, 212, 0.35); background: rgba(6, 182, 212, 0.06); }
+.service-card-cyan::after { background: linear-gradient(90deg, #06b6d4, #22d3ee); }
+.service-card-cyan::before { background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(6, 182, 212, 0.16) 0%, transparent 65%); }
+/* مشاوره — بنفش صریح */
+.service-card-purple:hover .service-card-icon {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.3), 0 8px 24px rgba(124, 58, 237, 0.35);
+}
+.service-card-purple:hover .service-card-title { color: #a78bfa; }
+.service-card-purple:hover .service-card-arrow { color: #a78bfa; }
 .service-card-blue:hover .service-card-icon {
     background: linear-gradient(135deg, #3b82f6, #2563eb);
     box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3), 0 8px 24px rgba(59, 130, 246, 0.35);
+}
+/* اسکیل مکمل (طراحی وب/اپ) — بج ظریف خاکستری */
+.side-skill-badge {
+    display: inline-block;
+    vertical-align: middle;
+    margin-inline-start: 6px;
+    padding: 2px 8px;
+    border: 1px solid var(--border-light);
+    border-radius: 50px;
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    background: rgba(128, 128, 128, 0.06);
+    white-space: nowrap;
 }
 
 .service-card-title { font-size: 1.1rem; font-weight: 500; margin-bottom: 8px; transition: color 0.3s ease; }
@@ -195,8 +227,8 @@
 .service-card-arrow { position: absolute; top: 24px; left: 24px; font-size: 1.1rem; color: var(--text-muted); opacity: 0; transform: translateX(8px); transition: opacity 0.35s ease, transform 0.35s ease, color 0.3s ease; z-index: 1; }
 .service-card:hover .service-card-arrow { opacity: 1; transform: translateX(0); color: var(--accent-light); }
 
-/* کارت CTA (دعوت به تماس) */
-.service-card-cta { background: transparent; border: 1px dashed var(--border-light); justify-content: center; align-items: center; cursor: pointer; }
+/* کارت CTA (دعوت به تماس) — تمام‌عرض در پایین بنتو */
+.service-card-cta { grid-column: 1 / -1; min-height: 96px; background: transparent; border: 1px dashed var(--border-light); justify-content: center; align-items: center; cursor: pointer; }
 .service-card-cta::before { display: none; }
 .service-card-cta:hover { border-color: var(--accent); border-style: solid; background: rgba(124, 58, 237, 0.03); transform: translateY(-4px); }
 .service-card-cta-inner { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; position: relative; z-index: 1; }

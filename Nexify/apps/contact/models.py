@@ -5,11 +5,12 @@ class ContactMessage(models.Model):
     """پیام ارسالی از فرم تماس — در ادمین جنگو مدیریت می‌شود."""
 
     REQUEST_TYPES = [
-        ("consulting", "مشاوره رایگان"),
-        ("web-design", "طراحی سایت"),
+        ("agent-ai", "ساخت Agent هوش مصنوعی"),
+        ("automation", "پکیج اتوماسیون آماده (n8n)"),
+        ("mlops", "استقرار مدل هوش مصنوعی"),
+        ("consulting", "مشاوره هوش مصنوعی"),
+        ("web-design", "طراحی وب"),
         ("app-development", "طراحی اپلیکیشن"),
-        ("agent-ai", "ساخت Agent AI"),
-        ("mlops", "MLOps و استقرار مدل"),
         ("education", "آموزش"),
         ("other", "سایر موارد"),
     ]
