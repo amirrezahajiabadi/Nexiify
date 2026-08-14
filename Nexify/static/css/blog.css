@@ -45,5 +45,21 @@
 .blog-article-content p { margin-bottom: 18px; }
 .blog-article-footer { text-align: center; }
 @media (max-width:640px) { .blog-article-cover { height: 180px; font-size: 3.5rem; margin-bottom: 28px; } }
+
+/* --- کامنت‌ها (دیدگاه‌ها) --- */
+.comments-list { max-width: 760px; margin: 0 auto 36px; display: flex; flex-direction: column; gap: 14px; }
+.comment-item { display: flex; gap: 14px; padding: 20px 22px; background: var(--surface); border: 1px solid var(--border-light); border-radius: 16px; }
+.comment-avatar { flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; font-size: 0.95rem; font-weight: 600; color: #fff; background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+.comment-body { min-width: 0; }
+.comment-meta { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+.comment-author { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+.comment-date { font-size: 0.72rem; color: var(--text-muted); }
+.comment-text { font-size: 0.88rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; }
+.comment-form-wrap { max-width: 760px; margin: 0 auto; padding: 28px; background: var(--surface); border: 1px solid var(--border-light); border-radius: 18px; }
+.comment-form-title { font-size: 1rem; font-weight: 600; margin-bottom: 16px; }
+.comment-form textarea { width: 100%; min-height: 100px; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border-light); border-radius: 12px; color: var(--text); font-family: var(--font-sans); font-size: 0.9rem; resize: vertical; transition: border-color 0.3s; margin-bottom: 14px; }
+.comment-form textarea:focus { outline: none; border-color: var(--accent); }
+.comment-form textarea::placeholder { color: var(--text-muted); }
+.comment-login-hint { font-size: 0.9rem; color: var(--text-secondary); font-weight: 300; text-align: center; }
 @media (max-width:1024px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width:640px) { .blog-grid { grid-template-columns: 1fr; } .blog-image { height: 160px; font-size: 2.5rem; } .newsletter-card { padding: 40px 24px; } .newsletter-form { flex-direction: column; } .newsletter-form .btn { justify-content: center; } .newsletter-section { padding: 80px 0; } }

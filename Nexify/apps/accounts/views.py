@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
@@ -61,3 +62,15 @@ def logout_view(request):
         auth_logout(request)
         return redirect(settings.LOGOUT_REDIRECT_URL)
     return redirect("accounts:login")
+
+
+@login_required
+def profile(request):
+    """پروفایل کاربر: درخواست‌های ارسالی + دیدگاه‌هایش + (برای staff) لینک پنل مدیریت."""
+    messages_qs = request.user.contact_messages.order_by("-created_at")
+    comments = request.user.blog_comments.select_related("post").order_by("-created_at")
+    return render(
+        request,
+        "accounts/profile.html",
+        {"user_messages": messages_qs, "user_comments": comments},
+    )

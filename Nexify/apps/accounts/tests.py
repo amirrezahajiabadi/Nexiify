@@ -251,3 +251,78 @@ def test_navbar_shows_username_and_logout_for_user(client):
     assert reverse("accounts:logout") in content
     # دکمه‌های ورود/ثبت‌نام دیگر نمایش داده نمی‌شوند
     assert reverse("accounts:login") not in content
+    # دکمه‌ی «پنل مدیریت» از هدر حذف شد — فقط از پروفایل در دسترس است
+    assert reverse("panel:dashboard") not in content
+
+
+# ===========================================================================
+# پروفایل
+# ===========================================================================
+
+@pytest.mark.django_db
+def test_profile_requires_login(client):
+    """کاربر مهمان → ریدایرکت به صفحه‌ی ورود."""
+    response = client.get(reverse("accounts:profile"))
+    assert response.status_code == 302
+    assert reverse("accounts:login") in response.url
+
+
+@pytest.mark.django_db
+def test_profile_renders_user_data(client):
+    """پروفایل: نام کاربری + درخواست‌هایش + لینک پنل فقط برای staff."""
+    user = User.objects.create_user("ali", "ali@example.com", PASSWORD)
+    client.login(username="ali", password=PASSWORD)
+
+    # یک پیام تماس وصل به این کاربر
+    from apps.contact.models import ContactMessage
+
+    ContactMessage.objects.create(
+        user=user, name="ali", email="ali@example.com",
+        contact_method="phone", phone="09123456789",
+        request_type="agent-ai", subject="ساخت Agent",
+        message="سلام، نیاز به یک Agent دارم.",
+    )
+
+    response = client.get(reverse("accounts:profile"))
+    assert response.status_code == 200
+    content = response.content.decode("utf-8")
+    assert user.username in content
+    assert "درخواست‌های من" in content
+    assert "ساخت Agent" in content
+    # کاربر عادی → لینک پنل مدیریت نمایش داده نمی‌شود
+    assert reverse("panel:dashboard") not in content
+
+
+@pytest.mark.django_db
+def test_profile_shows_admin_panel_link_for_staff(client):
+    """کاربر staff → لینک پنل مدیریت فقط در پروفایل دیده می‌شود (نه در هدر)."""
+    user = User.objects.create_user(
+        "admin", "admin@example.com", PASSWORD, is_staff=True
+    )
+    client.login(username="admin", password=PASSWORD)
+
+    response = client.get(reverse("accounts:profile"))
+    assert response.status_code == 200
+    assert reverse("panel:dashboard") in response.content.decode("utf-8")
+
+
+@pytest.mark.django_db
+def test_profile_shows_user_comments(client):
+    """پروفایل: دیدگاه‌های کاربر نمایش داده می‌شوند."""
+    from datetime import date
+
+    from apps.blog.models import BlogPost, Comment
+
+    user = User.objects.create_user("ali", "ali@example.com", PASSWORD)
+    client.login(username="ali", password=PASSWORD)
+    post = BlogPost.objects.create(
+        title="مقاله", slug="article", category="AI",
+        excerpt="خلاصه", published_at=date.today(), is_published=True,
+    )
+    Comment.objects.create(post=post, author=user, body="دیدگاه من روی مقاله")
+
+    response = client.get(reverse("accounts:profile"))
+    assert response.status_code == 200
+    content = response.content.decode("utf-8")
+    assert "دیدگاه‌های من" in content
+    assert "دیدگاه من روی مقاله" in content

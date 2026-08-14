@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -30,6 +31,15 @@ class ContactMessage(models.Model):
 
     name = models.CharField(max_length=100, verbose_name="نام و نام خانوادگی")
     email = models.EmailField(verbose_name="ایمیل")
+    # اتصال پیام به کاربر ثبت‌نام‌شده (اگر ارسال‌کننده لاگین بوده باشد) — برای صفحه‌ی پروفایل
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="contact_messages",
+        verbose_name="کاربر ارسال‌کننده",
+    )
     status = models.CharField(
         max_length=20, choices=STATUSES, default="new", verbose_name="وضعیت پیگیری"
     )

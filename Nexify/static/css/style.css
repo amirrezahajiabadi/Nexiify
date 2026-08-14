@@ -104,7 +104,7 @@ section { padding: 140px 0; position: relative; z-index: 1; }
 }
 @keyframes dotPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-.nav-links { display: flex; list-style: none; gap: 40px; align-items: center; }
+.nav-links { display: flex; list-style: none; gap: 34px; align-items: center; }
 .nav-link {
     color: var(--text-secondary); text-decoration: none; font-size: 0.83rem;
     font-weight: 400; letter-spacing: 0.5px; transition: color 0.3s;
@@ -127,16 +127,19 @@ section { padding: 140px 0; position: relative; z-index: 1; }
     background: none; border: 1px solid var(--border-light);
     width: 44px; height: 44px; border-radius: 50%; cursor: pointer; /* U4: تارگت لمسی ≥۴۴px */
     font-size: 1rem; display: flex; align-items: center; justify-content: center;
+    color: var(--text); /* رفع باگ: بدون color صریح، UA استایل button رنگ سیاه می‌داد → ماه در دارک‌مود دیده نمی‌شد */
     transition: all 0.3s ease; margin-right: 12px;
     flex-shrink: 0; /* U4: در هدر شلوغ موبایل جمع نشود */
 }
+.theme-toggle .icon-svg { width: 20px; height: 20px; }
+.theme-toggle:hover { color: var(--accent-light); border-color: var(--accent); }
 .theme-toggle:hover { border-color: var(--accent); }
 .theme-icon-dark { display: inline; }
 .theme-icon-light { display: none; }
 [data-theme="light"] .theme-icon-dark { display: none; }
 [data-theme="light"] .theme-icon-light { display: inline; }
 
-.mobile-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; width: 44px; height: 44px; padding: 0; align-items: center; justify-content: center; z-index: 101; transition: opacity 0.3s; flex-shrink: 0; } /* U4: تارگت لمسی ≥۴۴px */
+.mobile-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; width: 44px; height: 44px; padding: 0; align-items: center; justify-content: center; z-index: 101; transition: opacity 0.3s, color 0.3s; flex-shrink: 0; } /* U4: تارگت لمسی ≥۴۴px */
 .mobile-toggle:hover { opacity: 0.7; }
 
 /* ==================== Auth Buttons (ورود / ثبت‌نام) ====================
@@ -147,8 +150,8 @@ section { padding: 140px 0; position: relative; z-index: 1; }
 .nav-auth {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-right: 16px;
+    gap: 12px;
+    margin-right: 20px;
 }
 .auth-btn {
     position: relative;
@@ -258,6 +261,7 @@ section { padding: 140px 0; position: relative; z-index: 1; }
     font-size: 0.82rem;
     font-weight: 500;
     white-space: nowrap;
+    text-decoration: none; /* چیپ حالا لینک به پروفایل است */
     animation: userChipIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
     transform-origin: right center;
     transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;

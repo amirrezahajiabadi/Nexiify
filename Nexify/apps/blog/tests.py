@@ -121,3 +121,76 @@ def test_detail_404_for_unpublished_post(client):
 def test_detail_404_for_unknown_slug(client):
     response = client.get(reverse("blog:detail", args=["does-not-exist"]))
     assert response.status_code == 404
+
+
+# ===========================================================================
+# کامنت‌ها
+# ===========================================================================
+
+from django.contrib.auth.models import User
+
+from .models import Comment
+
+
+@pytest.mark.django_db
+def test_comment_str_and_ordering():
+    post = make_post()
+    user = User.objects.create_user("ali", "a@e.com", "StrongPass123!")
+    first = Comment.objects.create(post=post, author=user, body="اول")
+    second = Comment.objects.create(post=post, author=user, body="دوم")
+    assert list(post.comments.all()) == [first, second]
+    assert str(first) == "ali — مقاله"
+
+
+@pytest.mark.django_db
+def test_detail_shows_only_visible_comments(client):
+    post = make_post()
+    user = User.objects.create_user("ali", "a@e.com", "StrongPass123!")
+    Comment.objects.create(post=post, author=user, body="نمایش داده می‌شود")
+    Comment.objects.create(post=post, author=user, body="نباید دیده شود", is_visible=False)
+
+    response = client.get(reverse("blog:detail", args=[post.slug]))
+    content = response.content.decode("utf-8")
+    assert "نمایش داده می‌شود" in content
+    assert "نباید دیده شود" not in content
+    # مهمان → فرم کامنت نیست ولی لینک ورود دارد
+    assert "comment-login-hint" in content
+    assert reverse("accounts:login") in content
+
+
+@pytest.mark.django_db
+def test_guest_cannot_post_comment(client):
+    post = make_post()
+    response = client.post(
+        reverse("blog:detail", args=[post.slug]), {"body": "کامنت مهمان"}
+    )
+    assert response.status_code == 302
+    assert Comment.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_authenticated_user_can_post_comment(client):
+    post = make_post()
+    User.objects.create_user("ali", "a@e.com", "StrongPass123!")
+    client.login(username="ali", password="StrongPass123!")
+
+    response = client.post(
+        reverse("blog:detail", args=[post.slug]), {"body": "کامنت من"}
+    )
+    assert response.status_code == 302
+    comment = Comment.objects.get()
+    assert comment.body == "کامنت من"
+    assert comment.author.username == "ali"
+    assert comment.post == post
+    assert comment.is_visible is True
+
+
+@pytest.mark.django_db
+def test_comment_short_body_rejected(client):
+    post = make_post()
+    User.objects.create_user("ali", "a@e.com", "StrongPass123!")
+    client.login(username="ali", password="StrongPass123!")
+
+    response = client.post(reverse("blog:detail", args=[post.slug]), {"body": "ک"})
+    assert response.status_code == 200  # فرم با خطا دوباره رندر می‌شود
+    assert Comment.objects.count() == 0

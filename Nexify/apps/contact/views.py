@@ -56,7 +56,11 @@ def contact(request):
             return render(request, "contact.html", context)
 
         if form.is_valid():
-            message = form.save()
+            message = form.save(commit=False)
+            # اگر کاربر لاگین کرده، پیام به پروفایل او وصل می‌شود (صفحه‌ی «درخواست‌های من»)
+            if request.user.is_authenticated:
+                message.user = request.user
+            message.save()
             _notify_by_email(message)
             notify_contact_message(message)
             context.update({"form": ContactForm(), "success": True})

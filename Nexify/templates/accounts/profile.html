@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{% load core_extras %}
+
+{% block title %}پروفایل {{ user.username }} | Nexify{% endblock %}
+{% block meta %}<meta name="description" content="پروفایل کاربری Nexify - درخواست‌ها و دیدگاه‌های من">{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/auth.css' %}">{% endblock %}
+
+{% block content %}
+<section class="page-header"><div class="container">
+    <p class="page-label reveal">My Profile</p>
+    <h1 class="page-title reveal reveal-delay-1">پروفایل <span class="accent-text">{{ user.username }}</span></h1>
+    <p class="page-desc reveal reveal-delay-2">درخواست‌ها و دیدگاه‌های تو در یک‌جا.</p>
+</div></section>
+<div class="divider"></div>
+
+<section class="profile-section"><div class="container">
+
+    <!-- هدر پروفایل: آواتار + اطلاعات + (برای ادمین) ورود به پنل -->
+    <div class="profile-card reveal">
+        <span class="profile-avatar" aria-hidden="true"><svg class="auth-user-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+        <div class="profile-head-info">
+            <h2 class="profile-username">{{ user.username }}</h2>
+            <p class="profile-email">{{ user.email|default:"ایمیل ثبت نشده" }}</p>
+            <p class="profile-joined">عضویت: {{ user.date_joined|date:"d F Y" }}</p>
+        </div>
+        <div class="profile-actions">
+            {% if user.is_staff %}<a href="{% url 'panel:dashboard' %}" class="btn btn-primary">پنل مدیریت ←</a>{% endif %}
+            <form method="post" action="{% url 'accounts:logout' %}" class="nav-logout-form">{% csrf_token %}<button type="submit" class="btn btn-outline">خروج</button></form>
+        </div>
+    </div>
+
+    <div class="profile-grid">
+        <!-- درخواست‌ها -->
+        <section class="profile-panel reveal reveal-delay-1">
+            <h3 class="profile-panel-title"><span class="profile-panel-icon">{{ "✉"|icon_svg }}</span> درخواست‌های من <span class="profile-count">{{ user_messages|length }}</span></h3>
+            {% if user_messages %}
+            <div class="profile-list">
+                {% for msg in user_messages %}
+                <div class="profile-item">
+                    <div class="profile-item-head">
+                        <span class="profile-item-title">{{ msg.get_request_type_display }}{% if msg.subject %} — {{ msg.subject }}{% endif %}</span>
+                        <span class="profile-item-date">{{ msg.created_at|date:"d F Y" }}</span>
+                    </div>
+                    <p class="profile-item-desc">{{ msg.message|truncatechars:140 }}</p>
+                    <span class="status-badge status-{{ msg.status }}">{{ msg.get_status_display }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="grid-empty-state">هنوز درخواستی ثبت نکرده‌ای. <a href="{% url 'contact:index' %}" class="accent-text">اولین درخواستت را بفرست</a>.</p>
+            {% endif %}
+        </section>
+
+        <!-- دیدگاه‌ها -->
+        <section class="profile-panel reveal reveal-delay-2">
+            <h3 class="profile-panel-title"><span class="profile-panel-icon">{{ "💬"|icon_svg }}</span> دیدگاه‌های من <span class="profile-count">{{ user_comments|length }}</span></h3>
+            {% if user_comments %}
+            <div class="profile-list">
+                {% for comment in user_comments %}
+                <div class="profile-item">
+                    <div class="profile-item-head">
+                        <span class="profile-item-title">روی «<a href="{% url 'blog:detail' comment.post.slug %}#comments" class="accent-text">{{ comment.post.title }}</a>»</span>
+                        <span class="profile-item-date">{{ comment.created_at|date:"d F Y" }}</span>
+                    </div>
+                    <p class="profile-item-desc">{{ comment.body|truncatechars:140 }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="grid-empty-state">هنوز دیدگاهی ثبت نکرده‌ای. <a href="{% url 'blog:list' %}" class="accent-text">برو به مقالات</a>.</p>
+            {% endif %}
+        </section>
+    </div>
+
+</div></section>
+<div class="divider"></div>
+{% endblock %}

@@ -100,7 +100,8 @@ Nexify/
 │   │   ├── apps.py  ─  tests.py
 │   ├── blog/                        # مقالات
 │   │   ├── models.py                # مدل BlogPost
-│   │   ├── views.py                 # blog_list + blog_detail (با slug)
+│   │   ├── views.py                 # blog_list + blog_detail (با slug + کامنت)
+│       └── forms.py                 # CommentForm (فقط body)
 │   │   ├── urls.py                  # app_name = "blog"
 │   │   ├── admin.py  ─  apps.py  ─  tests.py
 │   └── contact/                     # فرم تماس + سوالات متداول
@@ -109,10 +110,11 @@ Nexify/
 │       ├── views.py                 # contact (GET/POST)
 │       ├── urls.py                  # app_name = "contact"
 │       ├── admin.py  ─  apps.py  ─  tests.py
-│   └── accounts/                    # ⭐ احراز هویت: ورود / ثبت‌نام / خروج
+│   └── accounts/                    # ⭐ احراز هویت: ورود / ثبت‌نام / خروج + پروفایل کاربر
 │       ├── forms.py                 # LoginForm (AuthenticationForm فارسی) + RegisterForm (UserCreationForm + ایمیل + هانی‌پات)
 │       ├── views.py                 # NexifyLoginView (LoginView) + register + logout_view (POST-only)
-│       ├── urls.py                  # app_name = "accounts"
+│       ├── urls.py                  # app_name = "accounts" (+ profile)
+│       ├── profile.html             # پروفایل: درخواست‌های من + دیدگاه‌های من + (staff) پنل مدیریت
 │       ├── apps.py  ─  tests.py
 │   └── panel/                       # ⭐ پنل ادمین سفارشی (طراحی شیشه‌ای هماهنگ با سایت) — فقط staff
 │       ├── models.py                # SiteSetting (متن‌ها) + Testimonial (نظر مشتری — فاز U5) + PageView
@@ -184,7 +186,7 @@ Nexify/
 - `SECRET_KEY` پیش‌فرض placeholder (در تولید باید از env بیاید)، `DEBUG=False`
 - **INSTALLED_APPS**: ۶ اپ داخلی جنگو (admin, auth, contenttypes, sessions, messages, staticfiles) + ۶ اپ پروژه: `apps.core`, `apps.projects`, `apps.blog`, `apps.contact`, `apps.accounts`, `apps.panel`
 - **Context processor**: `apps.panel.context_processors.site_settings` — همه‌ی تمپلیت‌ها به `{{ site_settings.<key> }}` دسترسی دارند (خالی اگر کلید نباشد، بدون خطا)
-- **احراز هویت**: `LOGIN_URL = "/accounts/login/"`، `LOGIN_REDIRECT_URL = "/"`، `LOGOUT_REDIRECT_URL = "/"`
+- **احراز هویت**: `LOGIN_URL = "/accounts/login/"`، `LOGIN_REDIRECT_URL = "/"`، `LOGOUT_REDIRECT_URL = "/"` — **پروفایل** (`accounts:profile`): چیپ نام کاربری در نوبار حالا **لینک به پروفایل** است؛ پنل مدیریت (`panel:dashboard`) از هدر حذف و **فقط داخل پروفایل برای staff** نمایش داده می‌شود. درخواست‌های تماس وقتی کاربر لاگین باشد به `ContactMessage.user` متصل می‌شوند و در پروفایل فهرست می‌شوند.
 - **MIDDLEWARE**: ترتیب مهم است — `SecurityMiddleware` ← `WhiteNoiseMiddleware` ← ...
 - `ROOT_URLCONF = "config.urls"`، قالب‌ها از `templates/` (`APP_DIRS=True`)
 - دیتابیس پیش‌فرض: **SQLite** (`db.sqlite3`)
@@ -223,11 +225,12 @@ Nexify/
 | `/services/` | `apps.core.views.services` | `core:services` | خدمات |
 | `/projects/` | `apps.projects.views.project_list` | `projects:list` | نمونه‌کارها (از DB) |
 | `/blog/` | `apps.blog.views.blog_list` | `blog:list` | لیست مقالات |
-| `/blog/<slug>/` | `apps.blog.views.blog_detail` | `blog:detail` | جزئیات مقاله |
+| `/blog/<slug>/` | `apps.blog.views.blog_detail` | `blog:detail` | جزئیات مقاله + **کامنت** (مدل `Comment` — فقط لاگین‌شده‌ها، POST با CSRF، `is_visible` برای مدیریت) |
 | `/contact/` | `apps.contact.views.contact` | `contact:index` | فرم تماس + FAQ — پری‌سلکت با `?type=` (مقادیر معتبر) و `?subject=` (U6: از ویجت مسیر انتخاب صفحه‌ی اصلی — ویجت موقتاً از صفحه‌ی اصلی حذف شده ولی پری‌سلکت فعال است) |
 | `/accounts/login/` | `apps.accounts.views.NexifyLoginView` | `accounts:login` | ورود (مدیریت خودکار `?next=`) |
 | `/accounts/register/` | `apps.accounts.views.register` | `accounts:register` | ثبت‌نام + ورود خودکار |
 | `/accounts/logout/` | `apps.accounts.views.logout_view` | `accounts:logout` | خروج — فقط POST (CSRF-safe) |
+| `/accounts/profile/` | `apps.accounts.views.profile` | `accounts:profile` | پروفایل کاربر (لاگین الزامی) — درخواست‌های تماس + دیدگاه‌ها + لینک پنل برای staff |
 | `/admin/` | Django Admin | — | پنل مدیریت جنگو |
 | `/panel/` | `apps.panel.views.dashboard` | `panel:dashboard` | ⭐ پنل ادمین سفارشی (فقط staff — مهمان → ورود) |
 | `/panel/blog/` (+new/`<pk>`/toggle/delete) | `apps.panel.views` | `panel:blog_*` | مدیریت و انتشار مقالات |
@@ -300,7 +303,7 @@ urlpatterns = [
 
 ## ۶٫۵) پنل ادمین سفارشی (apps/panel) — راهنمای سریع
 
-- **ورود**: `/panel/` — فقط `staff` (مهمان → `/accounts/login/?next=/panel/`). دکمه‌ی «خروج از پنل» در سایدبار.
+- **ورود**: `/panel/` — فقط `staff` (مهمان → `/accounts/login/?next=/panel/`). دکمه‌ی «خروج از پنل» در سایدبار. لینک ورود به پنل فقط از **صفحه‌ی پروفایل** (برای staff) در دسترس است — در نوبار نیست.
 - **داشبورد**: آمار (تعداد مقالات منتشرشده، پروژه‌ها، سفارش‌های جدید، کاربران/ادمین‌ها) + **آمار بازدید** (کل/امروز/۷ روز/۳۰ روز + نمودار ۱۴ روزه با CSS خالص + پربازدیدترین صفحات — از مدل `PageView` که توسط `VisitTrackingMiddleware` پر می‌شود) + آخرین سفارش‌ها و مقالات.
 - **مقالات**: لیست + فرم (new/edit) + toggle انتشار + حذف — `BlogPostForm` (مدل BlogPost با `is_published`). فرم‌ها `enctype="multipart/form-data"` دارند (فایل‌ها بدون `request.FILES` در ویو ذخیره نمی‌شوند — دو ویو `blog_edit`/`project_edit` آن را پاس می‌دهند).
 - **پروژه‌ها**: لیست + فرم + toggle + حذف — `ProjectForm` (فیلد `tags` متن با ویرگول → JSONField؛ `gradient` رشته‌ی CSS خام مثل `135deg,#1e1b4b,#312e81`).
@@ -472,7 +475,7 @@ python manage.py collectstatic --noinput
 python manage.py check
 python manage.py check --deploy
 
-# ⭐ اجرای تست‌ها (۱۰۵ تست)
+# ⭐ اجرای تست‌ها (۱۱۴ تست)
 pytest -v
 pytest apps/contact -v                # فقط اپ تماس
 pytest apps/accounts -v               # فقط اپ احراز هویت
@@ -616,6 +619,7 @@ git log --oneline -5
 | ۴.۱۱ | **رفع باگ «محتوای حذف‌شده برمی‌گردد»** — سرور توسعه هدر کش نمی‌فرستاد و مرورگر صفحات داینامیک را کش می‌کرد؛ میان‌افزار `NoStoreCacheMiddleware` در `config/middleware.py` حالا روی همه‌ی پاسخ‌های داینامیک `Cache-Control: no-store` ست می‌کند (بعد از WhiteNoise — استاتیک دست‌نخورده). اثبات: حذف رکورد + ریاستارت سرور → برنگشت. +۶ تست (۱۰۵ تست) | ✅ |
 | ۴.۱۲ | **چیدمان صفحه‌ی اصلی (درخواست مشتری، ۱۲ اوت ۲۰۲۶)** — سکشن‌های «راه‌حل بر اساس صنعت» و «مسیر انتخاب» (U6) از صفحه‌ی اصلی حذف شدند (CSS/JS عمداً حفظ شد — بازگردانی با paste HTML) و «نظرات مشتریان» به انتهای صفحه (دقیقاً قبل از CTA تماس) منتقل شد. ترتیب فعلی: هیرو → آمار → خدمات → نظرات مشتریان → CTA | ✅ |
 | ۴.۱۳ | **بازطراحی آمار صفحه‌ی اصلی (۱۲ اوت ۲۰۲۶)** — پنل شیشه‌ای (`--glass-bg` + `blur(16px)` + بوردر نیمه‌شفاف — با صفحه ادغام می‌شود نه بلوک توپُر) + خط نور بالایی + جداکننده‌های درست در RTL + آیکون‌های هویتی رنگی (🚀 بنفش / 👥 سبز / ⭐ کهربایی / 📚 آبی — گرادیان روی hover) + **شمارنده‌ی نرم** (index.js: IntersectionObserver + rAF + easeOutQuart ۱.۶s + تأخیر پلکانی ۱۴۰ms + ارقام فارسی + `tabular-nums` + reduced-motion → مقدار نهایی). موبایل: ۲×۲ با جداکننده‌های اصلاح‌شده. تست‌های آمار به ساختار `span.stat-count` به‌روز شدند (۱۰۵ تست) | ✅ |
+| ۴.۱۴ | **هدر + پروفایل کاربر (اوت ۲۰۲۶)** — ۱) رفع باگ آیکون ماه در دارک‌مود: `.theme-toggle` بدون `color` صریح بود → UA button رنگ سیاه می‌داد؛ حالا `color: var(--text)` + سایز SVG 20px. ۲) چیپ نام کاربری در نوبار **لینک به `accounts:profile`** شد؛ دکمه‌ی «پنل مدیریت» از هدر حذف و فقط داخل پروفایل برای staff نمایش داده می‌شود. ۳) صفحه‌ی پروفایل (`profile.html`): آواتار SVG + «درخواست‌های من» (`ContactMessage.user` — وقتی لاگین باشد به کاربر وصل می‌شود) + «دیدگاه‌های من» (مدل جدید `Comment` بلاگ — `apps/blog/models.py` + فرم + نمایش در `blog_detail`) + وضعیت پیام (new/in_progress/done). ۴) فاصله‌گذاری هدر بهینه (nav-links 34px، nav-auth gap 12px). +۹ تست (۱۱۴ تست) | ✅ |
 | ۴.۱۴ | **بازطراحی «فرآیند همکاری» صفحه‌ی خدمات (۱۲ اوت ۲۰۲۶)** — بج‌های شیشه‌ای دایره‌ای با **اعداد انگلیسی** ۰۱–۰۴ (خطاها: فارسی بود → انگلیسی) + خط اتصال گرادیانی که هنگام ورود به دید رسم می‌شود (scaleX با origin راست در RTL) + پاپ فنری پلکانی بج‌ها (easeOutBack + تأخیر ۲۰۰ms — با `nth-of-type` چون `.process-line` شاخص `nth-child` را جابه‌جا می‌کرد، باگ وسط انیمیشن پیدا و رفع شد) + hover گرادیان بنفش. خط با `calc((100% - 72px)/8)` دقیقاً به مرکز بج اول/آخر تراز است (گپ ۲۴px ستون‌ها را می‌کشد). موبایل: عمودی با اتصال‌های scaleY بین قدم‌ها. reduced-motion → حالت نهایی. فقط CSS + مکانیزم reveal موجود (بدون JS جدید) | ✅ |
 
 > **ریسپانسیو — خلاصه‌ی فازهای انجام‌شده (جزئیات کامل در `RESPONSIVE-ROADMAP.md`):**

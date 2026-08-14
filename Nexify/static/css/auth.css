@@ -245,3 +245,56 @@
 @media (hover: none) {
     .auth-submit:hover { transform: none; box-shadow: 0 10px 30px rgba(124, 58, 237, 0.35); }
 }
+
+/* ==================== پروفایل کاربر ==================== */
+.profile-section { padding: 16px 0 64px; }
+.profile-card {
+    display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    padding: 28px 32px; margin-bottom: 32px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+}
+.profile-avatar {
+    flex-shrink: 0; width: 72px; height: 72px; border-radius: 50%;
+    display: grid; place-items: center; color: #fff;
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
+}
+.profile-avatar .auth-user-icon { width: 34px; height: 34px; }
+.profile-head-info { flex: 1; min-width: 200px; }
+.profile-username { font-size: 1.4rem; font-weight: 600; margin-bottom: 4px; }
+.profile-email { font-size: 0.85rem; color: var(--text-secondary); font-weight: 300; }
+.profile-joined { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+.profile-actions { display: flex; gap: 12px; align-items: center; }
+.profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.profile-panel {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+    padding: 24px 26px;
+}
+.profile-panel-title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 1.05rem; font-weight: 600; margin-bottom: 18px;
+}
+.profile-panel-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; color: var(--accent-light); background: rgba(124, 58, 237, 0.1); }
+.profile-panel-icon .icon-svg { width: 16px; height: 16px; }
+.profile-count {
+    margin-inline-start: auto; padding: 2px 10px; border-radius: 50px;
+    font-size: 0.72rem; color: var(--accent-light); background: rgba(124, 58, 237, 0.1);
+}
+.profile-list { display: flex; flex-direction: column; gap: 14px; max-height: 420px; overflow-y: auto; padding-inline-end: 4px; }
+.profile-item { padding: 16px 18px; border: 1px solid var(--border-light); border-radius: 14px; transition: border-color 0.3s, background 0.3s; }
+.profile-item:hover { border-color: rgba(124, 58, 237, 0.35); background: rgba(124, 58, 237, 0.03); }
+.profile-item-head { display: flex; align-items: baseline; gap: 10px; justify-content: space-between; flex-wrap: wrap; margin-bottom: 6px; }
+.profile-item-title { font-size: 0.86rem; font-weight: 600; color: var(--text); }
+.profile-item-date { font-size: 0.72rem; color: var(--text-muted); }
+.profile-item-desc { font-size: 0.82rem; color: var(--text-secondary); font-weight: 300; line-height: 1.8; }
+.status-badge { display: inline-block; margin-top: 10px; padding: 3px 10px; border-radius: 50px; font-size: 0.68rem; font-weight: 500; }
+.status-new { color: #60a5fa; background: rgba(59, 130, 246, 0.12); }
+.status-in_progress { color: #fbbf24; background: rgba(251, 191, 36, 0.12); }
+.status-done { color: #34d399; background: rgba(16, 185, 129, 0.12); }
+@media (max-width: 1024px) { .profile-grid { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+    .profile-card { padding: 20px; gap: 16px; }
+    .profile-avatar { width: 56px; height: 56px; }
+    .profile-actions { width: 100%; justify-content: flex-start; }
+    .profile-panel { padding: 18px; }
+}
