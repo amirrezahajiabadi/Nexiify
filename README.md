@@ -160,4 +160,22 @@ Python 3.12 و 3.13 → نصب وابستگی‌ها → `manage.py check` → `
 - فونت‌ها self-host هستند (Vazirmatn + JetBrains Mono، همه‌ی وزن‌ها در یک فایل woff2)
 - پروژه‌ها و مقالات از دیتابیس می‌آیند؛ محتوای `index/about/services` فعلاً از خود قالب است (مدل‌های `Service`/`Skill` در فاز بعدی)
 
-© ۱۴۰۳ Nexify. تمام حقوق محفوظ است.
+---
+
+## 🤝 مشارکت
+
+از گزارش باگ و پیشنهاد ویژگی استقبال میشود:
+
+- 🐛 [گزارش باگ](https://github.com/AmirrezaHajiabadi/nexify/issues/new?template=bug_report.md)
+- ✨ [پیشنهاد ویژگی](https://github.com/AmirrezaHajiabadi/nexify/issues/new?template=feature_request.md)
+- 🔀 برای تغییر کد: Fork کنید، تغییر را اعمال کنید و **Pull Request** بفرستید (قالب PR آماده است)
+- قبل از ارسال PR حتماً `pytest` را سبز کنید (۱۱۵ تست)
+
+---
+
+## 📜 لایسنس
+
+کد این پروژه تحت **لایسنس MIT** منتشر میشود — ببینید: [`LICENSE`](LICENSE).
+محتوا، متن‌ها و هویت بصری سایت (طراحی، لوگو، عکس‌ها) متعلق به Nexify است و مشمول لایسنس MIT نیست.
+
+© ۱۴۰۵ Nexify — تمام حقوق محفوظ است.

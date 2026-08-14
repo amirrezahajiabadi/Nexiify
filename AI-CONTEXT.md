@@ -55,7 +55,10 @@ Nexify/
 ├── requirements-dev.txt             # + pytest و pytest-django (تست)
 ├── requirements-prod.txt            # (فایل تولید — محتوای مشابه + اختیاری psycopg)
 ├── pytest.ini                       # پیکربندی pytest (DJANGO_SETTINGS_MODULE=development)
-├── .github/workflows/ci.yml         # ⭐ CI — روی push/PR به main: check + makemigrations --check + pytest (Python 3.12/3.13)
+├── .github/                         # ⭐ در ریشه‌ی مخزن (بالای Nexify/)
+│   ├── workflows/ci.yml             # ⭐ CI — روی push/PR به main: check + makemigrations --check + pytest (Python 3.12/3.13)
+│   ├── ISSUE_TEMPLATE/              # قالب‌های گزارش باگ + پیشنهاد ویژگی
+│   └── PULL_REQUEST_TEMPLATE.md     # قالب PR (چک‌لیست تست)
 ├── .env.example                     # الگوی متغیرهای محیطی تولید
 ├── .gitignore                       # .env، staticfiles/، db.sqlite3، __pycache__ و...
 ├── README.md                        # راهنمای نصب و اجرا
