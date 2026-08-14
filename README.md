@@ -31,7 +31,7 @@ python manage.py runserver 127.0.0.1:8471
 ```bash
 cd Nexify
 python -m pip install -r requirements-dev.txt   # pytest + pytest-django
-pytest -v                                        # ۹۴ تست
+pytest -v                                        # ۱۱۵ تست
 ```
 
 پوشش تست‌ها:
@@ -43,6 +43,9 @@ pytest -v                                        # ۹۴ تست
 - **ویوها**: فیلتر `is_published` در پروژه‌ها/مقالات، 404 برای اسلاگ ناموجود یا پیش‌نویس
 - **smoke تست**: همه‌ی مسیرهای عمومی ۲۰۰
 - **پنل ادمین + احراز هویت**: انتشار/حذف محتوا، مدیریت پیام‌ها، آمار بازدید، هانی‌پات دولایه‌ی ثبت‌نام، بلاک ریدایرکت خارجی
+- **پروفایل کاربر**: اتصال سفارش‌های تماس و دیدگاه‌ها به کاربر لاگین‌شده + آمار پنل فقط برای staff
+- **کامنت بلاگ**: ثبت با CSRF، فقط کاربر لاگین‌شده، فیلتر `is_visible` برای مدیریت
+- **آمار خانه**: شمارنده‌های واقعی از دیتابیس (پروژه/مشتری/رضایت/مقاله) + ترتیب سکشن‌ها
 
 ### CI (GitHub Actions)
 
@@ -69,41 +72,45 @@ Python 3.12 و 3.13 → نصب وابستگی‌ها → `manage.py check` → `
 ## 📂 ساختار پروژه
 
 ```
-Nexify/
-├── manage.py
-├── requirements.txt        # توسعه‌ی محلی
-├── requirements-dev.txt    # + pytest, pytest-django (تست)
-├── requirements-prod.txt   # + gunicorn, psycopg (تولید)
-├── pytest.ini              # پیکربندی pytest (DJANGO_SETTINGS_MODULE)
-├── .github/workflows/ci.yml # CI: pytest روی Python 3.12/3.13
-├── .env.example            # الگوی متغیرهای محیطی تولید
-├── config/                 # پیکربندی اصلی جنگو
-│   ├── settings/
-│   │   ├── base.py         # تنظیمات مشترک (Whitenoise، استاتیک، تمپلیت)
-│   │   ├── development.py  # توسعه (SQLite، DEBUG=True)
-│   │   └── production.py   # تولید (PostgreSQL، HTTPS، env)
-│   ├── urls.py  wsgi.py  asgi.py
-├── apps/
-│   ├── core/               # خانه، درباره، خدمات + آیکون‌های SVG + دستور seed_demo
-│   ├── projects/           # مدل Project
-│   ├── blog/               # مدل BlogPost
-│   ├── contact/            # مدل‌های ContactMessage + FAQ و فرم امن
-│   ├── accounts/           # ورود/ثبت‌نام/خروج (هانی‌پات دولایه)
-│   └── panel/              # پنل ادمین سفارشی (داشبورد، مقاله/پروژه/FAQ/پیام/تنظیمات/کاربران)
-├── templates/
-│   ├── base.html           # قالب پایه (بلاک‌ها + preload فونت + CSP)
-│   ├── partials/           # navbar, footer, preloader, mobile_menu, auth_*
-│   ├── index.html  about.html  services.html  projects.html  contact.html
-│   ├── blog/               # blog_list.html + blog_detail.html
-│   ├── accounts/           # login.html + register.html
-│   └── panel/              # داشبورد + فرم‌ها/لیست‌های مدیریت
-├── static/
-│   ├── css/  js/  fonts/   # فونت‌های self-host (فاز ۳)
-├── legacy/                 # بایگانی HTML های استاتیک قبل از جنگو
-├── _headers                # هدرهای امنیتی (Netlify/Cloudflare Pages)
-├── nginx-security.conf     # هدرهای امنیتی (VPS)
-├── start_tunnel.sh         # تانل عمومی pinggy برای نمایش به دیگران
-└── ROADMAP.md
+├── README.md                 # همین فایل — راهنمای پروژه
+├── ROADMAP.md                # نقشه‌ی راه کلی (فاز ۰ تا ۵)
+├── UIUX-ROADMAP.md           # نقشه‌ی بازطراحی UI/UX (فازهای U1–U8)
+├── RESPONSIVE-ROADMAP.md     # نقشه‌ی ریسپانسیو موبایل
+├── AI-CONTEXT.md             # فایل کانتکست برای AI (ساختار + جزئیات فنی زنده)
+└── Nexify/                   # ⭐ خود پروژه‌ی جنگو
+    ├── manage.py
+    ├── requirements.txt        # توسعه‌ی محلی
+    ├── requirements-dev.txt    # + pytest, pytest-django (تست)
+    ├── requirements-prod.txt   # + gunicorn, psycopg (تولید)
+    ├── pytest.ini              # پیکربندی pytest (DJANGO_SETTINGS_MODULE)
+    ├── .github/workflows/ci.yml # CI: pytest روی Python 3.12/3.13
+    ├── .env.example            # الگوی متغیرهای محیطی تولید
+    ├── config/                 # پیکربندی اصلی جنگو
+    │   ├── settings/
+    │   │   ├── base.py         # تنظیمات مشترک (Whitenoise، استاتیک، تمپلیت)
+    │   │   ├── development.py  # توسعه (SQLite، DEBUG=True)
+    │   │   └── production.py   # تولید (PostgreSQL، HTTPS، env)
+    │   ├── urls.py  wsgi.py  asgi.py
+    ├── apps/
+    │   ├── core/               # خانه، درباره، خدمات + آیکون‌های SVG + دستور seed_demo
+    │   ├── projects/           # مدل Project
+    │   ├── blog/               # مدل BlogPost + Comment
+    │   ├── contact/            # مدل‌های ContactMessage + FAQ و فرم امن
+    │   ├── accounts/           # ورود/ثبت‌نام/خروج + پروفایل (هانی‌پات دولایه)
+    │   └── panel/              # پنل ادمین سفارشی (داشبورد، مقاله/پروژه/FAQ/پیام/نظر/تنظیمات/کاربران)
+    ├── templates/
+    │   ├── base.html           # قالب پایه (بلاک‌ها + preload فونت + CSP)
+    │   ├── partials/           # navbar, footer, preloader, mobile_menu, auth_*
+    │   ├── index.html  about.html  services.html  projects.html  contact.html
+    │   ├── blog/               # blog_list.html + blog_detail.html
+    │   ├── accounts/           # login.html + register.html + profile.html
+    │   └── panel/              # داشبورد + فرم‌ها/لیست‌های مدیریت
+    ├── static/
+    │   ├── css/  js/  fonts/   # فونت‌های self-host (فاز ۳)
+    ├── scripts/security_scan.py # اسکن امنیتی مسیرها/هدرها روی سرور توسعه
+    ├── _headers                # هدرهای امنیتی (Netlify/Cloudflare Pages)
+    ├── nginx-security.conf     # هدرهای امنیتی (VPS)
+    └── start_tunnel.sh         # تانل عمومی pinggy برای نمایش به دیگران
 ```
 
 ---
@@ -113,6 +120,19 @@ Nexify/
 - **CSRF** روی فرم تماس + **هانی‌پات دو لایه** (`website`) — سمت کلاینت و **سمت سرور** (پیام ربات ساکت رد می‌شود و در دیتابیس ذخیره نمی‌شود)
 - **اعتبارسنجی سمت سرور** (`minlength` نام/پیام، فرمت ایمیل، انتخاب نوع درخواست) + خطاهای فیلد در قالب
 - **CSP** در `base.html` + هدرهای امنیتی برای دیپلوی (`_headers` / `nginx-security.conf`)
+
+---
+
+## 🚫 فایل‌هایی که هرگز در گیت‌هاب قرار نده
+
+| فایل/پوشه | چرا | وضعیت در مخزن |
+|---|---|---|
+| `Nexify/db.sqlite3` | دیتابیس توسعه — داده‌ی کاربران و هش رمزها | ignored (`Nexify/.gitignore`) |
+| `Nexify/.env` | رازها (SECRET_KEY، رمز SMTP/DB، توکن تلگرام) | ignored — فقط `.env.example` کامیت می‌شود |
+| `Nexify/media/` | فایل‌های آپلودی کاربران | ignored |
+| `Nexify/staticfiles/` | خروجی `collectstatic` (بازسازی‌شدنی) | ignored |
+| `.freebuff/` | لاگ‌ها/دیتابیس ابزار محلی | ignored (root) |
+| `.agents/` `.claude/` `skills-lock.json` | ابزارهای محلی agent — به سایت ربطی ندارند | ignored (root) |
 - مودال پروژه‌ها بدون `innerHTML` (ساخت DOM امن) — ضد XSS حتی با داده‌ی داینامیک
 - در تولید: `SECURE_SSL_REDIRECT`، HSTS، کوکی‌های امن و `check --deploy`
 

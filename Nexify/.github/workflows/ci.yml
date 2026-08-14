@@ -5,8 +5,8 @@
 #   2) بررسی سلامت جنگو (python manage.py check)
 #   3) اجرای کامل pytest
 #
-# ⚠️ این فایل باید در ریشه‌ی ریپو بماند:
-#    ریشه‌ی ریپو = پوشه‌ی Nexify/ (جایی که manage.py است)
+# ⚠️ پروژه‌ی جنگو در Nexify/ است (جایی که manage.py است) —
+#    همه‌ی دستورها با working-directory: Nexify اجرا می‌شوند
 # ============================================================
 name: CI
 
@@ -15,6 +15,10 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+
+defaults:
+  run:
+    working-directory: Nexify
 
 jobs:
   test:

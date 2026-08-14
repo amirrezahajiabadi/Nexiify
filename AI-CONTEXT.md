@@ -14,6 +14,7 @@
 
 - پروژه از یک **وب‌سایت استاتیک** شروع شد و در **فاز ۴ به جنگو (Django)** مهاجرت کرده است.
 - کل پروژه در پوشه‌ی `Nexify/` قرار دارد (پروژه‌ی جنگو درون همین پوشه است — یعنی `manage.py` در `Nexify/manage.py` است).
+- **اسناد و رودمپ‌ها در ریشه‌ی مخزن (بالای `Nexify/`) قرار دارند**: `README.md`، `ROADMAP.md`، `UIUX-ROADMAP.md`، `RESPONSIVE-ROADMAP.md` و همین `AI-CONTEXT.md`.
 - تم تیره (Dark) پیش‌فرض + تم روشن قابل سوییچ، کاملاً فارسی و RTL.
 - دیتای محتوا (پروژه‌ها، مقالات، FAQ ها، پیام‌های تماس) **در دیتابیس** ذخیره می‌شود و از **Django Admin** مدیریت می‌شود.
 
@@ -173,8 +174,10 @@ Nexify/
 │
 ├── staticfiles/                     # خروجی collectstatic (تولید) — در .gitignore
 ├── media/                           # فایل‌های آپلودی (blog_covers/, project_covers/) — در .gitignore
-├── legacy/                          # HTML/CSS/JS های قدیمی استاتیک (بایگانی)
 └── db.sqlite3                       # دیتابیس توسعه (در .gitignore)
+
+> 📄 اسناد (README/ROADMAP/UIUX-ROADMAP/RESPONSIVE-ROADMAP/AI-CONTEXT) در **ریشه‌ی مخزن** — بالای `Nexify/`
+> 🧹 `legacy/` (HTML های استاتیک قدیمی) حذف شد — نسخه‌ها در تاریخ گیت هستند
 ```
 
 ---

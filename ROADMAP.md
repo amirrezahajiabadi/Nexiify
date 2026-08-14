@@ -143,7 +143,7 @@ CSRF_TRUSTED_ORIGINS = ['https://nexify.ir', 'https://www.nexify.ir']
 
 ## 🐍 فاز ۴ — یکپارچه‌سازی با جنگو ✅ (انجام شد)
 
-> وضعیت: پروژه‌ی جنگو کامل راه‌اندازی شد — `config/` با settings سه‌تایی (base/development/production)، ۴ اپ (`core`, `projects`, `blog`, `contact`)، `base.html` + partials (حذف تکرار نوبار/فوتر)، تبدیل همه‌ی HTML ها به Template با `{% static %}`، مدل‌های `Project`/`BlogPost`/`ContactMessage`/`FAQ`، فرم تماس امن با CSRF و هانی‌پات سمت سرور (ربات ساکت رد می‌شود)، پنل `Django Admin` جایگزین `admin.html` شد، دستور `seed_demo` برای داده‌ی نمونه، فایل‌های `requirements*.txt`/`.env.example`/`.gitignore`، و HTML های قدیمی به `legacy/` بایگانی شدند.
+> وضعیت: پروژه‌ی جنگو کامل راه‌اندازی شد — `config/` با settings سه‌تایی (base/development/production)، ۴ اپ (`core`, `projects`, `blog`, `contact`)، `base.html` + partials (حذف تکرار نوبار/فوتر)، تبدیل همه‌ی HTML ها به Template با `{% static %}`، مدل‌های `Project`/`BlogPost`/`ContactMessage`/`FAQ`، فرم تماس امن با CSRF و هانی‌پات سمت سرور (ربات ساکت رد می‌شود)، پنل `Django Admin` جایگزین `admin.html` شد، دستور `seed_demo` برای داده‌ی نمونه، فایل‌های `requirements*.txt`/`.env.example`/`.gitignore`، و HTML های قدیمی به `legacy/` بایگانی شدند (بعداً حذف شد — نسخه‌ها در تاریخ گیت هستند).
 
 ## 🔐 فاز ۴.۶ — احراز هویت (ورود/ثبت‌نام) ✅ (انجام شد)
 

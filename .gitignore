@@ -6,6 +6,11 @@
 # ---------- Freebuff workspace internals (logs, db, pids) — never commit ----------
 .freebuff/
 
+# ---------- Agent tooling (local-only, not part of the site) ----------
+.agents/
+.claude/
+skills-lock.json
+
 # ---------- Python ----------
 __pycache__/
 *.py[cod]
