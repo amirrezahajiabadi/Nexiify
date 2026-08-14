@@ -10,11 +10,14 @@
             <li><a href="{% url 'blog:list' %}" class="nav-link">مقالات</a></li>
             <li><a href="{% url 'contact:index' %}" class="nav-link">تماس</a></li>
         </ul>
-        <!-- وضعیت کاربر: واردشده → چیپ نام (لینک به پروفایل) + خروج | مهمان → ورود/ثبت‌نام (next باعث می‌شود بعد از ورود به همین صفحه برگردد). پنل مدیریت فقط از صفحه‌ی پروفایل قابل دسترسی است. -->
+        <!-- وضعیت کاربر: واردشده → باکس واحد (پروفایل + خروج) | مهمان → ورود/ثبت‌نام (next باعث می‌شود بعد از ورود به همین صفحه برگردد). پنل مدیریت فقط از صفحه‌ی پروفایل قابل دسترسی است. -->
         <div class="nav-auth">
             {% if user.is_authenticated %}
-            <a href="{% url 'accounts:profile' %}" class="auth-user-chip" aria-label="پروفایل {{ user.username }}"><span class="auth-user-avatar" aria-hidden="true"><svg class="auth-user-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span><span class="auth-user-name">{{ user.username }}</span></a>
-            <form method="post" action="{% url 'accounts:logout' %}" class="nav-logout-form">{% csrf_token %}<button type="submit" class="auth-btn auth-btn-login auth-btn-logout" aria-label="خروج">خروج</button></form>
+            <div class="auth-user-box">
+                <a href="{% url 'accounts:profile' %}" class="auth-user-chip" aria-label="پروفایل {{ user.username }}"><span class="auth-user-avatar" aria-hidden="true"><svg class="auth-user-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span><span class="auth-user-name">{{ user.username }}</span></a>
+                <span class="auth-user-divider" aria-hidden="true"></span>
+                <form method="post" action="{% url 'accounts:logout' %}" class="nav-logout-form">{% csrf_token %}<button type="submit" class="auth-btn-logout" aria-label="خروج از حساب"><svg class="auth-logout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></button></form>
+            </div>
             {% else %}
             <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="auth-btn auth-btn-login" aria-label="ورود">ورود</a>
             <a href="{% url 'accounts:register' %}?next={{ request.path }}" class="auth-btn auth-btn-register" aria-label="ثبت‌نام">ثبت‌نام</a>

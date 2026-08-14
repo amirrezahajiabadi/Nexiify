@@ -249,28 +249,48 @@ section { padding: 140px 0; position: relative; z-index: 1; }
 
 /* وضعیت کاربر واردشده: چیپ شیشه‌ای نام کاربری (آواتار SVG + نام) + فرم خروج (POST با CSRF)
    انیمیشن‌ها: ورود نرم چیپ (userChipIn) + درخشش تنفسی آواتار (userAvatarGlow) — فقط CSS، سازگار با CSP */
+/* باکس واحد کاربر: پروفایل + جداکننده + خروج — شیشه‌ای و جمع‌وجور */
+.auth-user-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px 5px 4px 4px;
+    border-radius: 999px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: userChipIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    transform-origin: right center;
+    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+.auth-user-box:hover {
+    border-color: rgba(124, 58, 237, 0.45);
+    background: var(--glass-bg-hover);
+    box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.12), 0 4px 18px rgba(124, 58, 237, 0.14);
+}
 .auth-user-chip {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 3px 14px 3px 12px;
+    padding: 4px 10px 4px 10px;
     border-radius: 999px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
     color: var(--text-secondary);
     font-size: 0.82rem;
     font-weight: 500;
     white-space: nowrap;
     text-decoration: none; /* چیپ حالا لینک به پروفایل است */
-    animation: userChipIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-    transform-origin: right center;
-    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    transition: color 0.3s ease, background 0.3s ease;
 }
 .auth-user-chip:hover {
-    border-color: rgba(124, 58, 237, 0.45);
-    background: var(--glass-bg-hover);
-    box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.12), 0 4px 18px rgba(124, 58, 237, 0.14);
-    transform: translateY(-1px);
+    color: var(--text);
+    background: rgba(124, 58, 237, 0.08);
+}
+.auth-user-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border-light);
+    margin: 0 2px;
 }
 .auth-user-avatar {
     display: grid;
@@ -294,9 +314,6 @@ section { padding: 140px 0; position: relative; z-index: 1; }
 .auth-user-chip:hover .auth-user-avatar {
     transform: scale(1.12);
 }
-.auth-user-chip:hover .auth-user-name {
-    color: var(--text);
-}
 @keyframes userChipIn {
     from { opacity: 0; transform: translateY(-8px) scale(0.94); }
     to { opacity: 1; transform: translateY(0) scale(1); }
@@ -309,12 +326,29 @@ section { padding: 140px 0; position: relative; z-index: 1; }
     display: inline-flex;
     margin: 0;
 }
-/* خروج — مثل ورود اما hover قرمز (بعد از auth-btn-login تعریف می‌شود تا برنده شود) */
+/* دکمه‌ی خروج — آیکون داخل باکس واحد، hover قرمز */
+.auth-btn-logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+.auth-logout-icon {
+    width: 16px;
+    height: 16px;
+}
 .auth-btn-logout:hover {
-    color: #f87171 !important;
-    border-color: #ef4444 !important;
-    transform: translateY(-2px);
-    box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.15), 0 0 20px rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    background: rgba(239, 68, 68, 0.12);
+    transform: translateY(-1px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -594,10 +628,12 @@ html.lenis, html.lenis body { height: auto; }
     /* ورود/ثبت‌نام در هدر موبایل — فشرده و همیشه نمایان (قبلاً display:none بود و فقط پشت منوی همبرگری بود) */
     .nav-auth { display: flex; gap: 8px; margin-right: 8px; }
     .nav-auth .auth-btn { padding: 7px 14px; font-size: 0.74rem; }
-    .nav-auth .auth-user-chip { padding: 2px 10px 2px 8px; font-size: 0.74rem; gap: 6px; }
+    .nav-auth .auth-user-box { padding: 2px 3px 2px 2px; }
+    .nav-auth .auth-user-chip { padding: 3px 8px 3px 7px; font-size: 0.74rem; gap: 6px; }
     .nav-auth .auth-user-avatar { width: 22px; height: 22px; }
     .nav-auth .auth-user-icon { width: 12px; height: 12px; }
-    .nav-auth .auth-btn-logout { padding: 7px 12px; font-size: 0.74rem; }
+    .nav-auth .auth-btn-logout { width: 28px; height: 28px; }
+    .nav-auth .auth-logout-icon { width: 14px; height: 14px; }
     .mobile-toggle { display: flex; }
     section { padding: 100px 0; }
     .page-header { padding: 140px 0 60px; }
