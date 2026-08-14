@@ -196,14 +196,15 @@ if (!reducedMotion) { for (let i = 0; i < (isMobile ? 12 : 25); i++) { createPar
     const WANT = {
         site:    { label: 'سایت و فروشگاه بسازم', type: 'web-design' },
         agent:   { label: 'Agent هوشمند بسازم',   type: 'agent-ai' },
-        mlops:   { label: 'اتوماسیون و MLOps',    type: 'mlops' },
+        mlops:   { label: 'استقرار مدل',           type: 'mlops' },
         consult: { label: 'مشاوره بگیرم',         type: 'consulting' }
     };
     const TYPE_LABELS = {
-        'web-design': 'طراحی سایت',
-        'agent-ai': 'ساخت Agent AI',
-        'mlops': 'MLOps و استقرار مدل',
-        'consulting': 'مشاوره رایگان'
+        'web-design': 'طراحی وب',
+        'agent-ai': 'ساخت Agent هوش مصنوعی',
+        'automation': 'پکیج اتوماسیون آماده',
+        'mlops': 'استقرار مدل',
+        'consulting': 'مشاوره هوش مصنوعی'
     };
 
     let who = null, want = null;

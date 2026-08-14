@@ -173,7 +173,7 @@ POSTS = [
     {
         "title": "CI/CD برای مدل‌های ML با GitHub Actions",
         "slug": "ml-cicd-github-actions",
-        "category": "MLOps",
+        "category": "استقرار مدل",
         "icon": "⚙️",
         "gradient": "135deg,#1a1a2e,#6d28d9",
         "excerpt": "راه‌اندازی pipeline خودکار برای تست، اعتبارسنجی و deploy مدل‌های ML",

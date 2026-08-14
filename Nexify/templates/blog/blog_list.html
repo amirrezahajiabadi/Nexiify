@@ -13,7 +13,7 @@
 <section><div class="container"><div class="blog-grid">
     {% for post in posts %}
     <a href="{% url 'blog:detail' post.slug %}" class="blog-card reveal{% if forloop.counter|divisibleby:3 %} reveal-delay-2{% elif forloop.counter|divisibleby:2 %} reveal-delay-1{% endif %}">
-        <div class="blog-image{% if post.cover_image %} blog-image-has-photo{% endif %}" style="--grad:linear-gradient({{ post.gradient }});">{% if post.cover_image %}<img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="blog-image-photo" loading="lazy">{% else %}<span class="blog-image-icon">{{ post.icon|icon_svg }}</span>{% endif %}{% if post.category == 'MLOps' %}<span class="coming-soon-badge blog-soon-badge">به‌زودی</span>{% endif %}<span class="blog-category-badge">{{ post.category }}</span></div>
+        <div class="blog-image{% if post.cover_image %} blog-image-has-photo{% endif %}" style="--grad:linear-gradient({{ post.gradient }});">{% if post.cover_image %}<img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="blog-image-photo" loading="lazy">{% else %}<span class="blog-image-icon">{{ post.icon|icon_svg }}</span>{% endif %}<span class="blog-category-badge">{{ post.category }}</span></div>
         <div class="blog-body">
             <h3 class="blog-title">{{ post.title }}</h3>
             <p class="blog-excerpt">{{ post.excerpt }}</p>
