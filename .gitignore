@@ -75,6 +75,11 @@ Desktop.ini
 $RECYCLE.BIN/
 *.lnk
 
-# ---------- Screenshot tooling (local Chrome profiles) ----------
-scripts/.chrome-profile/
-scripts/.chrome-profile-gif/
+# ---------- Local-only docs & tooling (never on GitHub) ----------
+# Internal roadmaps / AI context for the developer — keep local, not part of the public repo
+AI-CONTEXT.md
+ROADMAP.md
+UIUX-ROADMAP.md
+RESPONSIVE-ROADMAP.md
+# Dev screenshot/GIF tooling — regenerated locally when needed
+scripts/
