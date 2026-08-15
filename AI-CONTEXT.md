@@ -61,7 +61,8 @@ Nexify/
 │   └── PULL_REQUEST_TEMPLATE.md     # قالب PR (چک‌لیست تست)
 ├── .env.example                     # الگوی متغیرهای محیطی تولید
 ├── .gitignore                       # .env، staticfiles/، db.sqlite3، __pycache__ و...
-├── README.md                        # راهنمای نصب و اجرا
+├── README.md                        # ⭐ معرفی به‌عنوان نمونه‌کار (گالری اسکرین‌شات + امکانات — مخزن عمومی است؛ هدف نمایش است نه کولب/مشارکت)
+├── LICENSE                          # ⭐ تمام حقوق محفوظ (All rights reserved — نه MIT؛ چون نمونه‌کار است)
 ├── ROADMAP.md                       # نقشه‌ی راه فازها (۱→۵)
 ├── RESPONSIVE-ROADMAP.md            # ⭐ نقشه‌ی راه ریسپانسیو (بریک‌پوینت‌های یکپارچه، فازهای R1→R6، چک‌لیست تست موبایل)
 ├── UIUX-ROADMAP.md                  # ⭐ نقشه‌ی راه بهبود UI/UX (ممیزی با اسکیل ui-ux-pro-max — فازهای U1→U8: کنتراست، آیکون‌ها، مودال، فوتر، Social Proof، صنایع، پرفورمنس)
