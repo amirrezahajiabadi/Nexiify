@@ -8,7 +8,7 @@
   <a href="docs/screenshots/home.png"><img src="docs/screenshots/home.gif" alt="Nexify — صفحه اصلی (دموی متحرک)" width="100%"></a>
 </div>
 
-<h1 align="center">⚡ Nexify — وب‌سایت معرفی و توسعهٔ راه‌کارهای هوش مصنوعی</h1>
+<h1 align="center"> Nexify وب‌سایت</h1>
 
 <p align="center">
   وب‌سایت کامل <strong>فارسی و راست‌چین (RTL)</strong> با تم تیره/روشن، طراحی شیشه‌ای و بک‌اند Django — یک <strong>نمونه‌کار</strong> در طراحی UI/UX، فرانت‌اند و بک‌اند.
