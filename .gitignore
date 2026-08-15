@@ -75,5 +75,6 @@ Desktop.ini
 $RECYCLE.BIN/
 *.lnk
 
-# ---------- Screenshot tooling (local Chrome profile) ----------
+# ---------- Screenshot tooling (local Chrome profiles) ----------
 scripts/.chrome-profile/
+scripts/.chrome-profile-gif/
