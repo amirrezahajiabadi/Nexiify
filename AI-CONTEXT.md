@@ -200,7 +200,7 @@ Nexify/
 - `LANGUAGE_CODE = "fa-ir"`، `TIME_ZONE = "Asia/Tehran"`
 - استاتیک: `STATIC_URL = "static/"`، `STATICFILES_DIRS = [BASE_DIR/"static"]`، `STATIC_ROOT = BASE_DIR/"staticfiles"`
 - **STORAGES**: پیش‌فرض = `whitenoise.storage.CompressedManifestStaticFilesStorage` (هش فایل + فشرده‌سازی)
-- ایمیل: `console` backend، `DEFAULT_FROM_EMAIL = "noreply@nexify.ir"`، `CONTACT_NOTIFY_EMAIL = "amirrezahajiabadi480@gmail.com"`
+- ایمیل: `console` backend، `DEFAULT_FROM_EMAIL = "noreply@example.com"` (placeholder — قبل از دیپلوی با دامنه‌ی واقعی عوض شود)، `CONTACT_NOTIFY_EMAIL = "amirrezahajiabadi480@gmail.com"`
 - `DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"`
 
 ### `development.py` — محلی
@@ -213,7 +213,7 @@ Nexify/
 
 ### `production.py` — تولید (هنوز تست نشده)
 - `DEBUG=False`، `SECRET_KEY` و همه‌ی رازها فقط از `os.environ` (تابع `env()` با خطای واضح)
-- `ALLOWED_HOSTS` از env (پیش‌فرض `nexify.ir`)
+- `ALLOWED_HOSTS` از env (پیش‌فرض `localhost,127.0.0.1`)
 - **HTTPS سخت‌گیرانه**: SSL Redirect، کوکی‌های امن، HSTS (یک سال + includeSubdomains + preload)، `CSRF_TRUSTED_ORIGINS` خودکار از ALLOWED_HOSTS
 - دیتابیس: **PostgreSQL** (`POSTGRES_DB/USER/PASSWORD/HOST/PORT` از env — مطابق docker-compose فاز ۵)
 - ایمیل SMTP قابل تنظیم از env
@@ -573,8 +573,8 @@ python ../.agents/skills/ui-ux-pro-max/scripts/search.py "responsive layout" --s
 **الگوی `.env.example`** (کلیدهای موردنیاز تولید):
 ```
 DJANGO_SECRET_KEY=
-DJANGO_ALLOWED_HOSTS=nexify.ir,www.nexify.ir
-CSRF_TRUSTED_ORIGINS=https://nexify.ir,https://www.nexify.ir
+DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
+CSRF_TRUSTED_ORIGINS=http://localhost,http://127.0.0.1
 POSTGRES_DB=nexify
 POSTGRES_USER=nexify
 POSTGRES_PASSWORD=
@@ -585,7 +585,7 @@ EMAIL_HOST=
 EMAIL_PORT=587
 EMAIL_HOST_USER=
 EMAIL_HOST_PASSWORD=
-DEFAULT_FROM_EMAIL=noreply@nexify.ir
+DEFAULT_FROM_EMAIL=noreply@example.com
 CONTACT_NOTIFY_EMAIL=amirrezahajiabadi480@gmail.com
 ```
 

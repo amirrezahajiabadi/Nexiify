@@ -24,7 +24,7 @@ DEBUG = False
 
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
-ALLOWED_HOSTS = [h.strip() for h in env("DJANGO_ALLOWED_HOSTS", "nexify.ir").split(",") if h.strip()]
+ALLOWED_HOSTS = [h.strip() for h in env("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h.strip()]
 
 # ---------------------------------------------------------------------------
 # HTTPS
@@ -65,7 +65,7 @@ EMAIL_PORT = int(env("EMAIL_PORT", "587"))
 EMAIL_HOST_USER = env("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", "noreply@nexify.ir")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", "noreply@example.com")
 CONTACT_NOTIFY_EMAIL = env("CONTACT_NOTIFY_EMAIL", "amirrezahajiabadi480@gmail.com")
 
 # ---------------------------------------------------------------------------

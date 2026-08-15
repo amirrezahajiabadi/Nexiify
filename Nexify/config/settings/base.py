@@ -129,7 +129,7 @@ STORAGES = {
 # ایمیل — پیش‌فرض توسعه: console (در production.py با SMTP جایگزین می‌شود)
 # ---------------------------------------------------------------------------
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-DEFAULT_FROM_EMAIL = "noreply@nexify.ir"
+DEFAULT_FROM_EMAIL = "noreply@example.com"
 CONTACT_NOTIFY_EMAIL = "amirrezahajiabadi480@gmail.com"
 
 # ---------------------------------------------------------------------------
