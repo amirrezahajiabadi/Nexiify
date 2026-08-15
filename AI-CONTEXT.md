@@ -513,7 +513,7 @@ pytest apps/contact/tests.py::test_honeypot_filled_is_silently_dropped -v   # ی
 
 ## ۱۳) اسکیل‌های نصب‌شده (Skills برای AI)
 
-اسکیل‌ها به‌صورت آینه‌ای در **دو مکان** نصب می‌شوند — `.agents/skills/` (استاندارد Universal) و `.claude/skills/` (Claude Code) — و در `skills-lock.json` (ریشه‌ی پروژه، کنار `Nexify/`) ردیابی می‌شوند (source + skillPath + computedHash). هر اسکیل جدید: همان ساختار (پوشه + `SKILL.md`) را در هر دو مکان نصب کن و یک entry به `skills-lock.json` اضافه کن.
+اسکیل‌ها به‌صورت آینه‌ای در **دو مکان** نصب می‌شوند — `.agents/skills/` و `.claude/skills/` — و در `skills-lock.json` (ریشه‌ی پروژه، کنار `Nexify/`) ردیابی می‌شوند (source + skillPath + computedHash). هر اسکیل جدید: همان ساختار (پوشه + `SKILL.md`) را در هر دو مکان نصب کن و یک entry به `skills-lock.json` اضافه کن.
 
 | اسکیل | منبع (GitHub) | کاربرد |
 |-------|---------------|--------|
@@ -544,7 +544,7 @@ python ../.agents/skills/ui-ux-pro-max/scripts/search.py "responsive layout" --s
 ```
 
 - **دیتابیس داخلی**: ۶۷ استایل، ۱۶۱ پالت رنگ، ۵۷ جفت فونت، ۹۹ راهنمای UX، ۲۵ نوع چارت، ۲۲ استک.
-- نصب از طریق CLI رسمی: `npx --yes ui-ux-pro-max-cli init --ai claude` و `npx --yes ui-ux-pro-max-cli init --ai universal` (بدون نصب global).
+- نصب از طریق CLI رسمی: `npx --yes ui-ux-pro-max-cli init --ai universal` (بدون نصب global).
 
 ---
 
@@ -593,7 +593,7 @@ CONTACT_NOTIFY_EMAIL=amirrezahajiabadi480@gmail.com
 
 ## ۱۵) گیت — نسخه‌بندی
 
-ریشه‌ی مخزن: **ریشه‌ی پروژه** (`D:/Nexify`) — شامل `Nexify/` + اسکیل‌ها (`.agents/`, `.claude/`) + `skills-lock.json`. برنچ پیش‌فرض: `main`. اولین کامیت: `cd96bbd` (۲۵۵ فایل). پیام‌های کامیت به **انگلیسی**.
+ریشه‌ی مخزن: **ریشه‌ی پروژه** (`D:/Nexify`) — شامل `Nexify/` + پوشه‌های اسکیل + `skills-lock.json`. برنچ پیش‌فرض: `main`. پیام‌های کامیت به **انگلیسی**.
 
 - `.gitignore` دولایه: ریشه‌ی پروژه (`.freebuff/`, `__pycache__/`, قالب‌های common Python/Node/IDE/OS) + `Nexify/.gitignore` (django: `db.sqlite3` + journal/wal/shm, `staticfiles/`, `media/`, `media-test/`, `.env`, venv‌ها، کَش‌های ابزار).
 - `.gitattributes` (ریشه): همه‌ی متن‌ها LF ذخیره/خروجی می‌شوند (هماهنگ با دیپلوی لینوکس؛ `*.bat/.cmd/.ps1` استثنا CRLF) + فونت‌ها/تصاویر/دیتابیس `binary` (دست‌نخورده). اگر فایل جدیدی با فرمت غیرمتن اضافه کردی، پسوندش را به بخش binary اضافه کن.
@@ -604,7 +604,7 @@ CONTACT_NOTIFY_EMAIL=amirrezahajiabadi480@gmail.com
 cd /d D:/Nexify
 git status                      # وضعیت فعلی
 git add <فایل‌های مرتبط>        # بدون git add -A (فایل‌های دیگر را نبر)
-git commit -m "..."             # انگلیسی + فوتر Codebuff
+git commit -m "..."             # انگلیسی
 git log --oneline -5
 ```
 

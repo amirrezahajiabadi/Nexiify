@@ -1,34 +1,44 @@
-# ⚡ Nexify — وب‌سایت معرفی و توسعهٔ راه‌کارهای هوش مصنوعی
+<p align="center">
+  <img src="docs/screenshots/home.png" alt="Nexify — صفحه اصلی" width="85%">
+</p>
 
-وب‌سایت کامل **فارسی و راست‌چین (RTL)** با تم تیره/روشن، طراحی شیشه‌ای (Glassmorphism)، انیمیشن‌های نرم و بک‌اند **Django** — ساخته‌شده به‌عنوان **نمونه‌کار** برای نمایش مهارت‌های طراحی UI/UX، فرانت‌اند و بک‌اند.
+<h1 align="center">⚡ Nexify — وب‌سایت معرفی و توسعهٔ راه‌کارهای هوش مصنوعی</h1>
 
-> 🎯 این مخزن یک **نمونه‌کار** است؛ هدف اصلی نمایش توانمندی‌هاست، نه توسعهٔ متن‌باز.
+<p align="center">
+  وب‌سایت کامل <strong>فارسی و راست‌چین (RTL)</strong> با تم تیره/روشن، طراحی شیشه‌ای و بک‌اند Django — یک <strong>نمونه‌کار</strong> در طراحی UI/UX، فرانت‌اند و بک‌اند.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Django-5.x-092E20?logo=django&logoColor=white" alt="Django">
+  <img src="https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/tests-115%20passed-brightgreen" alt="pytest">
+  <img src="https://img.shields.io/badge/RTL-Persian-7c3aed" alt="RTL Persian">
+  <img src="https://img.shields.io/badge/license-All%20rights%20reserved-555555" alt="License">
+</p>
 
 ---
 
-## 📸 پیش‌نمایش صفحات
+## 📸 گالری
 
-| | |
-|---|---|
-| <img src="docs/screenshots/home.png" alt="صفحه اصلی" width="45%"> | <img src="docs/screenshots/services.png" alt="خدمات" width="45%"> |
-| <img src="docs/screenshots/projects.png" alt="نمونه‌کارها" width="45%"> | <img src="docs/screenshots/blog.png" alt="بلاگ" width="45%"> |
-| <img src="docs/screenshots/about.png" alt="درباره ما" width="45%"> | <img src="docs/screenshots/contact.png" alt="تماس با ما" width="45%"> |
-| <img src="docs/screenshots/login.png" alt="ورود" width="45%"> | <img src="docs/screenshots/register.png" alt="ثبت‌نام" width="45%"> |
+| | | |
+|---|---|---|
+| **خدمات**<br><a href="docs/screenshots/services.png"><img src="docs/screenshots/services.png" alt="خدمات" width="100%"></a> | **نمونه‌کارها**<br><a href="docs/screenshots/projects.png"><img src="docs/screenshots/projects.png" alt="نمونه‌کارها" width="100%"></a> | **بلاگ**<br><a href="docs/screenshots/blog.png"><img src="docs/screenshots/blog.png" alt="بلاگ" width="100%"></a> |
+| **درباره ما**<br><a href="docs/screenshots/about.png"><img src="docs/screenshots/about.png" alt="درباره ما" width="100%"></a> | **تماس با ما**<br><a href="docs/screenshots/contact.png"><img src="docs/screenshots/contact.png" alt="تماس با ما" width="100%"></a> | **ورود**<br><a href="docs/screenshots/login.png"><img src="docs/screenshots/login.png" alt="ورود" width="100%"></a> |
+| **ثبت‌نام**<br><a href="docs/screenshots/register.png"><img src="docs/screenshots/register.png" alt="ثبت‌نام" width="100%"></a> | | |
 
-> اسکرین‌شات‌ها با تم تیره (پیش‌فرض سایت) در عرض دسکتاپ ۱۴۴۰px گرفته شده‌اند.
-> برای بازتولید بعد از تغییرات: `python scripts/capture_screenshots.py` (سرور در حال اجرا باشد).
+> برای دیدن تصویر کامل، روی هر اسکرین‌شات کلیک کنید.
 
 ---
 
 ## ✨ امکانات
 
-- **طراحی UI/UX**: تم تیره/روشن با سیستم توکن رنگی، شیشه‌ای، RTL، انیمیشن‌های نرم و پلکانی، ریسپانسیو کامل (دسکتاپ تا موبایل)، آیکون‌های SVG سفارشی، کنتراست AA
-- **بک‌اند Django**: settings سه‌گانه (`base`/`development`/`production`)، اپ‌های ماژولار (`core`, `projects`, `blog`, `contact`, `accounts`, `panel`)
-- **پنل مدیریت سفارشی** (`/panel/`): انتشار مقاله و پروژه، آپلود تصویر شاخص، مدیریت سفارش‌ها و پیام‌ها، ویرایش متن‌های سایت، پشتیبانی از چند ادمین، آمار بازدید
-- **حساب کاربری**: ورود/ثبت‌نام با انیمیشن، صفحهٔ پروفایل شخصی (درخواست‌های من + دیدگاه‌های من)، کامنت زیر مقالات
-- **فرم تماس امن**: CSRF + هانی‌پات دولایه، اعتبارسنجی سمت سرور، انتخاب روش تماس (تماس تلفنی / تلگرام)
-- **محتوای داینامیک**: پروژه‌ها و مقالات از دیتابیس با فیلتر انتشار
-- **امنیت**: CSP، هدرهای امنیتی، ضد-XSS، بلاک ریدایرکت خارجی، **۱۱۵ تست pytest** + CI
+- 🎨 **طراحی UI/UX** — تم تیره/روشن با سیستم توکن رنگی، شیشه‌ای (Glassmorphism)، انیمیشن‌های نرم و پلکانی، آیکون‌های SVG سفارشی، کنتراست AA
+- 📱 **ریسپانسیو کامل** — از دسکتاپ تا موبایل، با تارگت‌های لمسی استاندارد
+- 🛠 **پنل مدیریت سفارشی** (`/panel/`) — انتشار مقاله و پروژه، آپلود تصویر شاخص، مدیریت سفارش‌ها، ویرایش متن‌های سایت، چند ادمین، آمار بازدید
+- 👤 **حساب کاربری** — ورود/ثبت‌نام با انیمیشن، پروفایل شخصی (درخواست‌ها + دیدگاه‌ها)، کامنت زیر مقالات
+- 📬 **فرم تماس امن** — CSRF + هانی‌پات دولایه، انتخاب روش تماس (تلفن / تلگرام)
+- 🗄 **محتوای داینامیک** — پروژه‌ها و مقالات از دیتابیس، با فیلتر انتشار
+- 🔒 **امنیت** — CSP، هدرهای امنیتی، ضد-XSS، بلاک ریدایرکت خارجی، **۱۱۵ تست pytest** + CI
 
 ---
 
@@ -36,9 +46,9 @@
 
 | لایه | تکنولوژی |
 |---|---|
-| فرانت‌اند | HTML، CSS مدرن (Custom Properties، Flex/Grid، Glassmorphism)، JavaScript خالص |
-| بک‌اند | Python، Django، SQLite (توسعه) / PostgreSQL (تولید) |
-| تست | pytest + pytest-django، CI با GitHub Actions (Python 3.12/3.13) |
+| فرانت‌اند | HTML · CSS مدرن (Custom Properties، Flex/Grid، Glassmorphism) · JavaScript خالص |
+| بک‌اند | Python · Django · SQLite (توسعه) / PostgreSQL (تولید) |
+| تست | pytest + pytest-django · GitHub Actions (Python 3.12 / 3.13) |
 | فونت | Vazirmatn (self-host) + JetBrains Mono |
 
 ---
@@ -51,41 +61,41 @@ cd Nexify
 python -m pip install -r requirements.txt
 python manage.py migrate
 python manage.py seed_demo            # دادهٔ نمونه (پروژه/مقاله/سوال متداول)
-python manage.py createsuperuser      # برای ورود به /admin/ و /panel/
+python manage.py createsuperuser      # ورود به /admin/ و /panel/
 python manage.py runserver 127.0.0.1:8471
 ```
 
 | مسیر | صفحه |
 |---|---|
-| `/` | خانه |
-| `/services/` | خدمات |
-| `/projects/` | نمونه‌کارها (دیتابیس) |
-| `/blog/` | مقالات |
-| `/about/` | درباره ما |
+| `/` · `/services/` · `/projects/` · `/blog/` · `/about/` | صفحات عمومی |
 | `/contact/` | تماس (فرم امن) |
 | `/accounts/` | ورود / ثبت‌نام / پروفایل |
 | `/panel/` | پنل ادمین سفارشی (فقط staff) |
 
 ---
 
-## 🔒 نکات امنیتی پیاده‌شده
+## 🔒 امنیت
 
-- CSRF روی همهٔ فرم‌ها + **هانی‌پات دولایه** (کلاینت و سرور — پیام ربات ساکت رد می‌شود و ذخیره نمی‌شود)
-- **CSP** در `base.html` + هدرهای امنیتی برای دیپلوی (`_headers` / `nginx-security.conf`)
+- CSRF روی همهٔ فرم‌ها + **هانی‌پات دولایه** (کلاینت و سرور)
+- **CSP** + هدرهای امنیتی برای دیپلوی
 - ساخت DOM امن بدون `innerHTML` با دادهٔ داینامیک (ضد XSS)
-- ۱۱۵ تست pytest (فرم‌ها، ویوها، مدل‌ها، پنل، احراز هویت، امنیت) + CI خودکار
+- ۱۱۵ تست pytest + CI خودکار روی هر push
 
 ---
 
 ## 📬 تماس
 
-این پروژه یک **نمونه‌کار** است — برای سفارش پروژهٔ مشابه یا همکاری، از طریق
-[ایمیل](mailto:amirrezahajiabadi480@gmail.com) در تماس باشید.
+این پروژه یک **نمونه‌کار** است — برای سفارش پروژهٔ مشابه یا همکاری:
+[amirrezahajiabadi480@gmail.com](mailto:amirrezahajiabadi480@gmail.com)
 
 ---
 
 ## 📜 لایسنس
 
-© ۱۴۰۵ Nexify — **تمام حقوق محفوظ است.**
+© ۱۴۰۵ Nexify — **تمام حقوق محفوظ است.** این مخزن صرفاً برای نمایش نمونه‌کار منتشر شده؛ استفاده، کپی یا بازنشر کد، طراحی یا محتوا بدون اجازهٔ کتبی مجاز نیست.
 
-این مخزن صرفاً برای نمایش نمونه‌کار منتشر شده است؛ استفاده، کپی یا بازنشر کد، طراحی یا محتوا بدون اجازهٔ کتبی مجاز نیست.
+---
+
+<p align="center">
+  طراحی و توسعه: <strong>Amirreza Hajiabadi</strong> — © ۱۴۰۵ Nexify
+</p>
