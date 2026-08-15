@@ -6,6 +6,20 @@
 
 ---
 
+## 📸 پیش‌نمایش صفحات
+
+| | |
+|---|---|
+| <img src="docs/screenshots/home.png" alt="صفحه اصلی" width="45%"> | <img src="docs/screenshots/services.png" alt="خدمات" width="45%"> |
+| <img src="docs/screenshots/projects.png" alt="نمونه‌کارها" width="45%"> | <img src="docs/screenshots/blog.png" alt="بلاگ" width="45%"> |
+| <img src="docs/screenshots/about.png" alt="درباره ما" width="45%"> | <img src="docs/screenshots/contact.png" alt="تماس با ما" width="45%"> |
+| <img src="docs/screenshots/login.png" alt="ورود" width="45%"> | <img src="docs/screenshots/register.png" alt="ثبت‌نام" width="45%"> |
+
+> اسکرین‌شات‌ها با تم تیره (پیش‌فرض سایت) در عرض دسکتاپ ۱۴۴۰px گرفته شده‌اند.
+> برای بازتولید بعد از تغییرات: `python scripts/capture_screenshots.py` (سرور در حال اجرا باشد).
+
+---
+
 ## 🚀 اجرای پروژه (توسعه محلی)
 
 ```bash

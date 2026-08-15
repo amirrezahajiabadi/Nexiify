@@ -329,7 +329,7 @@ urlpatterns = [
 **سه لایه دفاعی دارد:**
 
 1. **CSRF**: `{% csrf_token %}` داخل فرم — توکن خودکار جنگو.
-2. **هانی‌پات سمت کلاینت** (`static/js/contact.js`): فیلد مخفی `#hpWebsite` (`name="website"`) داخل `.hp-wrap` (مخفی با CSS: خارج از صفحه، `tabindex="-1"`، `autocomplete="off"`) — اگر ربات آن را پر کند، اسکریپت فرم را **ساکت رد** می‌کند.
+2. **هانی‌پات سمت کلاینت** (`static/js/contact.js`): فیلد مخفی `#hpWebsite` (`name="website"`) داخل `.hp-wrap` (مخفی با CSS — الگوی `sr-only` با `clip: rect(0,0,0,0)`؛ نه `left:-9999px` چون در RTL scrollWidth صفحه را پف می‌کرد، `tabindex="-1"`، `autocomplete="off"`) — اگر ربات آن را پر کند، اسکریپت فرم را **ساکت رد** می‌کند.
 3. **هانی‌پات سمت سرور** (دو لایه):
    - در **ویو** (`contact`): اول از همه `if request.POST.get("website"):` → ساکت رد (بدون خطا، بدون ذخیره در DB، پیام موفقیت نمایش داده می‌شود تا ربات متوجه نشود).
    - در **فرم** (`forms.py`): `clean()` هم چک می‌کند و `ValidationError` می‌دهد — فیلد `website` **عمداً در `Meta.fields` نیست** تا هرگز در DB ذخیره نشود.
@@ -454,6 +454,9 @@ python -m pip install -r requirements-dev.txt   # pytest + pytest-django
 
 # اجرای سرور توسعه
 python manage.py runserver 127.0.0.1:8471
+
+# اسکرین‌شات‌های README (سرور در حال اجرا باشد)
+python ../scripts/capture_screenshots.py    # → docs/screenshots/*.png (۸ صفحه، تمام‌صفحه، ۱۴۴۰px)
 
 # اشتراک‌گذاری عمومی (نمایش به دوست/کلاینت) — ⚠️ ngrok از IP ایران بلاک است، از pinggy استفاده کن
 ./start_tunnel.sh   # ⭐ اسکریپت آماده: سرور را بالا می‌آورد + تانل pinggy می‌سازد + URL را نشان می‌دهد (PID واقعی ssh در .freebuff/pinggy.pid)

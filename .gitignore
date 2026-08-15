@@ -74,3 +74,6 @@ Thumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 *.lnk
+
+# ---------- Screenshot tooling (local Chrome profile) ----------
+scripts/.chrome-profile/
