@@ -28,7 +28,7 @@
                             <span class="panel-avatar panel-avatar-sm">{{ u.username|slice:":1" }}</span>
                             <div>
                                 <strong>{{ u.get_full_name|default:u.username }}</strong>
-                                <small class="panel-cell-sub" dir="ltr" style="direction:ltr; display:block; text-align:right">{{ u.email|default:"—" }}</small>
+                                <small class="panel-cell-sub ltr-block">{{ u.email|default:"—" }}</small>
                             </div>
                         </div>
                     </td>

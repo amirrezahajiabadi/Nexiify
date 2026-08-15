@@ -10,7 +10,35 @@ from apps.projects.models import Project
 from .models import SiteSetting, Testimonial
 
 
-class BlogPostForm(forms.ModelForm):
+class PanelFormMixin:
+    """کلاس‌های ورودی مشترک (form-input / form-textarea) را به ویجت‌های متنی اضافه می‌کند
+    تا پنل از recipe مشترک style.css استفاده کند و CSS تکراری در panel.css نداشته باشیم."""
+
+    TEXT_WIDGETS = (
+        forms.TextInput,
+        forms.EmailInput,
+        forms.URLInput,
+        forms.NumberInput,
+        forms.DateInput,
+        forms.SearchInput,
+        forms.Select,
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            w = field.widget
+            if isinstance(w, forms.Textarea):
+                cls = "form-textarea"
+            elif isinstance(w, self.TEXT_WIDGETS):
+                cls = "form-input"
+            else:
+                continue  # checkbox / file / hidden — استایل جداگانه‌ی خودشان را دارند
+            existing = w.attrs.get("class", "")
+            w.attrs["class"] = (existing + " " + cls).strip()
+
+
+class BlogPostForm(PanelFormMixin, forms.ModelForm):
     class Meta:
         model = BlogPost
         fields = [
@@ -38,7 +66,7 @@ class BlogPostForm(forms.ModelForm):
         return slug
 
 
-class ProjectForm(forms.ModelForm):
+class ProjectForm(PanelFormMixin, forms.ModelForm):
     tags = forms.CharField(
         required=False,
         label="تکنولوژی‌ها (با ویرگول جدا کنید)",
@@ -78,7 +106,7 @@ class ProjectForm(forms.ModelForm):
             self.fields["tags"].initial = ", ".join(self.instance.tags)
 
 
-class FAQForm(forms.ModelForm):
+class FAQForm(PanelFormMixin, forms.ModelForm):
     class Meta:
         model = FAQ
         fields = ["question", "answer", "order", "is_published"]
@@ -86,14 +114,14 @@ class FAQForm(forms.ModelForm):
         labels = {"order": "ترتیب نمایش (کوچک‌تر = بالاتر)"}
 
 
-class TestimonialForm(forms.ModelForm):
+class TestimonialForm(PanelFormMixin, forms.ModelForm):
     class Meta:
         model = Testimonial
         fields = ["name", "company", "text", "rating", "order", "is_published"]
         widgets = {"text": forms.Textarea(attrs={"rows": 4})}
 
 
-class SiteSettingForm(forms.ModelForm):
+class SiteSettingForm(PanelFormMixin, forms.ModelForm):
     class Meta:
         model = SiteSetting
         fields = ["key", "label", "value", "group", "is_textarea", "is_active"]

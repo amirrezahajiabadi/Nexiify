@@ -16,7 +16,7 @@
 
         <dl class="panel-dl">
             <dt>نام و نام خانوادگی</dt><dd>{{ msg.name }}</dd>
-            <dt>ایمیل</dt><dd><a href="mailto:{{ msg.email }}" dir="ltr" style="direction:ltr; display:inline-block">{{ msg.email }}</a></dd>
+            <dt>ایمیل</dt><dd><a href="mailto:{{ msg.email }}" dir="ltr">{{ msg.email }}</a></dd>
             <dt>نوع درخواست</dt><dd>{{ msg.get_request_type_display }}</dd>
             <dt>روش تماس</dt>
             <dd>{% if msg.contact_method == 'telegram' %}تلگرام: <span dir="ltr">{{ msg.telegram_id }}</span>{% else %}تلفن: <span dir="ltr">{{ msg.phone }}</span>{% endif %}</dd>

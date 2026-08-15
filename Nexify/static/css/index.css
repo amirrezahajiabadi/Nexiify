@@ -379,9 +379,6 @@
 }
 .testimonial-quote-mark .icon-svg { width: 28px; height: 28px; }
 .testimonial-rating { z-index: 1; }
-.testimonial-stars { display: inline-flex; gap: 3px; color: var(--accent); font-size: 1.05rem; }
-.testimonial-stars .icon-svg { width: 1em; height: 1em; }
-.testimonial-stars .star-off { opacity: 0.22; }
 .testimonial-text {
     margin: 0;
     font-size: 0.95rem;

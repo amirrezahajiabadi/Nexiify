@@ -142,6 +142,7 @@
 
 /* ---------- سکشن‌ها ---------- */
 .panel-section { max-width: 1100px; margin: 0 auto; }
+.panel-section-narrow { max-width: 720px; }
 
 .panel-page-head { margin: 26px 0 22px; }
 .panel-page-head h1 { font-size: 1.7rem; margin: 0 0 6px; }
@@ -171,7 +172,7 @@
 .panel-stat-accent .panel-stat-value { background: linear-gradient(135deg, #a78bfa, #7c3aed); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
 /* ---------- گرید و کارت ---------- */
-.panel-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px; }
+.panel-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 26px; }
 
 .panel-card {
     background: var(--glass-bg);
@@ -272,24 +273,8 @@
 }
 .panel-form .required-star { color: #f87171; }
 
-.panel-form input[type="text"],
-.panel-form input[type="email"],
-.panel-form input[type="url"],
-.panel-form input[type="date"],
-.panel-form input[type="number"],
-.panel-form input[type="search"],
-.panel-form textarea,
-.panel-form select {
-    width: 100%; min-width: 0; padding: 13px 16px;
-    background: var(--bg); border: 1px solid var(--border-light);
-    border-radius: 12px; color: var(--text);
-    font-family: var(--font-sans); font-size: 0.9rem;
-    transition: all 0.3s ease; resize: vertical;
-}
-.panel-form input:focus, .panel-form textarea:focus, .panel-form select:focus {
-    outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
-}
-.panel-form textarea { min-height: 110px; }
+/* ورودی‌های فرم — از recipe مشترک style.css (form-input / form-textarea / select.form-input)
+   استفاده می‌کنند؛ اینجا فقط استثناها و حالت‌های خاص پنل است. */
 .panel-form .code-input { font-family: var(--font-mono); font-size: 0.8rem; direction: ltr; text-align: left; }
 .panel-form input[type="checkbox"] {
     width: 18px; height: 18px; accent-color: #7c3aed; cursor: pointer;
@@ -303,7 +288,7 @@
 /* ----------------------------------------------------------------
    آمار بازدید (داشبورد)
 ---------------------------------------------------------------- */
-.visits-card { margin-top: 20px; }
+.visits-card { margin-bottom: 26px; } /* فاصله‌ی یکدست با بقیه سکشن‌ها (margin-bottom به‌جای margin-top) */
 .visits-grid {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
     margin: 16px 0 20px;
@@ -401,10 +386,14 @@
 .panel-dl dd { margin: 0; padding: 10px 0; border-bottom: 1px solid var(--border); }
 .panel-dl dd.message-body { color: var(--text); line-height: 1.9; }
 
-.panel-quick { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.panel-quick { display: flex; gap: 10px; flex-wrap: wrap; } /* فاصله از بالا را panel-grid-2 با margin-bottom تأمین می‌کند */
 
 /* ---------- کاربر ---------- */
 .panel-user-cell { display: flex; align-items: center; gap: 10px; }
+
+/* ---------- ابزارهای چیدمان ---------- */
+/* جهت چپ‌به‌راست برای محتوای انگلیسی (ایمیل/آیدی) — جایگزین استایل inline */
+.ltr-block { direction: ltr; display: block; text-align: right; }
 
 /* ---------- ریسپانسیو ---------- */
 @media (max-width: 900px) {
