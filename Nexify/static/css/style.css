@@ -20,6 +20,9 @@
     --accent: #7c3aed;
     --accent-light: #a78bfa;
     --success: #22c55e;
+    /* حلقه‌ی داخلی دکمه‌ی توپُر — تیره در تم تاریک تا لبه‌ی روشن "نشت" نکند
+       (رفع Irradiation Illusion: جسم روشن بزرگ‌تر دیده می‌شود) */
+    --btn-primary-edge: rgba(0, 0, 0, 0.45);
     --font-sans: 'Vazirmatn', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --transition-fast: 0.2s ease;
@@ -40,6 +43,8 @@
     --text-muted: #6b7280;     /* U1: کنتراست AA (4.6:1) — قبلاً #888888 (3.3:1 بود و FAIL) */
     --accent: #6d28d9;
     --accent-light: #7c3aed;
+    /* تم روشن: حلقه‌ی داخلی روشن روی دکمه‌ی تیره — لبه‌ی دکمه را تعریف می‌کند */
+    --btn-primary-edge: rgba(255, 255, 255, 0.28);
     --glass-bg: rgba(255, 255, 255, 0.6);
     --glass-bg-hover: rgba(255, 255, 255, 0.85);
     --glass-border: rgba(0, 0, 0, 0.06);
@@ -455,9 +460,9 @@ section { padding: 140px 0; position: relative; z-index: 1; }
 }
 .btn:active { transform: scale(0.97) !important; }
 /* U8: سلسله‌مراتب CTA — اصلی پررنگ‌تر (weight ۶۰۰ + هاله‌ی accent) از ثانویه */
-.btn-primary { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 600; box-shadow: 0 8px 24px rgba(124, 58, 237, 0.22); }
-.btn-primary:hover { background: transparent; color: var(--text); transform: translateY(-2px); box-shadow: 0 14px 36px rgba(124, 58, 237, 0.32); }
-.btn-outline { background: transparent; color: var(--text); border-color: var(--border-light); font-weight: 500; }
+.btn-primary { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 600; box-shadow: inset 0 0 0 1px var(--btn-primary-edge), 0 6px 18px rgba(124, 58, 237, 0.18); }
+.btn-primary:hover { background: transparent; color: var(--text); transform: translateY(-2px); box-shadow: inset 0 0 0 1px var(--btn-primary-edge), 0 14px 36px rgba(124, 58, 237, 0.32); }
+.btn-outline { background: rgba(127, 127, 127, 0.06); color: var(--text); border-color: var(--border-light); font-weight: 500; }
 .btn-outline:hover { border-color: var(--text); transform: translateY(-2px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
 
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

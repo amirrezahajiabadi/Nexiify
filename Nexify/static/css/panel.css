@@ -82,7 +82,7 @@
     color: var(--text-secondary); text-decoration: none;
     font-size: 0.82rem; border: 1px solid var(--border);
     transition: all var(--transition-fast);
-    background: transparent; font-family: var(--font-sans); cursor: pointer; width: 100%;
+    background: rgba(127, 127, 127, 0.06); font-family: var(--font-sans); cursor: pointer; width: 100%;
     min-height: 44px; /* U4: تارگت لمسی ≥۴۴px */
 }
 .panel-foot-link:hover { border-color: var(--accent); color: var(--accent-light); }
@@ -239,7 +239,7 @@
 .btn-mini {
     display: inline-flex; align-items: center; gap: 4px;
     padding: 6px 12px; font-size: 0.74rem; border-radius: 10px;
-    background: transparent; color: var(--text-secondary);
+    background: rgba(127, 127, 127, 0.06); color: var(--text-secondary);
     border: 1px solid var(--border-light); cursor: pointer;
     text-decoration: none; font-family: var(--font-sans);
     transition: all var(--transition-fast);
@@ -260,6 +260,7 @@
     color: var(--text-secondary); text-decoration: none;
     border: 1px solid var(--border-light); transition: all var(--transition-fast);
     display: inline-flex; align-items: center; min-height: 44px; /* U4: تارگت لمسی ≥۴۴px */
+    background: rgba(127, 127, 127, 0.06); /* سطح کمرنگ — یکدست با دکمه‌های ghost و ضد خطای تابش */
 }
 .panel-tab:hover { border-color: var(--accent); color: var(--accent-light); }
 .panel-tab.active { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff; border-color: transparent; }
